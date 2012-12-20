@@ -3,6 +3,9 @@ package org.openslat.models.univariate;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.openslat.interfaces.DifferentiableFunction;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * Represents the power model
  * 
@@ -14,9 +17,18 @@ import org.openslat.interfaces.DifferentiableFunction;
  * 
  * @author Alan Williams
  */
+@JsonSerialize
 public class PowerModel implements DifferentiableFunction {
+	
+	@JsonProperty
+	private String name = "PowerModel";
+	
+	
+	@JsonProperty
 	private static final String NAME = "Power model";
+	@JsonProperty
 	private double a;
+	@JsonProperty
 	private double b;
 
 	/**
@@ -85,5 +97,25 @@ public class PowerModel implements DifferentiableFunction {
 
 	public static String getName() {
 		return NAME;
+	}
+
+	public double getA() {
+		return a;
+	}
+
+	public void setA(double a) {
+		this.a = a;
+	}
+
+	public double getB() {
+		return b;
+	}
+
+	public void setB(double b) {
+		this.b = b;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

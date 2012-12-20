@@ -1,12 +1,11 @@
 *.class
 
-# Package Files #
+# package files #
 *.jar
 *.war
 *.ear
 
 # eclipse files
-
 *.pydevproject
 .project
 .metadata
@@ -22,10 +21,10 @@ local.properties
 .settings/
 .loadpath
 
-# External tool builders
+# external tool builders
 .externalToolBuilders/
 
-# Locally stored "Eclipse launch configurations"
+# locally stored "eclipse launch configurations"
 *.launch
 
 # CDT-specific
@@ -37,53 +36,42 @@ local.properties
 # maven
 target/
 
-
-
-# Directories #
+# directories #
 /build/
 /bin/
+/lib/
 target/
  
-# OS Files #
+# OS files #
 .DS_Store
  
 *.class
  
-# Package Files #
+# package files #
 *.jar
 *.war
 *.ear
 *.db
  
-######################
-# Windows
-######################
- 
 # Windows image file caches
 Thumbs.db 
  
-# Folder config file
+# folder config file
 Desktop.ini
  
-######################
 # OSX
-######################
- 
 .DS_Store
 .svn
  
-# Thumbnails
+# thumbnails
 ._*
  
-# Files that might appear on external disk
+# files that might appear on external disk
 .Spotlight-V100
 .Trashes
  
  
-######################
-# Eclipse
-######################
- 
+# eclipse
 *.pydevproject
 .project
 .metadata
@@ -99,10 +87,11 @@ local.properties
 .settings/
 .loadpath
 /src/main/resources/rebel.xml
-# External tool builders
+
+# external tool builders
 .externalToolBuilders/
  
-# Locally stored "Eclipse launch configurations"
+# locally stored "Eclipse launch configurations"
 *.launch
  
 # CDT-specific

@@ -2,13 +2,20 @@ package org.openslat.model.im;
 
 import org.openslat.interfaces.DifferentiableFunction;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * Session Bean implementation class IMR
  */
+@JsonSerialize
 public class IMR {
 	
+	@JsonProperty
 	private String imRName;
+	@JsonProperty
 	private double epistemicWeight = 1;
+	@JsonProperty
 	private DifferentiableFunction model;
 
 	/**
