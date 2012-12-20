@@ -3,6 +3,10 @@
  */
 package org.openslat.options;
 
+/**
+ * @author alan
+ * 
+ */
 public class CorrelationOptions {
 
 	private int COR_LDS = 0;

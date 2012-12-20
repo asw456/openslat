@@ -1,7 +1,11 @@
 package org.openslat.models.univariate;
 
 import org.openslat.interfaces.DifferentiableFunction;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.lang.Math;
+
 /**
  * Represents the Aslani model
  * 
@@ -14,8 +18,8 @@ import java.lang.Math;
  * 
  * @author James Williams
  */
+@JsonSerialize
 public class AslaniModel implements DifferentiableFunction {
-	private static final String NAME = "Aslani model";
 	private double a;
 	private double b;
 	private double c;
@@ -78,9 +82,5 @@ public class AslaniModel implements DifferentiableFunction {
 	public String toString() {
 		return "Aslani model y(x) = a*(b^x)*(x^c) with parameters a = "
 				+ this.a + " and b = " + this.b + " and c = " + this.c;
-	}
-
-	public static String getName() {
-		return NAME;
 	}
 }

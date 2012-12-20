@@ -11,7 +11,7 @@ import org.openslat.numerical.LNConverter;
  * Combines two continuous parametric models into a distribution model with mean
  * and standard deviation.
  * 
- * @author James Williams
+ * @author Alan Williams
  */
 public class LogNormalModel implements DistributionFunction {
 

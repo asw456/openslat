@@ -5,7 +5,7 @@ import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
 import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
 import org.apache.commons.math3.distribution.LogNormalDistribution;
 import org.openslat.calculators.multiplecomponents.LossIM;
-import org.openslat.control.CalculationOptions;
+import org.openslat.options.CalculationOptions;
 
 /**
  * @author alan
@@ -86,7 +86,7 @@ public class LossR {
 			gLIM = 1-probLIMNC;
 		}
 
-		double lossRi = (1/Math.pow(t,2))*gLIM*calculationOptions.getStructure().getIm().getImr().derivative(im);
+		double lossRi = (1/Math.pow(t,2))*gLIM*calculationOptions.getStructure().getIm().retrieveImr().derivative(im);
 		return lossRi;
 	}
 

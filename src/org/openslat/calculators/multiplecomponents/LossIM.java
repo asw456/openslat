@@ -3,8 +3,8 @@ package org.openslat.calculators.multiplecomponents;
 import java.util.ArrayList;
 import org.openslat.calculators.collapse.LossCollapse;
 import org.openslat.calculators.component.LossIMNC;
-import org.openslat.control.CalculationOptions;
 import org.openslat.model.structure.Component;
+import org.openslat.options.CalculationOptions;
 
 /**
  * @author alan

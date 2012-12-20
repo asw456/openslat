@@ -1,7 +1,8 @@
 package org.openslat.model.edp;
 
 import java.util.ArrayList;
-import org.openslat.control.CalculationOptions;
+
+import org.openslat.options.CalculationOptions;
 
 public class EDP {
 

@@ -42,7 +42,7 @@ public class EDPR {
 									.cumulativeProbability(1 / t - 1)) + pc
 							.getPcim().getDistribution()
 							.cumulativeProbability(1 / t - 1))
-							* Math.abs(im.getImr().derivative(1 / t - 1))
+							* Math.abs(im.retrieveImr().derivative(1 / t - 1))
 							* (-1 / Math.pow(t, 2));
 				}
 			};
@@ -56,7 +56,7 @@ public class EDPR {
 				public double value(double t) {
 					return (edp.getEdpIM().getDistributionFunction()
 							.distribution(1 / t - 1).cumulativeProbability(val))
-							* Math.abs(im.getImr().derivative(1 / t - 1))
+							* Math.abs(im.retrieveImr().derivative(1 / t - 1))
 							* (-1 / Math.pow(t, 2));
 				}
 			}, 0, 1);

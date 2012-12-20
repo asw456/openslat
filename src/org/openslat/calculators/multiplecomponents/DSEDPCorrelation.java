@@ -5,12 +5,12 @@ package org.openslat.calculators.multiplecomponents;
 
 import java.util.HashMap;
 
-import org.openslat.control.CalculationOptions;
 import org.openslat.model.edp.EDP;
 import org.openslat.model.fragilityfunctions.FragilityFunction;
 import org.openslat.model.fragilityfunctions.Material;
 import org.openslat.model.structure.Component;
 import org.openslat.numerical.RNGenerator;
+import org.openslat.options.CalculationOptions;
 
 /**
  * To obtain the CORRELATIONS (DS|EDP) for different components (my description)

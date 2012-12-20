@@ -1,8 +1,8 @@
 package org.openslat.model.fragilityfunctions;
 
 import org.apache.commons.math3.distribution.LogNormalDistribution;
-import org.openslat.control.CalculationOptions;
 import org.openslat.numerical.LNConverter;
+import org.openslat.options.CalculationOptions;
 
 public class DamageState {
 

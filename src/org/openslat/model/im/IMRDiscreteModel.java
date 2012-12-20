@@ -12,6 +12,7 @@ import org.openslat.interfaces.DifferentiableFunction;
  * @author alan
  * 
  */
+
 public class IMRDiscreteModel implements DifferentiableFunction {
 
 	private ArrayList<ArrayList<Double>> inputTable;
@@ -20,8 +21,8 @@ public class IMRDiscreteModel implements DifferentiableFunction {
 	private double minKnot;
 	private double maxKnot;
 	private PolynomialSplineFunction annualFreq;
-	
-	//TODO: deal with out-of-bounds values better
+
+	// TODO: deal with out-of-bounds values better
 
 	public void parseTable(ArrayList<ArrayList<Double>> table) {
 		this.inputTable = table;
@@ -53,7 +54,7 @@ public class IMRDiscreteModel implements DifferentiableFunction {
 		if (x >= minKnot && x <= maxKnot) {
 			return Math.pow(annualFreq.value(Math.log10(x)), 10);
 		}
-		// easy method: return consant 
+		// easy method: return consant
 		if (x < minKnot)
 			return inputTable.get(0).get(1).doubleValue();
 		else

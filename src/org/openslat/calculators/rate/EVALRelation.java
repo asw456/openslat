@@ -100,7 +100,7 @@ public class EVALRelation {
 		double im = 1 / t - 1;
 
 		double eALi = (1 / Math.pow(t, 2)) * lossIM.meanLoss(im)
-				* structure.getIm().getImr().derivative(im);
+				* structure.getIm().retrieveImr().derivative(im);
 		return eALi;
 	}
 
@@ -122,7 +122,7 @@ public class EVALRelation {
 		// TODO: correct brackets?
 		double EALi = (1 / Math.pow(t, 2))
 				* (Math.pow(totalLoss, 2) + varTLossEDP)
-				* structure.getIm().getImr().derivative(im);
+				* structure.getIm().retrieveImr().derivative(im);
 		return EALi;
 	}
 

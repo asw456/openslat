@@ -34,7 +34,7 @@ public class CR {
 			public double value(double t) {
 				return cr.pC.getPcim().getDistribution()
 						.cumulativeProbability(1 / t - 1)
-						* Math.abs(cr.im.getImr().derivative(1 / t - 1))
+						* Math.abs(cr.im.retrieveImr().derivative(1 / t - 1))
 						* (-1 / Math.pow(t, 2));
 			}
 		}, 0, 1);

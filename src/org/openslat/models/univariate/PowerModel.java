@@ -3,7 +3,6 @@ package org.openslat.models.univariate;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.openslat.interfaces.DifferentiableFunction;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
@@ -20,15 +19,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize
 public class PowerModel implements DifferentiableFunction {
 	
-	@JsonProperty
-	private String name = "PowerModel";
-	
-	
-	@JsonProperty
-	private static final String NAME = "Power model";
-	@JsonProperty
 	private double a;
-	@JsonProperty
 	private double b;
 
 	/**
@@ -41,7 +32,7 @@ public class PowerModel implements DifferentiableFunction {
 	 * @param a
 	 * @param b
 	 */
-	public void setPowerModelParams(double[] parameters) {
+	public void constructPowerModel(double[] parameters) {
 		this.a = parameters[0];
 		this.b = parameters[1];
 	}
@@ -56,7 +47,7 @@ public class PowerModel implements DifferentiableFunction {
 	 * @param a
 	 * @param b
 	 */
-	public void setPowerModelParams(double[] x, double[] y) {
+	public void estimatePowerModelParams(double[] x, double[] y) {
 		double[][] logdata = new double[x.length][2];
 		for (int i = 0; i < x.length; i++) {
 			logdata[i][0] = Math.log(x[i]);
@@ -95,10 +86,6 @@ public class PowerModel implements DifferentiableFunction {
 				+ " and b = " + this.b;
 	}
 
-	public static String getName() {
-		return NAME;
-	}
-
 	public double getA() {
 		return a;
 	}
@@ -113,9 +100,5 @@ public class PowerModel implements DifferentiableFunction {
 
 	public void setB(double b) {
 		this.b = b;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 }

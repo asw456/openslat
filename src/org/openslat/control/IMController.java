@@ -3,6 +3,7 @@ package org.openslat.control;
 import org.openslat.model.im.IM;
 import org.openslat.model.im.IMR;
 import org.openslat.models.univariate.PowerModel;
+import org.openslat.options.CalculationOptions;
 
 public class IMController {
 	

@@ -3,10 +3,10 @@ package org.openslat.calculators.collapse;
 import java.util.ArrayList;
 
 import org.openslat.calculators.multiplecomponents.LDSCorrelation;
-import org.openslat.control.CalculationOptions;
 import org.openslat.model.structure.Component;
 import org.openslat.model.structure.PerformanceGroup;
 import org.openslat.numerical.LNConverter;
+import org.openslat.options.CalculationOptions;
 
 public class LossCollapse {
 

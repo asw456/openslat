@@ -2,6 +2,8 @@ package org.openslat.models.univariate;
 
 import org.openslat.interfaces.DifferentiableFunction;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * Represents the hyperbolic model
  * 
@@ -13,8 +15,8 @@ import org.openslat.interfaces.DifferentiableFunction;
  * 
  * @author Alan Williams
  */
+@JsonSerialize
 public class HyperbolicModel implements DifferentiableFunction {
-	private static final String NAME = "Hyperbolic model";
 	private double a;
 	private double b;
 
@@ -79,9 +81,4 @@ public class HyperbolicModel implements DifferentiableFunction {
 		return "hyperbolic model y(x) = a*x/(1-b*x) with parameters a = "
 				+ this.a + " and b = " + this.b;
 	}
-
-	public static String getName() {
-		return NAME;
-	}
-
 }

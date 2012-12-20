@@ -2,8 +2,8 @@ package org.openslat.calculators.collapse;
 
 import java.util.ArrayList;
 
-import org.openslat.control.CalculationOptions;
 import org.openslat.model.im.IM;
+import org.openslat.options.CalculationOptions;
 
 public class PC {
 

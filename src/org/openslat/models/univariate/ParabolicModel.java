@@ -1,6 +1,9 @@
 package org.openslat.models.univariate;
 
 import org.openslat.interfaces.DifferentiableFunction;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.lang.Math;
 
 /**
@@ -15,8 +18,8 @@ import java.lang.Math;
  * 
  * @author Alan Williams
  */
+@JsonSerialize
 public class ParabolicModel implements DifferentiableFunction {
-	private static final String NAME = "Parabolic model";
 	private double a;
 	private double b;
 	private double c;
@@ -79,9 +82,5 @@ public class ParabolicModel implements DifferentiableFunction {
 	public String toString() {
 		return ("parabolic model y(x) = a + b*x + c*x^2 with parameters a = "
 				+ this.a + " and b = " + this.c + " and c = " + this.c);
-	}
-
-	public static String getName() {
-		return NAME;
 	}
 }

@@ -5,12 +5,12 @@ package org.openslat.calculators.multiplecomponents;
 
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
-import org.openslat.control.CalculationOptions;
 import org.openslat.calculators.multiplecomponents.ELijEDPij;
 import org.openslat.model.structure.Component;
 import org.openslat.numerical.LognormalPDF;
 import org.openslat.numerical.LognormalPDFBivariate;
 import org.openslat.numerical.LNConverter;
+import org.openslat.options.CalculationOptions;
 
 /**
  * @author alanslaptop

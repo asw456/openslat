@@ -7,7 +7,7 @@ import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
 import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
 import org.openslat.calculators.multiplecomponents.LossIM;
-import org.openslat.control.CalculationOptions;
+import org.openslat.options.CalculationOptions;
 
 /**
  * @author alan
@@ -102,7 +102,7 @@ public class EVALRelationOld {
 		//lossIM.setCalculationOptions(calculationOptions);
 
 		double eALi = (1 / Math.pow(t, 2)) * lossIM.meanLoss(im)
-				* calculationOptions.getStructure().getIm().getImr().derivative(im);
+				* calculationOptions.getStructure().getIm().retrieveImr().derivative(im);
 		return eALi;
 	}
 	
@@ -126,7 +126,7 @@ public class EVALRelationOld {
 		// TODO: correct brackets?
 		double EALi = (1 / Math.pow(t, 2))
 				* (Math.pow(totalLoss, 2) + varTLossEDP)
-				* calculationOptions.getStructure().getIm().getImr().derivative(im);
+				* calculationOptions.getStructure().getIm().retrieveImr().derivative(im);
 		return EALi;
 	}
 
