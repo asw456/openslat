@@ -5,11 +5,11 @@ Software for estimating the value-at-risk of significant buildings in earthquake
 
 The estimation is based on an existing structural design and a region-specific seismicity model, and is intended for use by insurance analysts or engineers to better understand financial risk.
 
-The core functionality is written in Java and is largely complete. Current work is focussed on providing a web interface and cloud-based calculation engine as the computation can take hours on a fast machine.
+This project is also an experiment in deploying academic code as a web application quickly and with the most flexibility possible.
 
-The technology stack includes a JSON/Javascript based web interface (Meteor) and document store (MongoDB) and an EC2 server for number-crunching linked with RabbitMQ.
+The core functionality is written in Java and is largely complete, and a web interface is the next step. Desired features include a remote computation server, a node.js based webserver, and a JSON document store with asynchronous communication. Currently investigating web frameworks (Meteor? Derby?) and document stores (MongoDB? CouchDB?) and setting up an EC2 computation server linked with RabbitMQ.
 
-Further work will look at GPU parallelizaiton for further speed increases.
+Further work will look at GPU computation on the compute server.
 
 Based on:
 

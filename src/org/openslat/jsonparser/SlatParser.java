@@ -22,6 +22,8 @@ public class SlatParser {
 	public static void main(String[] args) throws JsonGenerationException,
 			JsonMappingException, IOException {
 
+		// Construct and add example IM to Store
+		// =====================================
 		PowerModel pm = new PowerModel();
 		double[] params = {2.2, 2.3};
 		pm.constructPowerModel(params);
@@ -37,26 +39,38 @@ public class SlatParser {
 		iMR.add(imr1);
 		iMR.add(imr2);
 				
-		
 		IM im = new IM();
 		im.setName("happiness");
 		im.setiMR(iMR);
+		// =====================================
 		
-		SlatInputStoreExample g = new SlatInputStoreExample(im);
+		// Construct and add example Structure to Store
+		// =====================================
+		
+		// =====================================
+		
+		
+		// Construct and add example CalculationOptions to Store
+		// =====================================
+		
+		// =====================================
+		
+		
+		SlatInputStore g = new SlatInputStore(im,null,null);
 		ObjectMapper objm = new ObjectMapper();
 		StringWriter sw = new StringWriter();
 		objm.writeValue(sw, g);
 		System.out.println(sw.toString());
 
-		 SlatInputStoreExample c = objm
-		 .readValue(
-		 "{\"im\":{\"name\":\"happiness\",\"iMR\":[{\"imRName\":\"imr1\",\"epistemicWeight\":1.0,\"model\":{\"type\":\"PowerModel\",\"a\":2.2,\"b\":2.3}},{\"imRName\":\"imr2\",\"epistemicWeight\":1.0,\"model\":{\"type\":\"PowerModel\",\"a\":2.2,\"b\":2.3}}]}}",
-		 SlatInputStoreExample.class);
-		 StringWriter sw2 = new StringWriter();
-		 objm.writeValue(sw2, c);
-		 System.out.println(sw2.toString());
-		 
-		 System.out.println("the IM's name is: " + c.getIm().getName());
+//		 SlatInputStoreExample c = objm
+//		 .readValue(
+//		 "{\"im\":{\"name\":\"happiness\",\"iMR\":[{\"imRName\":\"imr1\",\"epistemicWeight\":1.0,\"model\":{\"type\":\"PowerModel\",\"a\":2.2,\"b\":2.3}},{\"imRName\":\"imr2\",\"epistemicWeight\":1.0,\"model\":{\"type\":\"PowerModel\",\"a\":2.2,\"b\":2.3}}]}}",
+//		 SlatInputStoreExample.class);
+//		 StringWriter sw2 = new StringWriter();
+//		 objm.writeValue(sw2, c);
+//		 System.out.println(sw2.toString());
+//		 
+//		 System.out.println("the IM's name is: " + c.getIm().getName());
 	}
 }
 
