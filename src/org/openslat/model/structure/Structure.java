@@ -1,14 +1,18 @@
 package org.openslat.model.structure;
 
 import java.util.ArrayList;
-import org.openslat.calculators.collapse.LossCollapse;
-import org.openslat.calculators.collapse.PC;
+
+import org.openslat.model.collapse.LossCollapse;
+import org.openslat.model.collapse.PC;
 import org.openslat.model.im.IM;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * @author alan.williams
  * 
  */
+@JsonSerialize
 public class Structure {
 
 	private ArrayList<PerformanceGroup> performanceGroups = new ArrayList<PerformanceGroup>();

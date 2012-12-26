@@ -1,15 +1,12 @@
 package org.openslat.options;
 
-import org.openslat.calculators.multiplecomponents.EDPIMCorrelations;
+//import org.openslat.calculators.multiplecomponents.EDPIMCorrelations;
 import org.openslat.model.fragilityfunctions.EpistemicCorrArrays;
-import org.openslat.model.structure.Structure;
 
 /**
  * Session Bean implementation class CalculationOptions
  */
 public class CalculationOptions {
-
-	private Structure structure;
 
 	private boolean collapse;
 	private boolean collLossType;
@@ -19,18 +16,10 @@ public class CalculationOptions {
 	private CorrelationOptions correlationOptions;
 
 	// is this where this goes?
-	private EDPIMCorrelations edpIMCorrelations;
+	// private EDPIMCorrelations edpIMCorrelations;
 
 	private EpistemicCorrArrays epistemicCorrArrays;
 	private EpistemicLogicTreeValues epistemicLogicTreeValues;
-
-	public Structure getStructure() {
-		return structure;
-	}
-
-	public void setStructure(Structure structure) {
-		this.structure = structure;
-	}
 
 	public boolean isCollapse() {
 		return collapse;
@@ -73,13 +62,13 @@ public class CalculationOptions {
 		this.correlationOptions = correlationOptions;
 	}
 
-	public EDPIMCorrelations getEdpIMCorrelations() {
-		return edpIMCorrelations;
-	}
-
-	public void setEdpIMCorrelations(EDPIMCorrelations edpIMCorrelations) {
-		this.edpIMCorrelations = edpIMCorrelations;
-	}
+	// public EDPIMCorrelations getEdpIMCorrelations() {
+	// return edpIMCorrelations;
+	// }
+	//
+	// public void setEdpIMCorrelations(EDPIMCorrelations edpIMCorrelations) {
+	// this.edpIMCorrelations = edpIMCorrelations;
+	// }
 
 	public EpistemicCorrArrays getEpistemicCorrArrays() {
 		return epistemicCorrArrays;

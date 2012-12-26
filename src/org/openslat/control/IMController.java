@@ -1,19 +1,18 @@
 package org.openslat.control;
 
 import org.openslat.model.im.IM;
-import org.openslat.model.im.IMR;
-import org.openslat.models.univariate.PowerModel;
 import org.openslat.options.CalculationOptions;
 
 public class IMController {
 	
 	private CalculationOptions calculationOptions;
+	private Openslat openslat;
 	
 	public void addIM(String name) {
 		IM im = new IM();
 		im.setCalculationOptions(calculationOptions);
 		im.setName(name);
-		calculationOptions.getStructure().setIm(im);
+		openslat.getStructure().setIm(im);
 	}
 
 	public void addIMRWithPowerModel(String jsonPowerModel) {

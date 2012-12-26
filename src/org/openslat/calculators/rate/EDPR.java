@@ -3,7 +3,7 @@ package org.openslat.calculators.rate;
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
 import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
-import org.openslat.calculators.collapse.PC;
+import org.openslat.model.collapse.PC;
 import org.openslat.model.edp.EDP;
 import org.openslat.model.im.IM;
 
