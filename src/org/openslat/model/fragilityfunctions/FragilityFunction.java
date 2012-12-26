@@ -8,28 +8,35 @@ import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.CholeskyDecomposition;
-import org.openslat.options.CalculationOptions;
+import org.openslat.control.Openslat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * @author alanslaptop
  * 
  */
+@JsonSerialize
 public class FragilityFunction {
+	@JsonIgnore
+	private Openslat openslat;
 
 	private int identifier;
-	private CalculationOptions calculationOptions;
 	private String name;
-
 	private Material material;
 	private ArrayList<DamageState> damageStates = new ArrayList<DamageState>();
 
+	@JsonIgnore
 	private double[] randDSEDP;
+	@JsonIgnore
 	private double[] randLDS;
+	@JsonIgnore
+	private RealMatrix corrMatrixDSEDP; // TODO: json
+	@JsonIgnore
+	private RealMatrix corrMatrixLDS; // TODO: json
 
-	private RealMatrix corrMatrixDSEDP;
-	private RealMatrix corrMatrixLDS;
-
-	//private LossEDPCalculator
+	// private LossEDPCalculator
 	/**
 	 * Method reaches into each DS and sets the mean values from the upper and
 	 * lower limits based on the number of components
@@ -54,7 +61,8 @@ public class FragilityFunction {
 		randDSEDP = new double[damageStates.size()];
 		randLDS = new double[damageStates.size()];
 
-		if (calculationOptions.getCorrelationOptions().getCORE_DSEDP() == 0) {
+		if (openslat.getCalculationOptions().getCorrelationOptions()
+				.getCORE_DSEDP() == 0) {
 			NormalDistribution nd = new NormalDistribution();
 			for (int i = 0; i < damageStates.size(); i = i + 1) {
 				randDSEDP[i] = nd.sample();
@@ -62,7 +70,8 @@ public class FragilityFunction {
 			}
 		}
 
-		if (calculationOptions.getCorrelationOptions().getCORE_DSEDP() == 1) {
+		if (openslat.getCalculationOptions().getCorrelationOptions()
+				.getCORE_DSEDP() == 1) {
 			NormalDistribution nd = new NormalDistribution();
 			double rn = nd.sample();
 			for (int i = 0; i < damageStates.size(); i = i + 1) {
@@ -169,6 +178,14 @@ public class FragilityFunction {
 
 	public void setRandLDS(double[] randLDS) {
 		this.randLDS = randLDS;
+	}
+
+	public Openslat getOpenslat() {
+		return openslat;
+	}
+
+	public void setOpenslat(Openslat openslat) {
+		this.openslat = openslat;
 	}
 
 }

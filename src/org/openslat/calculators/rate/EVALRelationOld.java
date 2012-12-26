@@ -7,7 +7,7 @@ import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
 import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
 import org.openslat.calculators.multiplecomponents.LossIM;
-import org.openslat.options.CalculationOptions;
+import org.openslat.control.Openslat;
 
 /**
  * @author alan
@@ -15,7 +15,7 @@ import org.openslat.options.CalculationOptions;
  */
 public class EVALRelationOld {
 
-	private CalculationOptions calculationOptions;
+	private Openslat openslat;
 	private UnivariateIntegrator integrator = new SimpsonIntegrator();
 	
 	public double meanAnnualLoss() {
@@ -102,7 +102,7 @@ public class EVALRelationOld {
 		//lossIM.setCalculationOptions(calculationOptions);
 
 		double eALi = (1 / Math.pow(t, 2)) * lossIM.meanLoss(im)
-				* calculationOptions.getStructure().getIm().retrieveImr().derivative(im);
+				* openslat.getStructure().getIm().retrieveImr().derivative(im);
 		return eALi;
 	}
 	
@@ -126,16 +126,8 @@ public class EVALRelationOld {
 		// TODO: correct brackets?
 		double EALi = (1 / Math.pow(t, 2))
 				* (Math.pow(totalLoss, 2) + varTLossEDP)
-				* calculationOptions.getStructure().getIm().retrieveImr().derivative(im);
+				* openslat.getStructure().getIm().retrieveImr().derivative(im);
 		return EALi;
-	}
-
-	public CalculationOptions getCalculationOptions() {
-		return calculationOptions;
-	}
-
-	public void setCalculationOptions(CalculationOptions calculationOptions) {
-		this.calculationOptions = calculationOptions;
 	}
 
 	public UnivariateIntegrator getIntegrator() {
@@ -144,6 +136,14 @@ public class EVALRelationOld {
 
 	public void setIntegrator(UnivariateIntegrator integrator) {
 		this.integrator = integrator;
+	}
+
+	public Openslat getOpenslat() {
+		return openslat;
+	}
+
+	public void setOpenslat(Openslat openslat) {
+		this.openslat = openslat;
 	}
 
 }

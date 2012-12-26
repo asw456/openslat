@@ -1,14 +1,18 @@
 package org.openslat.model.fragilityfunctions;
 
 import org.apache.commons.math3.distribution.LogNormalDistribution;
+import org.openslat.control.Openslat;
 import org.openslat.numerical.LNConverter;
-import org.openslat.options.CalculationOptions;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonSerialize
 public class DamageState {
 
 	// TODO: time not yet done. only edp and loss
-
-	private CalculationOptions calculationOptions;
+	@JsonIgnore
+	private Openslat openslat;
 	private double randDSEDP;
 	private double randLDS;
 
@@ -81,13 +85,13 @@ public class DamageState {
 	 * @return
 	 */
 	public double getMeanEDPOnset() {
-		//TODO: should these be the same randDSEDP for both mean and sigma?
-		if (calculationOptions.getEpistemicUncertOptions().isEpistemicUncert()
-				&& calculationOptions.getEpistemicUncertOptions()
+		// TODO: should these be the same randDSEDP for both mean and sigma?
+		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
+				.isEpistemicUncert()
+				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
 						.isEpistemicUncertDSEDP()) {
 			double medianEDPDS = Math.exp(Math.log(meanEDPOnset) - 0.5
-					* Math.pow(sigmaEDPOnset, 2)
-					+ randDSEDP
+					* Math.pow(sigmaEDPOnset, 2) + randDSEDP
 					* epistemicStdDev_Mean_LNedp);
 			sigmaEDPOnset = Math.sqrt((Math.pow(sigmaEDPOnset, 2) + randDSEDP
 					* epistemicStdDev_Var_LNedp));
@@ -105,12 +109,12 @@ public class DamageState {
 	 * @return
 	 */
 	public double getMuEDPOnset() {
-		if (calculationOptions.getEpistemicUncertOptions().isEpistemicUncert()
-				&& calculationOptions.getEpistemicUncertOptions()
+		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
+				.isEpistemicUncert()
+				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
 						.isEpistemicUncertDSEDP()) {
 			double medianEDPDS = Math.exp(Math.log(meanEDPOnset) - 0.5
-					* Math.pow(sigmaEDPOnset, 2)
-					+ randDSEDP
+					* Math.pow(sigmaEDPOnset, 2) + randDSEDP
 					* epistemicStdDev_Mean_LNedp);
 			sigmaEDPOnset = Math.sqrt((Math.pow(sigmaEDPOnset, 2) + randDSEDP
 					* epistemicStdDev_Var_LNedp));
@@ -127,8 +131,9 @@ public class DamageState {
 	 * @return
 	 */
 	public double getSigmaEDPOnset() {
-		if (calculationOptions.getEpistemicUncertOptions().isEpistemicUncert()
-				&& calculationOptions.getEpistemicUncertOptions()
+		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
+				.isEpistemicUncert()
+				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
 						.isEpistemicUncertDSEDP()) {
 			sigmaEDPOnset = Math.sqrt((Math.pow(sigmaEDPOnset, 2) + randDSEDP
 					* epistemicStdDev_Var_LNedp));
@@ -154,12 +159,12 @@ public class DamageState {
 	 * @return
 	 */
 	public double getMeanLoss() {
-		if (calculationOptions.getEpistemicUncertOptions().isEpistemicUncert()
-				&& calculationOptions.getEpistemicUncertOptions()
+		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
+				.isEpistemicUncert()
+				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
 						.isEpistemicUncertLDS()) {
 			double medianEDPDS = Math.exp(Math.log(meanLoss) - 0.5
-					* Math.pow(sigmaLoss, 2)
-					+ randLDS
+					* Math.pow(sigmaLoss, 2) + randLDS
 					* epistemicStdDev_Mean_LNloss);
 			sigmaLoss = Math.sqrt((Math.pow(sigmaLoss, 2) + randDSEDP
 					* epistemicStdDev_Var_LNloss));
@@ -178,12 +183,12 @@ public class DamageState {
 	 * @return
 	 */
 	public double getMuLoss() {
-		if (calculationOptions.getEpistemicUncertOptions().isEpistemicUncert()
-				&& calculationOptions.getEpistemicUncertOptions()
+		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
+				.isEpistemicUncert()
+				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
 						.isEpistemicUncertLDS()) {
 			double medianEDPDS = Math.exp(Math.log(meanLoss) - 0.5
-					* Math.pow(sigmaLoss, 2)
-					+ randLDS
+					* Math.pow(sigmaLoss, 2) + randLDS
 					* epistemicStdDev_Mean_LNloss);
 			sigmaLoss = Math.sqrt((Math.pow(sigmaLoss, 2) + randLDS
 					* epistemicStdDev_Var_LNloss));
@@ -201,8 +206,9 @@ public class DamageState {
 	 * @return
 	 */
 	public double getSigmaLoss() {
-		if (calculationOptions.getEpistemicUncertOptions().isEpistemicUncert()
-				&& calculationOptions.getEpistemicUncertOptions()
+		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
+				.isEpistemicUncert()
+				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
 						.isEpistemicUncertLDS()) {
 			sigmaLoss = Math.sqrt((Math.pow(sigmaLoss, 2) + randLDS
 					* epistemicStdDev_Var_LNloss));
@@ -229,12 +235,12 @@ public class DamageState {
 	 * @return
 	 */
 	public double getMeanTime() {
-		if (calculationOptions.getEpistemicUncertOptions().isEpistemicUncert()
-				&& calculationOptions.getEpistemicUncertOptions()
+		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
+				.isEpistemicUncert()
+				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
 						.isEpistemicUncertLDS()) {
 			double medianEDPDS = Math.exp(Math.log(meanTime) - 0.5
-					* Math.pow(sigmaTime, 2)
-					+ randLDS
+					* Math.pow(sigmaTime, 2) + randLDS
 					* epistemicStdDev_Mean_LNtime);
 			sigmaTime = Math.sqrt((Math.pow(sigmaTime, 2) + randLDS
 					* epistemicStdDev_Var_LNtime));
@@ -253,12 +259,12 @@ public class DamageState {
 	 * @return
 	 */
 	public double getMuTime() {
-		if (calculationOptions.getEpistemicUncertOptions().isEpistemicUncert()
-				&& calculationOptions.getEpistemicUncertOptions()
+		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
+				.isEpistemicUncert()
+				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
 						.isEpistemicUncertLDS()) {
 			double medianEDPDS = Math.exp(Math.log(meanTime) - 0.5
-					* Math.pow(sigmaTime, 2)
-					+ randLDS
+					* Math.pow(sigmaTime, 2) + randLDS
 					* epistemicStdDev_Mean_LNtime);
 			sigmaTime = Math.sqrt((Math.pow(sigmaTime, 2) + randLDS
 					* epistemicStdDev_Var_LNtime));
@@ -276,8 +282,9 @@ public class DamageState {
 	 * @return
 	 */
 	public double getSigmaTime() {
-		if (calculationOptions.getEpistemicUncertOptions().isEpistemicUncert()
-				&& calculationOptions.getEpistemicUncertOptions()
+		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
+				.isEpistemicUncert()
+				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
 						.isEpistemicUncertLDS()) {
 			sigmaTime = Math.sqrt((Math.pow(sigmaTime, 2) + randLDS
 					* epistemicStdDev_Var_LNtime));
@@ -285,14 +292,6 @@ public class DamageState {
 		}
 
 		return sigmaTime;
-	}
-
-	public CalculationOptions getCalculationOptions() {
-		return calculationOptions;
-	}
-
-	public void setCalculationOptions(CalculationOptions calculationOptions) {
-		this.calculationOptions = calculationOptions;
 	}
 
 	public double getRandDSEDP() {
@@ -347,7 +346,8 @@ public class DamageState {
 		return numberComponentsUpperLimitLoss;
 	}
 
-	public void setNumberComponentsUpperLimitLoss(int numberComponentsUpperLimitLoss) {
+	public void setNumberComponentsUpperLimitLoss(
+			int numberComponentsUpperLimitLoss) {
 		this.numberComponentsUpperLimitLoss = numberComponentsUpperLimitLoss;
 	}
 
@@ -355,7 +355,8 @@ public class DamageState {
 		return numberComponentsLowerLimitLoss;
 	}
 
-	public void setNumberComponentsLowerLimitLoss(int numberComponentsLowerLimitLoss) {
+	public void setNumberComponentsLowerLimitLoss(
+			int numberComponentsLowerLimitLoss) {
 		this.numberComponentsLowerLimitLoss = numberComponentsLowerLimitLoss;
 	}
 
@@ -363,7 +364,8 @@ public class DamageState {
 		return epistemicStdDev_Mean_LNloss;
 	}
 
-	public void setEpistemicStdDev_Mean_LNloss(double epistemicStdDev_Mean_LNloss) {
+	public void setEpistemicStdDev_Mean_LNloss(
+			double epistemicStdDev_Mean_LNloss) {
 		this.epistemicStdDev_Mean_LNloss = epistemicStdDev_Mean_LNloss;
 	}
 
@@ -395,7 +397,8 @@ public class DamageState {
 		return numberComponentsUpperLimitTime;
 	}
 
-	public void setNumberComponentsUpperLimitTime(int numberComponentsUpperLimitTime) {
+	public void setNumberComponentsUpperLimitTime(
+			int numberComponentsUpperLimitTime) {
 		this.numberComponentsUpperLimitTime = numberComponentsUpperLimitTime;
 	}
 
@@ -403,7 +406,8 @@ public class DamageState {
 		return numberComponentsLowerLimitTime;
 	}
 
-	public void setNumberComponentsLowerLimitTime(int numberComponentsLowerLimitTime) {
+	public void setNumberComponentsLowerLimitTime(
+			int numberComponentsLowerLimitTime) {
 		this.numberComponentsLowerLimitTime = numberComponentsLowerLimitTime;
 	}
 
@@ -411,7 +415,8 @@ public class DamageState {
 		return epistemicStdDev_Mean_LNtime;
 	}
 
-	public void setEpistemicStdDev_Mean_LNtime(double epistemicStdDev_Mean_LNtime) {
+	public void setEpistemicStdDev_Mean_LNtime(
+			double epistemicStdDev_Mean_LNtime) {
 		this.epistemicStdDev_Mean_LNtime = epistemicStdDev_Mean_LNtime;
 	}
 
@@ -445,5 +450,13 @@ public class DamageState {
 
 	public void setSigmaTime(double sigmaTime) {
 		this.sigmaTime = sigmaTime;
+	}
+
+	public Openslat getOpenslat() {
+		return openslat;
+	}
+
+	public void setOpenslat(Openslat openslat) {
+		this.openslat = openslat;
 	}
 }

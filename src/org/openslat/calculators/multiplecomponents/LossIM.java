@@ -2,9 +2,9 @@ package org.openslat.calculators.multiplecomponents;
 
 import java.util.ArrayList;
 import org.openslat.calculators.component.LossIMNC;
+import org.openslat.control.Openslat;
 import org.openslat.model.collapse.LossCollapse;
 import org.openslat.model.structure.Component;
-import org.openslat.options.CalculationOptions;
 
 /**
  * @author alan
@@ -12,12 +12,12 @@ import org.openslat.options.CalculationOptions;
  */
 public class LossIM {
 
-	private CalculationOptions calculationOptions;
+	private Openslat openslat;
 	private LossIMNC lossIMNC;
 	private COVLkLmIM covLkLmIM;
 
 	public double meanLoss(double im) {
-		ArrayList<Component> components = calculationOptions.getStructure()
+		ArrayList<Component> components = openslat.getStructure()
 				.getComponents();
 
 		// compute mean loss (no collapse)
@@ -29,22 +29,22 @@ public class LossIM {
 
 		// COMPUTE LOSS taking col/no col into account
 		double probCollapse;
-		if (calculationOptions.isCollapse()) {
-			probCollapse = calculationOptions.getStructure().getPc().getPcim()
+		if (openslat.getCalculationOptions().isCollapse()) {
+			probCollapse = openslat.getStructure().getPc().getPcim()
 					.probability(im);
 		} else {
 			probCollapse = 0;
 		}
 
 		LossCollapse lossCollapse = new LossCollapse();
-		lossCollapse.setCalculationOptions(calculationOptions);
+		lossCollapse.setOpenslat(openslat);
 		lossC = lossCollapse.meanLoss();
 		double totalLoss = lossNC * (1 - probCollapse) + lossC * (probCollapse);
 		return totalLoss;
 	}
 
 	public double meanLossNC(double im) {
-		ArrayList<Component> components = calculationOptions.getStructure()
+		ArrayList<Component> components = openslat.getStructure()
 				.getComponents();
 
 		// compute mean loss (no collapse)
@@ -58,14 +58,14 @@ public class LossIM {
 		probCollapse = 0;
 
 		LossCollapse lossCollapse = new LossCollapse();
-		lossCollapse.setCalculationOptions(calculationOptions);
+		lossCollapse.setOpenslat(openslat);
 		lossC = lossCollapse.meanLoss();
 		double totalLoss = lossNC * (1 - probCollapse) + lossC * (probCollapse);
 		return totalLoss;
 	}
 
 	public double sigmaLoss(double im) {
-		ArrayList<Component> components = calculationOptions.getStructure()
+		ArrayList<Component> components = openslat.getStructure()
 				.getComponents();
 		// TODO: return sigma (as coded...?) or variance?
 
@@ -97,15 +97,15 @@ public class LossIM {
 
 		// COMPUTE LOSS taking col/no col into account
 		double probCollapse;
-		if (calculationOptions.isCollapse()) {
-			probCollapse = calculationOptions.getStructure().getPc().getPcim()
+		if (openslat.getCalculationOptions().isCollapse()) {
+			probCollapse = openslat.getStructure().getPc().getPcim()
 					.probability(im);
 		} else {
 			probCollapse = 0;
 		}
 
 		LossCollapse lossCollapse = new LossCollapse();
-		lossCollapse.setCalculationOptions(calculationOptions);
+		lossCollapse.setOpenslat(openslat);
 		lossC = lossCollapse.meanLoss();
 		double totalLoss = lossNC * (1 - probCollapse) + lossC * (probCollapse);
 
@@ -123,5 +123,29 @@ public class LossIM {
 		double sigmaTotalLoss = Math.sqrt(Math.log(varTotalLoss
 				/ Math.pow(totalLoss, 2) + 1.0));
 		return sigmaTotalLoss;
+	}
+
+	public Openslat getOpenslat() {
+		return openslat;
+	}
+
+	public void setOpenslat(Openslat openslat) {
+		this.openslat = openslat;
+	}
+
+	public LossIMNC getLossIMNC() {
+		return lossIMNC;
+	}
+
+	public void setLossIMNC(LossIMNC lossIMNC) {
+		this.lossIMNC = lossIMNC;
+	}
+
+	public COVLkLmIM getCovLkLmIM() {
+		return covLkLmIM;
+	}
+
+	public void setCovLkLmIM(COVLkLmIM covLkLmIM) {
+		this.covLkLmIM = covLkLmIM;
 	}
 }

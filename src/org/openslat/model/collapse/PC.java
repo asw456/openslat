@@ -1,11 +1,14 @@
 package org.openslat.model.collapse;
 
 import java.util.ArrayList;
-import org.openslat.options.CalculationOptions;
+import org.openslat.control.Openslat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+@JsonSerialize
 public class PC {
-
-	private CalculationOptions calculationOptions;
+	@JsonIgnore
+	private Openslat openslat;
 	private ArrayList<PCIM> pcim = new ArrayList<PCIM>();
 
 	/**
@@ -21,8 +24,8 @@ public class PC {
 		} else if (pcim.size() == 1) {
 			return pcim.get(0);
 		} else {
-			double rn = calculationOptions.getEpistemicLogicTreeValues()
-					.getRandPCIM();
+			double rn = openslat.getCalculationOptions()
+					.getEpistemicLogicTreeValues().getRandPCIM();
 			ArrayList<Double> epistemicWeights = new ArrayList<Double>();
 			double total = 0;
 			for (PCIM each : pcim) {
@@ -58,11 +61,15 @@ public class PC {
 		return this.pcim.remove(pcim);
 	}
 
-	public CalculationOptions getCalculationOptions() {
-		return calculationOptions;
+	public Openslat getOpenslat() {
+		return openslat;
 	}
 
-	public void setCalculationOptions(CalculationOptions calculationOptions) {
-		this.calculationOptions = calculationOptions;
+	public void setOpenslat(Openslat openslat) {
+		this.openslat = openslat;
+	}
+
+	public void setPcim(ArrayList<PCIM> pcim) {
+		this.pcim = pcim;
 	}
 }

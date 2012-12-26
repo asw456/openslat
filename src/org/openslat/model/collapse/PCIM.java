@@ -7,6 +7,8 @@ import org.apache.commons.math3.distribution.LogNormalDistribution;
 import org.openslat.numerical.FitLogNormalDistribution;
 import org.openslat.numerical.LNConverter;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * Probability of Collapse given IM Relationship. Class for the prob of collapse
  * given IM. Represented by a log-normal distribution (moment-based analytical
@@ -17,24 +19,26 @@ import org.openslat.numerical.LNConverter;
  * @author Alan Williams
  * 
  */
+@JsonSerialize
 public class PCIM {
 
 	private LogNormalDistribution distribution;
 	private Double epistemicWeight;
 
-	public double probability(double im){
+	public double probability(double im) {
 		return distribution.cumulativeProbability(im);
 	}
-	
+
 	public void setDistribution(double mean, double sigma) {
 		distribution = new LogNormalDistribution(LNConverter.muGivenMeanSigma(
 				mean, sigma), sigma);
 	}
 
-	public void setDistribution(double[] imValues){
-		this.distribution = FitLogNormalDistribution.calculateLogNormalParameters(imValues);
+	public void setDistribution(double[] imValues) {
+		this.distribution = FitLogNormalDistribution
+				.calculateLogNormalParameters(imValues);
 	}
-	
+
 	public LogNormalDistribution getDistribution() {
 		return distribution;
 	}
