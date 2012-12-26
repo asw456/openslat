@@ -3,10 +3,13 @@
  */
 package org.openslat.options;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * @author alan
  * 
  */
+@JsonSerialize
 public class CorrelationOptions {
 
 	private int COR_LDS = 0;

@@ -6,6 +6,7 @@ import org.openslat.model.collapse.LossCollapse;
 import org.openslat.model.collapse.PC;
 import org.openslat.model.im.IM;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
@@ -18,8 +19,9 @@ public class Structure {
 	private ArrayList<PerformanceGroup> performanceGroups = new ArrayList<PerformanceGroup>();
 	private LossCollapse lossCollapse;
 	private PC pc;
-	private IM im = new IM();
+	private IM im;
 
+	@JsonIgnore
 	public ArrayList<Component> getComponents() {
 		ArrayList<Component> components = new ArrayList<Component>();
 		for (PerformanceGroup pg : this.getPerformanceGroups()) {

@@ -1,5 +1,8 @@
 package org.openslat.options;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonSerialize
 public class EpistemicUncertOptions {
 
 	private boolean epistemicUncert = false;
@@ -8,7 +11,7 @@ public class EpistemicUncertOptions {
 	private boolean epistemicUncertDSEDP = false;
 	private boolean epistemicUncertLDS = false;
 
-	// used in 
+	// used in
 	private boolean epistemicUncertDSEDPCorrelations = false;
 	private boolean epistemicUncertLDSCorrelations = false;
 

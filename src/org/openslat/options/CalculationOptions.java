@@ -3,9 +3,13 @@ package org.openslat.options;
 //import org.openslat.calculators.multiplecomponents.EDPIMCorrelations;
 import org.openslat.model.fragilityfunctions.EpistemicCorrArrays;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * Session Bean implementation class CalculationOptions
  */
+@JsonSerialize
 public class CalculationOptions {
 
 	private boolean collapse;
@@ -18,7 +22,9 @@ public class CalculationOptions {
 	// is this where this goes?
 	// private EDPIMCorrelations edpIMCorrelations;
 
+	@JsonIgnore
 	private EpistemicCorrArrays epistemicCorrArrays;
+	@JsonIgnore
 	private EpistemicLogicTreeValues epistemicLogicTreeValues;
 
 	public boolean isCollapse() {

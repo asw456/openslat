@@ -6,10 +6,13 @@ package org.openslat.model.structure;
 import org.openslat.model.edp.EDP;
 import org.openslat.model.fragilityfunctions.FragilityFunction;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * @author alan
  * 
  */
+@JsonSerialize
 public class Component {
 
 	private FragilityFunction ff;

@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 import org.openslat.model.im.IM;
 import org.openslat.model.im.IMR;
+import org.openslat.model.structure.Component;
+import org.openslat.model.structure.PerformanceGroup;
+import org.openslat.model.structure.Structure;
 import org.openslat.models.univariate.PowerModel;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -23,8 +26,7 @@ public class SlatParserTest {
 	public static void main(String[] args) throws JsonGenerationException,
 			JsonMappingException, IOException {
 
-		// Construct and add example IM to Store
-		// =====================================
+		// Construct an IM
 		PowerModel pm = new PowerModel();
 		double[] params = { 2.2, 2.3 };
 		pm.constructPowerModel(params);
@@ -46,25 +48,36 @@ public class SlatParserTest {
 		// =====================================
 
 		// Construct and add example Structure to Store
-		// =====================================
+		Structure structure = new Structure();
+		structure.setIm(im);
+		structure.setPc(null);
+		structure.setLossCollapse(null);
 
+		PerformanceGroup pg = new PerformanceGroup();
+		pg.setName("performanceGroupName");
+		pg.setComponents(new ArrayList<Component>());
+		Component component = new Component();
+		component.setFf(null);
+		component.setEdp(null);
+		pg.addComponent(component);
+		
+		structure.addPerformanceGroup(pg);
 		// =====================================
 
 		// Construct and add example CalculationOptions to Store
+		// null ;)
 		// =====================================
 
-		// =====================================
-
-		SlatInputStore g = new SlatInputStore(null, null);
+		SlatInputStore g = new SlatInputStore(structure, null);
 		ObjectMapper objm = new ObjectMapper();
 		StringWriter sw = new StringWriter();
 		objm.writeValue(sw, g);
 		System.out.println(sw.toString());
-		
-		String myJsonString = "{\"im\":{\"name\":\"happiness\",\"iMR\":[{\"imRName\":\"imr1\",\"epistemicWeight\":1.0,\"model\":{\"type\":\"PowerModel\",\"a\":2.2,\"b\":2.3}},{\"imRName\":\"imr2\",\"epistemicWeight\":1.0,\"model\":{\"type\":\"PowerModel\",\"a\":2.2,\"b\":2.3}}]}}";
-		SlatParser parser = new SlatParser(); 
-		parser.parseInputJsonString(myJsonString);
+
+		// String myJsonString =
+		// "{\"im\":{\"name\":\"happiness\",\"iMR\":[{\"imRName\":\"imr1\",\"epistemicWeight\":1.0,\"model\":{\"type\":\"PowerModel\",\"a\":2.2,\"b\":2.3}},{\"imRName\":\"imr2\",\"epistemicWeight\":1.0,\"model\":{\"type\":\"PowerModel\",\"a\":2.2,\"b\":2.3}}]}}";
+		// SlatParser parser = new SlatParser();
+		// parser.parseInputJsonString(myJsonString);
 	}
 
-	
 }

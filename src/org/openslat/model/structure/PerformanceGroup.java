@@ -2,6 +2,9 @@ package org.openslat.model.structure;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonSerialize
 public class PerformanceGroup {
 
 	private ArrayList<Component> components = new ArrayList<Component>();
@@ -9,7 +12,7 @@ public class PerformanceGroup {
 
 	public void setNumberOfComponents() {
 		for (Component each : components) {
-			each.getFf().setMeans(components.size());
+			//each.getFf().setMeans(components.size());
 		}
 	}
 
@@ -32,6 +35,10 @@ public class PerformanceGroup {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setComponents(ArrayList<Component> components) {
+		this.components = components;
 	}
 
 }
