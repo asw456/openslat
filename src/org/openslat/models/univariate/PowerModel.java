@@ -19,8 +19,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize
 public class PowerModel implements DifferentiableFunction {
 	
-	private double a;
-	private double b;
+	private double[] parameters;
 
 	/**
 	 * sets the power model parameters directly
@@ -30,11 +29,10 @@ public class PowerModel implements DifferentiableFunction {
 	 * from a specified set of parameters <code>[a b]</code>.
 	 * 
 	 * @param a
-	 * @param b
+	 * @param parameters[1]
 	 */
 	public void constructPowerModel(double[] parameters) {
-		this.a = parameters[0];
-		this.b = parameters[1];
+		this.parameters = parameters;
 	}
 
 	/**
@@ -45,7 +43,7 @@ public class PowerModel implements DifferentiableFunction {
 	 * by regression from two <code>double[]</code> arrays
 	 * 
 	 * @param a
-	 * @param b
+	 * @param parameters[1]
 	 */
 	public void estimatePowerModelParams(double[] x, double[] y) {
 		double[][] logdata = new double[x.length][2];
@@ -55,8 +53,8 @@ public class PowerModel implements DifferentiableFunction {
 		}
 		SimpleRegression regressor = new SimpleRegression();
 		regressor.addData(logdata);
-		this.a = Math.exp(regressor.getIntercept());
-		this.b = regressor.getSlope();
+		this.parameters[0] = Math.exp(regressor.getIntercept());
+		this.parameters[1] = regressor.getSlope();
 	}
 
 	/**
@@ -67,7 +65,7 @@ public class PowerModel implements DifferentiableFunction {
 	 * @return output value
 	 */
 	public double value(double x) {
-		return a * Math.pow(x, b);
+		return parameters[0] * Math.pow(x, parameters[1]);
 	}
 
 	/**
@@ -78,27 +76,19 @@ public class PowerModel implements DifferentiableFunction {
 	 * @return output value
 	 */
 	public double derivative(double x) {
-		return a * b * Math.pow(x, b - 1);
+		return parameters[0] * parameters[1] * Math.pow(x, parameters[1] - 1);
 	}
 
 	public String toString() {
-		return "power model y(x) = a*x^b with parameters a = " + this.a
-				+ " and b = " + this.b;
+		return "power model y(x) = a*x^b with parameters a = " + this.parameters[0]
+				+ " and b = " + this.parameters[1];
 	}
 
-	public double getA() {
-		return a;
+	public double[] getParameters() {
+		return parameters;
 	}
 
-	public void setA(double a) {
-		this.a = a;
-	}
-
-	public double getB() {
-		return b;
-	}
-
-	public void setB(double b) {
-		this.b = b;
+	public void setParameters(double[] parameters) {
+		this.parameters = parameters;
 	}
 }

@@ -51,13 +51,13 @@ public class ELijEDPij {
 				// .get(j).getSigmaEDPOnset(), 2) - 1.0));
 				muLEDPij = muLEDPij
 						+ (componenti.getFf().getDamageStates().get(i)
-								.getMeanLoss()
+								.calcMeanLoss()
 								* componentj.getFf().getDamageStates().get(j)
-										.getMeanLoss() + corr_Lossij_DS
+										.calcMeanLoss() + corr_Lossij_DS
 								* componenti.getFf().getDamageStates().get(i)
-										.getMeanLoss()
+										.calcMeanLoss()
 								* componentj.getFf().getDamageStates().get(j)
-										.getMeanLoss() * pDSEDP[i][j]);
+										.calcMeanLoss() * pDSEDP[i][j]);
 
 			}
 		}
@@ -81,10 +81,10 @@ public class ELijEDPij {
 			for (DamageState dsj : componentj.getFf().getDamageStates()) {
 				// TODO: test getSigmaEDPOnset should equal
 				// dsi.getLnMeanEDPOnset().getStandardDeviation()
-				double zi = (Math.log(edpi) - dsi.getMuEDPOnset())
-						/ dsi.getSigmaEDPOnset();
-				double zj = (Math.log(edpj) - dsj.getMuEDPOnset())
-						/ dsj.getSigmaEDPOnset();
+				double zi = (Math.log(edpi) - dsi.calcMuEDPOnset())
+						/ dsi.calcSigmaEDPOnset();
+				double zj = (Math.log(edpj) - dsj.calcMuEDPOnset())
+						/ dsj.calcSigmaEDPOnset();
 
 				bvnd = new BivariateNormalDistribution(corr_DSij_EDP);
 				CDFArray[i][j] = bvnd.op(zi, zj);

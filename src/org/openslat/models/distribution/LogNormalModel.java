@@ -3,9 +3,11 @@ package org.openslat.models.distribution;
 import java.util.ArrayList;
 
 import org.apache.commons.math3.distribution.LogNormalDistribution;
-import org.apache.commons.math3.analysis.UnivariateFunction;
+import org.openslat.interfaces.DifferentiableFunction;
 import org.openslat.interfaces.DistributionFunction;
 import org.openslat.numerical.LNConverter;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Combines two continuous parametric models into a distribution model with mean
@@ -13,22 +15,11 @@ import org.openslat.numerical.LNConverter;
  * 
  * @author Alan Williams
  */
+@JsonSerialize
 public class LogNormalModel implements DistributionFunction {
 
-	private UnivariateFunction meanModel;
-	private UnivariateFunction stddModel;
-
-	/**
-	 * Constructs the combined model from the two parametric models.
-	 * 
-	 * @param meanModel
-	 * @param stddModel
-	 */
-	public LogNormalModel(UnivariateFunction meanModel,
-			UnivariateFunction stddModel) {
-		this.meanModel = meanModel;
-		this.stddModel = stddModel;
-	}
+	private DifferentiableFunction meanModel;
+	private DifferentiableFunction stddModel;
 
 	/**
 	 * Evaluates the model for a specified input value x.
@@ -37,6 +28,7 @@ public class LogNormalModel implements DistributionFunction {
 	 *            input value
 	 * @return output distribution
 	 */
+	@Override
 	public LogNormalDistribution distribution(double x) {
 		// TODO : Check if this is correct..check 1 passed
 		return new LogNormalDistribution(LNConverter.muGivenMeanSigma(
@@ -47,6 +39,22 @@ public class LogNormalModel implements DistributionFunction {
 	public ArrayList<ArrayList<Double>> getTable() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public DifferentiableFunction getMeanModel() {
+		return meanModel;
+	}
+
+	public void setMeanModel(DifferentiableFunction meanModel) {
+		this.meanModel = meanModel;
+	}
+
+	public DifferentiableFunction getStddModel() {
+		return stddModel;
+	}
+
+	public void setStddModel(DifferentiableFunction stddModel) {
+		this.stddModel = stddModel;
 	}
 
 }

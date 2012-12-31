@@ -65,18 +65,18 @@ public class LossCollapse {
 		LDSCorrelation ldsCorrelation = new LDSCorrelation();
 		for (int k = 0; k < components.size(); ++k) {
 			meanLoss = meanLoss
-					+ components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).getMeanLoss();
+					+ components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).calcMeanLoss();
 			varLoss = varLoss
-					+ LNConverter.variance(components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).getMuLoss(),
-							components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).getSigmaLoss());
+					+ LNConverter.variance(components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).calcMuLoss(),
+							components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).calcSigmaLoss());
 
 			for (int l = 0; l < k; ++l) {
 				varLoss = varLoss
 						+ ldsCorrelation.corr_Lossij_DS(components.get(k),components.get(l))* 
-						Math.sqrt(LNConverter.variance(components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).getMuLoss(),
-								components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).getSigmaLoss())
-								* LNConverter.variance(components.get(l).getFf().getDamageStates().get(components.get(l).getFf().getDamageStates().size() - 1).getMuLoss(),
-										components.get(l).getFf().getDamageStates().get(components.get(l).getFf().getDamageStates().size() - 1).getSigmaLoss()));
+						Math.sqrt(LNConverter.variance(components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).calcMuLoss(),
+								components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).calcSigmaLoss())
+								* LNConverter.variance(components.get(l).getFf().getDamageStates().get(components.get(l).getFf().getDamageStates().size() - 1).calcMuLoss(),
+										components.get(l).getFf().getDamageStates().get(components.get(l).getFf().getDamageStates().size() - 1).calcSigmaLoss()));
 
 			}
 
@@ -121,18 +121,18 @@ public class LossCollapse {
 		LDSCorrelation ldsCorrelation = new LDSCorrelation();
 		for (int k = 0; k < components.size(); ++k) {
 			meanLoss = meanLoss
-					+ components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).getMeanLoss();
+					+ components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).calcMeanLoss();
 			varLoss = varLoss
-					+ LNConverter.variance(components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).getMuLoss(),
-							components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).getSigmaLoss());
+					+ LNConverter.variance(components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).calcMuLoss(),
+							components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).calcSigmaLoss());
 
 			for (int l = 0; l < k; ++l) {
 				varLoss = varLoss
 						+ ldsCorrelation.corr_Lossij_DS(components.get(k),components.get(l))* 
-						Math.sqrt(LNConverter.variance(components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).getMuLoss(),
-								components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).getSigmaLoss())
-								* LNConverter.variance(components.get(l).getFf().getDamageStates().get(components.get(l).getFf().getDamageStates().size() - 1).getMuLoss(),
-										components.get(l).getFf().getDamageStates().get(components.get(l).getFf().getDamageStates().size() - 1).getSigmaLoss()));
+						Math.sqrt(LNConverter.variance(components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).calcMuLoss(),
+								components.get(k).getFf().getDamageStates().get(components.get(k).getFf().getDamageStates().size() - 1).calcSigmaLoss())
+								* LNConverter.variance(components.get(l).getFf().getDamageStates().get(components.get(l).getFf().getDamageStates().size() - 1).calcMuLoss(),
+										components.get(l).getFf().getDamageStates().get(components.get(l).getFf().getDamageStates().size() - 1).calcSigmaLoss()));
 
 			}
 

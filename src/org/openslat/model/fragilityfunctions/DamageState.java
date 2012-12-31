@@ -13,34 +13,36 @@ public class DamageState {
 	// TODO: time not yet done. only edp and loss
 	@JsonIgnore
 	private Openslat openslat;
+	@JsonIgnore
 	private double randDSEDP;
+	@JsonIgnore
 	private double randLDS;
 
-	private double meanEDPOnset;
-	private double epistemicStdDev_Mean_LNedp;
+	private double meanEDPOnset = -1;
+	private double epistemicStdDev_Mean_LNedp = -1;
 
-	private double sigmaEDPOnset;
-	private double epistemicStdDev_Var_LNedp;
+	private double sigmaEDPOnset = -1;
+	private double epistemicStdDev_Var_LNedp = -1;
 
-	private double upperLimitMeanLoss;
-	private double lowerLimitMeanLoss;
-	private int numberComponentsUpperLimitLoss;
-	private int numberComponentsLowerLimitLoss;
-	private double meanLoss;
-	private double epistemicStdDev_Mean_LNloss;
+	private double upperLimitMeanLoss = -1;
+	private double lowerLimitMeanLoss = -1;
+	private int numberComponentsUpperLimitLoss = -1;
+	private int numberComponentsLowerLimitLoss = -1;
+	private double meanLoss = -1;
+	private double epistemicStdDev_Mean_LNloss = -1;
 
-	private double sigmaLoss;
-	private double epistemicStdDev_Var_LNloss;
+	private double sigmaLoss = -1;
+	private double epistemicStdDev_Var_LNloss = -1;
 
-	private double upperLimitMeanTime;
-	private double lowerLimitMeanTime;
-	private int numberComponentsUpperLimitTime;
-	private int numberComponentsLowerLimitTime;
-	private double meanTime;
-	private double epistemicStdDev_Mean_LNtime;
+	private double upperLimitMeanTime = -1;
+	private double lowerLimitMeanTime = -1;
+	private int numberComponentsUpperLimitTime = -1;
+	private int numberComponentsLowerLimitTime = -1;
+	private double meanTime = -1;
+	private double epistemicStdDev_Mean_LNtime = -1;
 
-	private double sigmaTime;
-	private double epistemicStdDev_Var_LNtime;
+	private double sigmaTime = -1;
+	private double epistemicStdDev_Var_LNtime = -1;
 
 	public void setMeans(int numberOfComponents) {
 
@@ -74,8 +76,8 @@ public class DamageState {
 	 * 
 	 * @return
 	 */
-	public LogNormalDistribution getEDPOnset() {
-		return new LogNormalDistribution(getMuEDPOnset(), getSigmaEDPOnset());
+	public LogNormalDistribution calcEDPOnset() {
+		return new LogNormalDistribution(calcMuEDPOnset(), calcSigmaEDPOnset());
 	}
 
 	/**
@@ -84,7 +86,7 @@ public class DamageState {
 	 * 
 	 * @return
 	 */
-	public double getMeanEDPOnset() {
+	public double calcMeanEDPOnset() {
 		// TODO: should these be the same randDSEDP for both mean and sigma?
 		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
 				.isEpistemicUncert()
@@ -108,7 +110,7 @@ public class DamageState {
 	 * 
 	 * @return
 	 */
-	public double getMuEDPOnset() {
+	public double calcMuEDPOnset() {
 		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
 				.isEpistemicUncert()
 				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
@@ -130,7 +132,7 @@ public class DamageState {
 	 * 
 	 * @return
 	 */
-	public double getSigmaEDPOnset() {
+	public double calcSigmaEDPOnset() {
 		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
 				.isEpistemicUncert()
 				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
@@ -148,8 +150,8 @@ public class DamageState {
 	 * 
 	 * @return
 	 */
-	public LogNormalDistribution getLoss() {
-		return new LogNormalDistribution(getMuLoss(), getSigmaLoss());
+	public LogNormalDistribution calcLoss() {
+		return new LogNormalDistribution(calcMuLoss(), calcSigmaLoss());
 	}
 
 	/**
@@ -158,7 +160,7 @@ public class DamageState {
 	 * 
 	 * @return
 	 */
-	public double getMeanLoss() {
+	public double calcMeanLoss() {
 		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
 				.isEpistemicUncert()
 				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
@@ -182,7 +184,7 @@ public class DamageState {
 	 * 
 	 * @return
 	 */
-	public double getMuLoss() {
+	public double calcMuLoss() {
 		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
 				.isEpistemicUncert()
 				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
@@ -205,7 +207,7 @@ public class DamageState {
 	 * 
 	 * @return
 	 */
-	public double getSigmaLoss() {
+	public double calcSigmaLoss() {
 		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
 				.isEpistemicUncert()
 				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
@@ -224,8 +226,8 @@ public class DamageState {
 	 * 
 	 * @return
 	 */
-	public LogNormalDistribution getTime() {
-		return new LogNormalDistribution(getMuTime(), getSigmaTime());
+	public LogNormalDistribution calcTime() {
+		return new LogNormalDistribution(calcMuTime(), calcSigmaTime());
 	}
 
 	/**
@@ -234,7 +236,7 @@ public class DamageState {
 	 * 
 	 * @return
 	 */
-	public double getMeanTime() {
+	public double calcMeanTime() {
 		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
 				.isEpistemicUncert()
 				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
@@ -258,7 +260,7 @@ public class DamageState {
 	 * 
 	 * @return
 	 */
-	public double getMuTime() {
+	public double calcMuTime() {
 		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
 				.isEpistemicUncert()
 				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
@@ -281,7 +283,7 @@ public class DamageState {
 	 * 
 	 * @return
 	 */
-	public double getSigmaTime() {
+	public double calcSigmaTime() {
 		if (openslat.getCalculationOptions().getEpistemicUncertOptions()
 				.isEpistemicUncert()
 				&& openslat.getCalculationOptions().getEpistemicUncertOptions()
@@ -458,5 +460,29 @@ public class DamageState {
 
 	public void setOpenslat(Openslat openslat) {
 		this.openslat = openslat;
+	}
+
+	public double getMeanEDPOnset() {
+		return meanEDPOnset;
+	}
+
+	public double getSigmaEDPOnset() {
+		return sigmaEDPOnset;
+	}
+
+	public double getMeanLoss() {
+		return meanLoss;
+	}
+
+	public double getSigmaLoss() {
+		return sigmaLoss;
+	}
+
+	public double getMeanTime() {
+		return meanTime;
+	}
+
+	public double getSigmaTime() {
+		return sigmaTime;
 	}
 }

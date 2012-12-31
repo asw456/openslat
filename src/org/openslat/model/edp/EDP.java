@@ -4,8 +4,13 @@ import java.util.ArrayList;
 
 import org.openslat.options.CalculationOptions;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonSerialize
 public class EDP {
 
+	@JsonIgnore
 	private CalculationOptions calculationOptions;
 	private ArrayList<EDPIM> edpIM = new ArrayList<EDPIM>();
 
@@ -44,5 +49,17 @@ public class EDP {
 
 	public boolean removeEdpIM(EDPIM edpIM) {
 		return this.edpIM.remove(edpIM);
+	}
+
+	public CalculationOptions getCalculationOptions() {
+		return calculationOptions;
+	}
+
+	public void setCalculationOptions(CalculationOptions calculationOptions) {
+		this.calculationOptions = calculationOptions;
+	}
+
+	public void setEdpIM(ArrayList<EDPIM> edpIM) {
+		this.edpIM = edpIM;
 	}
 }

@@ -20,6 +20,5 @@ import java.util.ArrayList;
 		@Type(value = NormalModel.class) })
 public interface DistributionFunction {
 	public RealDistribution distribution(double x);
-
 	public ArrayList<ArrayList<Double>> getTable();
 }

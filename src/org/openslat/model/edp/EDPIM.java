@@ -12,7 +12,7 @@ import org.openslat.interfaces.DistributionFunction;
  * EDPIM can be constructed with a discrete function or a combined parametric
  * function as it returns a distribution instead of a single value.
  * 
- * @author James Williams
+ * @author Alan Williams
  */
 public class EDPIM {
 
@@ -23,7 +23,7 @@ public class EDPIM {
 		this.distributionFunction = model;
 	}
 
-	public void setDistributionFunction(DifferentiableFunction meanModel,
+	public void setDistributionFunctionFromModels(DifferentiableFunction meanModel,
 			DifferentiableFunction stddModel) {
 		this.distributionFunction = new EDPIMParametricModel(meanModel, stddModel);
 	}

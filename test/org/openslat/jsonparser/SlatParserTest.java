@@ -4,11 +4,16 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
+import org.openslat.model.edp.EDP;
+import org.openslat.model.edp.EDPIM;
+import org.openslat.model.fragilityfunctions.DamageState;
+import org.openslat.model.fragilityfunctions.FragilityFunction;
 import org.openslat.model.im.IM;
 import org.openslat.model.im.IMR;
 import org.openslat.model.structure.Component;
 import org.openslat.model.structure.PerformanceGroup;
 import org.openslat.model.structure.Structure;
+import org.openslat.models.distribution.LogNormalModel;
 import org.openslat.models.univariate.PowerModel;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -26,7 +31,7 @@ public class SlatParserTest {
 	public static void main(String[] args) throws JsonGenerationException,
 			JsonMappingException, IOException {
 
-		// Construct an IM
+		// Construct an IM ====================
 		PowerModel pm = new PowerModel();
 		double[] params = { 2.2, 2.3 };
 		pm.constructPowerModel(params);
@@ -47,20 +52,45 @@ public class SlatParserTest {
 		im.setiMR(iMR);
 		// =====================================
 
+		// Construct EDP =======================
+        LogNormalModel lgnmdl = new LogNormalModel();
+        lgnmdl.setMeanModel(pm);
+        lgnmdl.setStddModel(pm);
+        
+        EDPIM edpIm = new EDPIM();
+        edpIm.setDistributionFunction(lgnmdl);
+        
+        EDP edp = new EDP();
+        edp.setEdpIM(new ArrayList<EDPIM>());
+        edp.addEdpIM(edpIm);
+		// =====================================
+
+
+		// Construct FF ========================
+        DamageState ds = new DamageState();
+        FragilityFunction ff = new FragilityFunction();
+        ff.setDamageStates(new ArrayList<DamageState>());
+        ff.getDamageStates().add(ds);
+		// =====================================
+		
+		// Construct component
+		Component component = new Component();
+		component.setFf(ff);
+		component.setEdp(edp);
+		// =====================================
+		
+		// Construct Performance group
+ 		PerformanceGroup pg = new PerformanceGroup();
+		pg.setName("performanceGroupName");
+		pg.setComponents(new ArrayList<Component>());
+		pg.addComponent(component);
+		// =====================================
+		
 		// Construct and add example Structure to Store
 		Structure structure = new Structure();
 		structure.setIm(im);
 		structure.setPc(null);
 		structure.setLossCollapse(null);
-
-		PerformanceGroup pg = new PerformanceGroup();
-		pg.setName("performanceGroupName");
-		pg.setComponents(new ArrayList<Component>());
-		Component component = new Component();
-		component.setFf(null);
-		component.setEdp(null);
-		pg.addComponent(component);
-		
 		structure.addPerformanceGroup(pg);
 		// =====================================
 
