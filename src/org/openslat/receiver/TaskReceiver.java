@@ -1,5 +1,9 @@
-package org.openslat.control;
+package org.openslat.receiver;
 
+import java.io.IOException;
+
+import org.openslat.control.SlatMainController;
+import org.openslat.jsonparser.SlatInputStore;
 import org.openslat.jsonparser.SlatParser;
 
 import com.rabbitmq.client.ConnectionFactory;
@@ -32,20 +36,33 @@ public class TaskReceiver {
 			String message = new String(delivery.getBody());
 
 			System.out.println(" [x] Received '" + message + "'");
-			generateResults(message);
+			// TODO: this used to be a void method, is this OK
+			String results = generateResults(message);
 			System.out.println(" [x] Done");
 
 			channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
 		}
 	}
 
+	private static String generateResults(String inputString) {
 
-	private static void generateResults(String message){
-		
-		SlatParser parser = new SlatParser();
-		
-		
-		
+		SlatInputStore slatInputStore;
+		try {
+			slatInputStore = SlatParser.parseInputJsonString(inputString);
+
+			SlatMainController slatMainController = new SlatMainController();
+			slatMainController.setCalculationOptions(slatInputStore
+					.getCalculationOptions());
+			slatMainController.setStructure(slatInputStore.getStructure());
+
+			// and some magic happens
+			String outputString = slatMainController.generateOutputString();
+
+			return outputString;
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "fail";
+		}
 	}
-
 }

@@ -2,7 +2,7 @@ package org.openslat.model.collapse;
 
 import java.util.ArrayList;
 import org.openslat.calculators.multiplecomponents.LDSCorrelation;
-import org.openslat.control.Openslat;
+import org.openslat.control.SlatMainController;
 import org.openslat.model.structure.Component;
 import org.openslat.model.structure.PerformanceGroup;
 import org.openslat.numerical.LNConverter;
@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class LossCollapse {
 
 	@JsonIgnore
-	private Openslat openslat;
+	private SlatMainController openslat;
 	
 	private double randMeanLoss;
 	private double randSigmaLoss;
@@ -243,11 +243,11 @@ public class LossCollapse {
 		this.randSigmaLoss = randSigmaLoss;
 	}
 
-	public Openslat getOpenslat() {
+	public SlatMainController getOpenslat() {
 		return openslat;
 	}
 
-	public void setOpenslat(Openslat openslat) {
+	public void setOpenslat(SlatMainController openslat) {
 		this.openslat = openslat;
 	}
 

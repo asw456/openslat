@@ -2,7 +2,7 @@ package org.openslat.model.im;
 
 import java.util.ArrayList;
 
-import org.openslat.options.CalculationOptions;
+import org.openslat.control.SlatMainController;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -15,7 +15,7 @@ public class IM {
 
 	private String name = "defaultName";
 	@JsonIgnore
-	private CalculationOptions calculationOptions;
+	private SlatMainController slatMC;
 	private ArrayList<IMR> iMR = new ArrayList<IMR>();
 
 	/**
@@ -30,7 +30,8 @@ public class IM {
 		} else if (iMR.size() == 1) {
 			return iMR.get(0);
 		} else {
-			double rn = calculationOptions.getEpistemicLogicTreeValues().getRandIMR();
+			double rn = slatMC.getCalculationOptions()
+					.getEpistemicLogicTreeValues().getRandIMR();
 			ArrayList<Double> epistemicWeights = new ArrayList<Double>();
 			double total = 0;
 			for (IMR each : iMR) {
@@ -47,14 +48,6 @@ public class IM {
 		return null;
 	}
 
-	public CalculationOptions getCalculationOptions() {
-		return calculationOptions;
-	}
-
-	public void setCalculationOptions(CalculationOptions calculationOptions) {
-		this.calculationOptions = calculationOptions;
-	}
-
 	public ArrayList<IMR> getiMR() {
 		return iMR;
 	}
@@ -69,6 +62,14 @@ public class IM {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public SlatMainController getSlatMC() {
+		return slatMC;
+	}
+
+	public void setSlatMC(SlatMainController slatMC) {
+		this.slatMC = slatMC;
 	}
 
 }

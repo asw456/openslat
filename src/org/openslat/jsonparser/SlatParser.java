@@ -8,8 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SlatParser {
 
-	public void parseInputJsonString(String s) throws JsonParseException,
-			JsonMappingException, IOException {
+	public static SlatInputStore parseInputJsonString(String s)
+			throws JsonParseException, JsonMappingException, IOException {
 
 		ObjectMapper objm = new ObjectMapper();
 		SlatInputStore c = objm.readValue(s, SlatInputStore.class);
@@ -18,8 +18,8 @@ public class SlatParser {
 		objm.writeValue(sw2, c);
 		System.out.println(sw2.toString());
 
-		System.out.println("the IM's name is: " + c.getStructure().getIm().getName());
-
+		System.out.println("the IM's name is: "
+				+ c.getStructure().getIm().getName());
+		return c;
 	}
-
 }

@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize
 public class IMR {
 	
-	private String imRName;
+	private String name;
 	private double epistemicWeight = 1;
 	private DifferentiableFunction model;
 
@@ -37,11 +37,11 @@ public class IMR {
 	}
 	
 	public String getImRName() {
-		return imRName;
+		return name;
 	}
 
 	public void setImRName(String imRName) {
-		this.imRName = imRName;
+		this.name = imRName;
 	}
 
 	public double getEpistemicWeight() {

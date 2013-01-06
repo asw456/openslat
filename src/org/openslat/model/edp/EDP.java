@@ -2,8 +2,7 @@ package org.openslat.model.edp;
 
 import java.util.ArrayList;
 
-import org.openslat.options.CalculationOptions;
-
+import org.openslat.control.SlatMainController;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -11,7 +10,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class EDP {
 
 	@JsonIgnore
-	private CalculationOptions calculationOptions;
+	private SlatMainController slatMC;
 	private ArrayList<EDPIM> edpIM = new ArrayList<EDPIM>();
 
 	/**
@@ -27,7 +26,7 @@ public class EDP {
 		} else if (edpIM.size() == 1) {
 			return edpIM.get(0);
 		} else {
-			double rn = calculationOptions.getEpistemicLogicTreeValues().getRandEDPIM();
+			double rn = slatMC.getCalculationOptions().getEpistemicLogicTreeValues().getRandEDPIM();
 			ArrayList<Double> epistemicWeights = new ArrayList<Double>();
 			double total = 0;
 			for (EDPIM each : edpIM) {
@@ -51,15 +50,15 @@ public class EDP {
 		return this.edpIM.remove(edpIM);
 	}
 
-	public CalculationOptions getCalculationOptions() {
-		return calculationOptions;
-	}
-
-	public void setCalculationOptions(CalculationOptions calculationOptions) {
-		this.calculationOptions = calculationOptions;
-	}
-
 	public void setEdpIM(ArrayList<EDPIM> edpIM) {
 		this.edpIM = edpIM;
+	}
+
+	public SlatMainController getSlatMC() {
+		return slatMC;
+	}
+
+	public void setSlatMC(SlatMainController slatMC) {
+		this.slatMC = slatMC;
 	}
 }

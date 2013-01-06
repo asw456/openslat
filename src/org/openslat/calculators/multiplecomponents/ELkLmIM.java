@@ -6,11 +6,11 @@ package org.openslat.calculators.multiplecomponents;
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
 import org.openslat.calculators.multiplecomponents.ELijEDPij;
+import org.openslat.control.SlatMainController;
 import org.openslat.model.structure.Component;
 import org.openslat.numerical.LognormalPDF;
 import org.openslat.numerical.LognormalPDFBivariate;
 import org.openslat.numerical.LNConverter;
-import org.openslat.options.CalculationOptions;
 
 /**
  * @author alanslaptop
@@ -18,7 +18,7 @@ import org.openslat.options.CalculationOptions;
  */
 public class ELkLmIM {
 
-	private CalculationOptions calculationOptions;
+	private SlatMainController slatMC;
 	private ELijEDPij eLijEDPij = new ELijEDPij();
 	private UnivariateIntegrator integrator;
 	private Component componentk;
@@ -43,7 +43,9 @@ public class ELkLmIM {
 
 		// check for special case in which |COR_EDPIM|=1.0 therefore the
 		// integral reduces to a single one
-		// if (calculationOptions.getCorrelationOptions().getCOR_EDPIM() == 1) {
+		// if
+		// (slatMC.getCalculationOptions().getCorrelationOptions().getCOR_EDPIM()
+		// == 1) {
 		// return innerIntegral(im,0);
 		// }
 
@@ -57,7 +59,7 @@ public class ELkLmIM {
 						return eLkLmIM.innerIntegral(imVal, t);
 					}
 				}, a, b);
-		//TODO: should these be 0 and 1 or a and b
+		// TODO: should these be 0 and 1 or a and b
 
 		return result;
 	}
@@ -84,7 +86,8 @@ public class ELkLmIM {
 			public double value(double t) {
 				// special case - if COR_EDPIM=1 then double integral reduces to
 				// single integral
-				if (calculationOptions.getCorrelationOptions().getCOR_EDPIM() == 1) {
+				if (slatMC.getCalculationOptions().getCorrelationOptions()
+						.getCOR_EDPIM() == 1) {
 					if (tK <= 0) {
 						return 0;
 					} else if (tK >= 1) {
@@ -181,8 +184,8 @@ public class ELkLmIM {
 											.getDistributionFunction()
 											.distribution(imVal)
 											.getNumericalVariance());
-					double rho = calculationOptions.getCorrelationOptions()
-							.getCOR_EDPIM();
+					double rho = slatMC.getCalculationOptions()
+							.getCorrelationOptions().getCOR_EDPIM();
 
 					double fEDPijIM = LognormalPDFBivariate.evaluate(lnMeanX,
 							sigmaX, lnMeanY, sigmaY, rho, edpK, edpM);
@@ -200,15 +203,7 @@ public class ELkLmIM {
 				}
 			}
 		}, a, b);
-		//TODO: should these be 0 and 1 or a and b
-	}
-
-	public CalculationOptions getCalculationOptions() {
-		return calculationOptions;
-	}
-
-	public void setCalculationOptions(CalculationOptions calculationOptions) {
-		this.calculationOptions = calculationOptions;
+		// TODO: should these be 0 and 1 or a and b
 	}
 
 	public UnivariateIntegrator getIntegrator() {

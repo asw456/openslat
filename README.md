@@ -1,9 +1,11 @@
-openslat
+Openslat
 ========
 
-Software for estimating the value-at-risk of significant buildings in earthquake-prone areas. 
+A Java calculation engine for estimating the value-at-risk of significant buildings in earthquake-prone areas.
+The user interface is an HTML5 web application in this repository https://github.com/statX/openslat-nodejs-one.
+Interfacing with the Java code is done by sending JSON objects to an embedded HTTP server, or through RabbitMQ. 
 
-The estimation is based on an existing structural design and a region-specific seismicity model, and is intended for use by insurance analysts or engineers to better understand financial risk.
+The program is intended for use by insurance analysts or engineers to quickly quantify financial risk. This is estimated by entering the quantity survey for an existing structure, and combining this with a region-specific seismicity model. 
 
 This project is also an experiment in deploying academic code as a web application quickly and with the most flexibility possible.
 

@@ -1,7 +1,7 @@
 package org.openslat.model.fragilityfunctions;
 
 import org.apache.commons.math3.distribution.LogNormalDistribution;
-import org.openslat.control.Openslat;
+import org.openslat.control.SlatMainController;
 import org.openslat.numerical.LNConverter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,7 +12,7 @@ public class DamageState {
 
 	// TODO: time not yet done. only edp and loss
 	@JsonIgnore
-	private Openslat openslat;
+	private SlatMainController openslat;
 	@JsonIgnore
 	private double randDSEDP;
 	@JsonIgnore
@@ -28,6 +28,7 @@ public class DamageState {
 	private double lowerLimitMeanLoss = -1;
 	private int numberComponentsUpperLimitLoss = -1;
 	private int numberComponentsLowerLimitLoss = -1;
+	@JsonIgnore //calculated from the upper and lower limits
 	private double meanLoss = -1;
 	private double epistemicStdDev_Mean_LNloss = -1;
 
@@ -38,6 +39,7 @@ public class DamageState {
 	private double lowerLimitMeanTime = -1;
 	private int numberComponentsUpperLimitTime = -1;
 	private int numberComponentsLowerLimitTime = -1;
+	@JsonIgnore //calculated from upper and lower limits
 	private double meanTime = -1;
 	private double epistemicStdDev_Mean_LNtime = -1;
 
@@ -454,11 +456,11 @@ public class DamageState {
 		this.sigmaTime = sigmaTime;
 	}
 
-	public Openslat getOpenslat() {
+	public SlatMainController getOpenslat() {
 		return openslat;
 	}
 
-	public void setOpenslat(Openslat openslat) {
+	public void setOpenslat(SlatMainController openslat) {
 		this.openslat = openslat;
 	}
 

@@ -19,13 +19,23 @@ public class EDPIM {
 	private Double epistemicWeight = 0.0;
 	private DistributionFunction distributionFunction;
 
+	/**
+	 * Gets the continuous distributionFunction.
+	 * 
+	 * @return distribution distributionFunction
+	 */
+	public DistributionFunction getDistributionFunction() {
+		return this.distributionFunction;
+	}
+
 	public void setDistributionFunction(DistributionFunction model) {
 		this.distributionFunction = model;
 	}
 
-	public void setDistributionFunctionFromModels(DifferentiableFunction meanModel,
-			DifferentiableFunction stddModel) {
-		this.distributionFunction = new EDPIMParametricModel(meanModel, stddModel);
+	public void setDistributionFunctionFromModels(
+			DifferentiableFunction meanModel, DifferentiableFunction stddModel) {
+		this.distributionFunction = new EDPIMParametricModel(meanModel,
+				stddModel);
 	}
 
 	public void setDistributionFunctionDiscreteType1Table(
@@ -50,15 +60,6 @@ public class EDPIM {
 			ArrayList<ArrayList<Double>> table) {
 		this.distributionFunction = new EDPIMParametricModel();
 		((EDPIMParametricModel) distributionFunction).typeTwoTableInput(table);
-	}
-
-	/**
-	 * Gets the continuous distributionFunction.
-	 * 
-	 * @return distribution distributionFunction
-	 */
-	public DistributionFunction getDistributionFunction() {
-		return this.distributionFunction;
 	}
 
 	public Double getEpistemicWeight() {

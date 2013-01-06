@@ -8,11 +8,14 @@ import org.apache.commons.math3.analysis.interpolation.LinearInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 import org.openslat.interfaces.DifferentiableFunction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * @author alan
  * 
  */
-
+@JsonSerialize
 public class IMRDiscreteModel implements DifferentiableFunction {
 
 	private ArrayList<ArrayList<Double>> inputTable;
@@ -20,6 +23,7 @@ public class IMRDiscreteModel implements DifferentiableFunction {
 	double[] annualFreqi;
 	private double minKnot;
 	private double maxKnot;
+	@JsonIgnore
 	private PolynomialSplineFunction annualFreq;
 
 	// TODO: deal with out-of-bounds values better

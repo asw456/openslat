@@ -24,10 +24,10 @@ import org.openslat.model.structure.Component;
  */
 public class EDPIMCorrelations {
 
-	private PearsonsCorrelation pearsonsCorrelation = new PearsonsCorrelation();
+	public static double edpCorrelation(Component componenti,
+			Component componentj, double im) {
 
-	public double edpCorrelation(Component componenti, Component componentj,
-			double im) {
+		PearsonsCorrelation pearsonsCorrelation = new PearsonsCorrelation();
 
 		// TODO: same IM not checked?? but never checked elsewhere in program
 		// TODO: same IM values down column 1 of table not checked
@@ -58,25 +58,28 @@ public class EDPIMCorrelations {
 			ArrayList<Double> edpRowJ = tablej.get(p);
 			edpRowI.remove(0);
 			edpRowJ.remove(0);
-			
-			correlations[p] = pearsonsCorrelation.correlation(ArrayUtils.toPrimitive(edpRowI
-					.toArray(new Double[edpRowI.size()])),
+
+			correlations[p] = pearsonsCorrelation.correlation(ArrayUtils
+					.toPrimitive(edpRowI.toArray(new Double[edpRowI.size()])),
 					ArrayUtils.toPrimitive(edpRowJ.toArray(new Double[edpRowI
 							.size()])));
 
 		}
 
-		PolynomialSplineFunction correlationIMRelationship = new LinearInterpolator().interpolate(imi, correlations);
-		
+		PolynomialSplineFunction correlationIMRelationship = new LinearInterpolator()
+				.interpolate(imi, correlations);
+
 		// flat if im value lies outside range
 		if (im < correlationIMRelationship.getKnots()[0]) {
 			im = correlationIMRelationship.getKnots()[0];
 		}
-		
-		if (im > correlationIMRelationship.getKnots()[correlationIMRelationship.getKnots().length-1]){
-			im = correlationIMRelationship.getKnots()[correlationIMRelationship.getKnots().length-1];
+
+		if (im > correlationIMRelationship.getKnots()[correlationIMRelationship
+				.getKnots().length - 1]) {
+			im = correlationIMRelationship.getKnots()[correlationIMRelationship
+					.getKnots().length - 1];
 		}
-		
+
 		return correlationIMRelationship.value(im);
 	}
 }

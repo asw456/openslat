@@ -5,12 +5,12 @@ package org.openslat.calculators.multiplecomponents;
 
 import java.util.HashMap;
 
+import org.openslat.control.SlatMainController;
 import org.openslat.model.edp.EDP;
 import org.openslat.model.fragilityfunctions.FragilityFunction;
 import org.openslat.model.fragilityfunctions.Material;
 import org.openslat.model.structure.Component;
 import org.openslat.numerical.RNGenerator;
-import org.openslat.options.CalculationOptions;
 
 /**
  * To obtain the CORRELATIONS (DS|EDP) for different components (my description)
@@ -22,12 +22,14 @@ import org.openslat.options.CalculationOptions;
  */
 public class DSEDPCorrelation {
 
-	private CalculationOptions calculationOptions;
+	private SlatMainController slatMC;
 
 	public double corr_DSij_EDP(Component componenti, Component componentj) {
-		if (calculationOptions.getCorrelationOptions().getCOR_DSEDP() == 0) {
+		if (slatMC.getCalculationOptions().getCorrelationOptions()
+				.getCOR_DSEDP() == 0) {
 			return 0;
-		} else if (calculationOptions.getCorrelationOptions().getCOR_DSEDP() == 1) {
+		} else if (slatMC.getCalculationOptions().getCorrelationOptions()
+				.getCOR_DSEDP() == 1) {
 			return 1;
 		} else {
 			return partialCorrelation(componenti, componentj);
@@ -51,17 +53,20 @@ public class DSEDPCorrelation {
 		Material materiali = componenti.getFf().getMaterial();
 		Material materialj = componentj.getFf().getMaterial();
 
-		if (calculationOptions.getEpistemicUncertOptions()
+		if (slatMC.getCalculationOptions().getEpistemicUncertOptions()
 				.isEpistemicUncertDSEDPCorrelations()) {
 
-			double randDSEDPCorrStructure = calculationOptions.getEpistemicCorrArrays()
-					.getRandDSEDPCorrStructure();
-			HashMap<EDP, Double> randDSEDPCorrEDP = calculationOptions
-					.getEpistemicCorrArrays().getRandDSEDPCorrEDP();
-			HashMap<Material, Double> randDSEDPCorrMaterial = calculationOptions
-					.getEpistemicCorrArrays().getRandDSEDPCorrMaterial();
-			HashMap<FragilityFunction, Double> randDSEDPCorrPG = calculationOptions
-					.getEpistemicCorrArrays().getRandDSEDPCorrPG();
+			double randDSEDPCorrStructure = slatMC.getCalculationOptions()
+					.getEpistemicCorrArrays().getRandDSEDPCorrStructure();
+			HashMap<EDP, Double> randDSEDPCorrEDP = slatMC
+					.getCalculationOptions().getEpistemicCorrArrays()
+					.getRandDSEDPCorrEDP();
+			HashMap<Material, Double> randDSEDPCorrMaterial = slatMC
+					.getCalculationOptions().getEpistemicCorrArrays()
+					.getRandDSEDPCorrMaterial();
+			HashMap<FragilityFunction, Double> randDSEDPCorrPG = slatMC
+					.getCalculationOptions().getEpistemicCorrArrays()
+					.getRandDSEDPCorrPG();
 
 			double pc_var = 0.3; // half of the width of the uniform
 									// distirbution for the correlations
@@ -86,12 +91,10 @@ public class DSEDPCorrelation {
 
 			double var_compi = var_comp
 					* (1.0 + pc_var
-							* (2.0 * randDSEDPCorrPG.get(componenti
-									.getFf()) - 0.5));
+							* (2.0 * randDSEDPCorrPG.get(componenti.getFf()) - 0.5));
 			double var_compj = var_comp
 					* (1.0 + pc_var
-							* (2.0 * randDSEDPCorrPG.get(componenti
-									.getFf()) - 0.5));
+							* (2.0 * randDSEDPCorrPG.get(componenti.getFf()) - 0.5));
 			var_comp = Math.sqrt(var_compi * var_compj);
 
 			double randij = RNGenerator.uniformRN();

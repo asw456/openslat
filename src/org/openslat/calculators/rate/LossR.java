@@ -5,7 +5,7 @@ import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
 import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
 import org.apache.commons.math3.distribution.LogNormalDistribution;
 import org.openslat.calculators.multiplecomponents.LossIM;
-import org.openslat.control.Openslat;
+import org.openslat.control.SlatMainController;
 
 /**
  * @author alan
@@ -14,7 +14,7 @@ import org.openslat.control.Openslat;
 public class LossR {
 
 	private UnivariateIntegrator integrator = new SimpsonIntegrator();
-	private Openslat openslat;
+	private SlatMainController openslat;
 
 	public double lossRate(double inputLoss) {
 
@@ -98,11 +98,11 @@ public class LossR {
 		this.integrator = integrator;
 	}
 
-	public Openslat getOpenslat() {
+	public SlatMainController getOpenslat() {
 		return openslat;
 	}
 
-	public void setOpenslat(Openslat openslat) {
+	public void setOpenslat(SlatMainController openslat) {
 		this.openslat = openslat;
 	}
 }

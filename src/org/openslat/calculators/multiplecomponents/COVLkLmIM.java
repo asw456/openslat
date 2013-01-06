@@ -1,12 +1,12 @@
 package org.openslat.calculators.multiplecomponents;
 
 import org.openslat.calculators.component.LossIMNC;
+import org.openslat.control.SlatMainController;
 import org.openslat.model.structure.Component;
-import org.openslat.options.CalculationOptions;
 
 public class COVLkLmIM {
 
-	private CalculationOptions calculationOptions;
+	private SlatMainController slatMC;
 
 	// private Component componentk;
 	// private Component componentm;
@@ -30,11 +30,14 @@ public class COVLkLmIM {
 		}
 
 		// DETERMINE aleatory correlation for EDPIM relationship
-		if (calculationOptions.getCorrelationOptions().getCOR_EDPIM() == 0) {
+		if (slatMC.getCalculationOptions().getCorrelationOptions()
+				.getCOR_EDPIM() == 0) {
 			corr_lnEDPij_IM = 0;
-		} else if (calculationOptions.getCorrelationOptions().getCOR_EDPIM() == 1) {
+		} else if (slatMC.getCalculationOptions().getCorrelationOptions()
+				.getCOR_EDPIM() == 1) {
 			corr_lnEDPij_IM = 1;
-		} else if (calculationOptions.getCorrelationOptions().getCOR_EDPIM() == 2) {
+		} else if (slatMC.getCalculationOptions().getCorrelationOptions()
+				.getCOR_EDPIM() == 2) {
 			if (componentk.getEdp().equals(componentm.getEdp())) {
 				corr_lnEDPij_IM = 1;
 			} else {
@@ -48,22 +51,27 @@ public class COVLkLmIM {
 		// Loss EDP correlation
 
 		// determine aleatory correlation for loss-DS relationship
-		if (calculationOptions.getCorrelationOptions().getCOR_LDS() == 0) {
+		if (slatMC.getCalculationOptions().getCorrelationOptions().getCOR_LDS() == 0) {
 			corr_Lossij_DS = 0;
-		} else if (calculationOptions.getCorrelationOptions().getCOR_LDS() == 1) {
+		} else if (slatMC.getCalculationOptions().getCorrelationOptions()
+				.getCOR_LDS() == 1) {
 			corr_lnEDPij_IM = 1;
-		} else if (calculationOptions.getCorrelationOptions().getCOR_LDS() == 2) {
+		} else if (slatMC.getCalculationOptions().getCorrelationOptions()
+				.getCOR_LDS() == 2) {
 			corr_lnEDPij_IM = 2; // The exact value is determined in the
 									// integration scheme for each EDP
 		}
 		// end of computing CORR_lnLossilnLossj|DS
 
 		// determine aleatory correlation for DS-EDP relationship
-		if (calculationOptions.getCorrelationOptions().getCOR_DSEDP() == 0) {
+		if (slatMC.getCalculationOptions().getCorrelationOptions()
+				.getCOR_DSEDP() == 0) {
 			corr_DSij_EDP = 0;
-		} else if (calculationOptions.getCorrelationOptions().getCOR_DSEDP() == 1) {
+		} else if (slatMC.getCalculationOptions().getCorrelationOptions()
+				.getCOR_DSEDP() == 1) {
 			corr_DSij_EDP = 1;
-		} else if (calculationOptions.getCorrelationOptions().getCOR_DSEDP() == 2) {
+		} else if (slatMC.getCalculationOptions().getCorrelationOptions()
+				.getCOR_DSEDP() == 2) {
 			corr_DSij_EDP = 2; // The exact value is determined in the
 								// integration scheme for each EDP
 		}
@@ -100,5 +108,13 @@ public class COVLkLmIM {
 							lossIMNC.sigmaLoss(componentm, im), 2)));
 		}
 		return cov_LIMNCkm;
+	}
+
+	public SlatMainController getSlatMainController() {
+		return slatMC;
+	}
+
+	public void setSlatMainController(SlatMainController slatMainController) {
+		this.slatMC = slatMainController;
 	}
 }

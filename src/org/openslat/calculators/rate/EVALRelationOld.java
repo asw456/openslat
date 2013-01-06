@@ -7,7 +7,7 @@ import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
 import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
 import org.openslat.calculators.multiplecomponents.LossIM;
-import org.openslat.control.Openslat;
+import org.openslat.control.SlatMainController;
 
 /**
  * @author alan
@@ -15,7 +15,7 @@ import org.openslat.control.Openslat;
  */
 public class EVALRelationOld {
 
-	private Openslat openslat;
+	private SlatMainController openslat;
 	private UnivariateIntegrator integrator = new SimpsonIntegrator();
 	
 	public double meanAnnualLoss() {
@@ -138,11 +138,11 @@ public class EVALRelationOld {
 		this.integrator = integrator;
 	}
 
-	public Openslat getOpenslat() {
+	public SlatMainController getOpenslat() {
 		return openslat;
 	}
 
-	public void setOpenslat(Openslat openslat) {
+	public void setOpenslat(SlatMainController openslat) {
 		this.openslat = openslat;
 	}
 
