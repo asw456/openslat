@@ -11,6 +11,7 @@ public class EDP {
 
 	@JsonIgnore
 	private SlatMainController slatMC;
+	private String name;
 	private ArrayList<EDPIM> edpIM = new ArrayList<EDPIM>();
 
 	/**
@@ -19,7 +20,7 @@ public class EDP {
 	 * 
 	 * @return
 	 */
-	public EDPIM getEdpIM() {
+	public EDPIM retrieveEdpIM() {
 		// TODO : exceptions..
 		if (edpIM.size() == 0) {
 			return null;
@@ -60,5 +61,17 @@ public class EDP {
 
 	public void setSlatMC(SlatMainController slatMC) {
 		this.slatMC = slatMC;
+	}
+
+	public ArrayList<EDPIM> getEdpIM() {
+		return edpIM;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import org.openslat.interfaces.DifferentiableFunction;
 import org.openslat.interfaces.DistributionFunction;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * EDPIM represents the seismic demand - intensity measure relationship where
  * seismic demand is measured by a known engineering demand parameter such as
@@ -14,8 +16,10 @@ import org.openslat.interfaces.DistributionFunction;
  * 
  * @author Alan Williams
  */
+@JsonSerialize
 public class EDPIM {
 
+	private String name;
 	private Double epistemicWeight = 0.0;
 	private DistributionFunction distributionFunction;
 
@@ -68,6 +72,14 @@ public class EDPIM {
 
 	public void setEpistemicWeight(Double epistemicWeight) {
 		this.epistemicWeight = epistemicWeight;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

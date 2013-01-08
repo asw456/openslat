@@ -36,7 +36,7 @@ public class LossIMNC {
 			return 0;
 		} else {
 			LogNormalDistribution lgnd = (LogNormalDistribution) component
-					.getEdp().getEdpIM().getDistributionFunction()
+					.getEdp().retrieveEdpIM().getDistributionFunction()
 					.distribution(im);
 			double sigmaEDP = lgnd.getShape();
 			double muEDP = lgnd.getScale(); // lnMeanEDP
@@ -74,7 +74,7 @@ public class LossIMNC {
 			return 0;
 		} else {
 			LogNormalDistribution lgnd = (LogNormalDistribution) component
-					.getEdp().getEdpIM().getDistributionFunction()
+					.getEdp().retrieveEdpIM().getDistributionFunction()
 					.distribution(im);
 			double sigmaEDP = lgnd.getShape();
 			double muEDP = lgnd.getScale(); // lnMeanEDP

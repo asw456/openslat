@@ -31,21 +31,21 @@ public class EDPIMCorrelations {
 
 		// TODO: same IM not checked?? but never checked elsewhere in program
 		// TODO: same IM values down column 1 of table not checked
-		if (componenti.getEdp().getEdpIM().getDistributionFunction().getTable() == null) {
+		if (componenti.getEdp().retrieveEdpIM().getDistributionFunction().getTable() == null) {
 			return 0; // TODO: exception, hard failure instead of soft
 		}
-		if (componentj.getEdp().getEdpIM().getDistributionFunction().getTable() == null) {
+		if (componentj.getEdp().retrieveEdpIM().getDistributionFunction().getTable() == null) {
 			return 0; // TODO: exception, hard failure instead of soft
 		}
-		if (componenti.getEdp().getEdpIM().getDistributionFunction().getTable()
-				.size() != componentj.getEdp().getEdpIM()
+		if (componenti.getEdp().retrieveEdpIM().getDistributionFunction().getTable()
+				.size() != componentj.getEdp().retrieveEdpIM()
 				.getDistributionFunction().getTable().size()) {
 			return 0; // TODO: exception, hard failure instead of soft
 		}
 
-		ArrayList<ArrayList<Double>> tablei = componenti.getEdp().getEdpIM()
+		ArrayList<ArrayList<Double>> tablei = componenti.getEdp().retrieveEdpIM()
 				.getDistributionFunction().getTable();
-		ArrayList<ArrayList<Double>> tablej = componentj.getEdp().getEdpIM()
+		ArrayList<ArrayList<Double>> tablej = componentj.getEdp().retrieveEdpIM()
 				.getDistributionFunction().getTable();
 
 		double[] imi = new double[tablei.size()];

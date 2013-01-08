@@ -1,13 +1,13 @@
-package org.openslat.jsonparser;
-
 import static org.junit.Assert.*;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class JsonParserTest {
+
+public class EDPIMTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -26,8 +26,8 @@ public class JsonParserTest {
 	}
 
 	@Test
-	public void test() {
-		assert(true); //haha suckers;
+	public final void test() {
+		fail("Not yet implemented"); // TODO
 	}
 
 }

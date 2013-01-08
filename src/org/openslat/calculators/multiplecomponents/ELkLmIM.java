@@ -29,15 +29,15 @@ public class ELkLmIM {
 		this.componentm = componentm;
 
 		double z = 5.0;
-		double sigmaI = LNConverter.sigma(componentk.getEdp().getEdpIM()
+		double sigmaI = LNConverter.sigma(componentk.getEdp().retrieveEdpIM()
 				.getDistributionFunction().distribution(im).getNumericalMean(),
-				componentk.getEdp().getEdpIM().getDistributionFunction()
+				componentk.getEdp().retrieveEdpIM().getDistributionFunction()
 						.distribution(im).getNumericalVariance());
 
-		double a = 1 / (componentk.getEdp().getEdpIM()
+		double a = 1 / (componentk.getEdp().retrieveEdpIM()
 				.getDistributionFunction().distribution(im).getNumericalMean()
 				* Math.exp(-0.5 * Math.pow(sigmaI, 2) + z * sigmaI) + 1);
-		double b = 1 / (componentk.getEdp().getEdpIM()
+		double b = 1 / (componentk.getEdp().retrieveEdpIM()
 				.getDistributionFunction().distribution(im).getNumericalMean()
 				* Math.exp(-0.5 * Math.pow(sigmaI, 2) - z * sigmaI) + 1);
 
@@ -67,15 +67,15 @@ public class ELkLmIM {
 	private double innerIntegral(double im, double tk) {
 
 		double z = 5.0;
-		double sigmaJ = LNConverter.sigma(componentm.getEdp().getEdpIM()
+		double sigmaJ = LNConverter.sigma(componentm.getEdp().retrieveEdpIM()
 				.getDistributionFunction().distribution(im).getNumericalMean(),
-				componentm.getEdp().getEdpIM().getDistributionFunction()
+				componentm.getEdp().retrieveEdpIM().getDistributionFunction()
 						.distribution(im).getNumericalVariance());
 
-		double a = 1 / (componentm.getEdp().getEdpIM()
+		double a = 1 / (componentm.getEdp().retrieveEdpIM()
 				.getDistributionFunction().distribution(im).getNumericalMean()
 				* Math.exp(-0.5 * Math.pow(sigmaJ, 2) + z * sigmaJ) + 1);
-		double b = 1 / (componentm.getEdp().getEdpIM()
+		double b = 1 / (componentm.getEdp().retrieveEdpIM()
 				.getDistributionFunction().distribution(im).getNumericalMean()
 				* Math.exp(-0.5 * Math.pow(sigmaJ, 2) - z * sigmaJ) + 1);
 
@@ -96,30 +96,30 @@ public class ELkLmIM {
 						double edpK = 1.0 / tK - 1;
 
 						double lnMeanX = LNConverter.mu(eLkLmIM.componentk
-								.getEdp().getEdpIM().getDistributionFunction()
+								.getEdp().retrieveEdpIM().getDistributionFunction()
 								.distribution(imVal).getNumericalMean(),
-								eLkLmIM.componentk.getEdp().getEdpIM()
+								eLkLmIM.componentk.getEdp().retrieveEdpIM()
 										.getDistributionFunction()
 										.distribution(imVal)
 										.getNumericalVariance());
 						double lnMeanY = LNConverter.mu(eLkLmIM.componentm
-								.getEdp().getEdpIM().getDistributionFunction()
+								.getEdp().retrieveEdpIM().getDistributionFunction()
 								.distribution(imVal).getNumericalMean(),
-								eLkLmIM.componentm.getEdp().getEdpIM()
+								eLkLmIM.componentm.getEdp().retrieveEdpIM()
 										.getDistributionFunction()
 										.distribution(imVal)
 										.getNumericalVariance());
 						double sigmaX = LNConverter.sigma(eLkLmIM.componentk
-								.getEdp().getEdpIM().getDistributionFunction()
+								.getEdp().retrieveEdpIM().getDistributionFunction()
 								.distribution(imVal).getNumericalMean(),
-								eLkLmIM.componentk.getEdp().getEdpIM()
+								eLkLmIM.componentk.getEdp().retrieveEdpIM()
 										.getDistributionFunction()
 										.distribution(imVal)
 										.getNumericalVariance());
 						double sigmaY = LNConverter.sigma(eLkLmIM.componentm
-								.getEdp().getEdpIM().getDistributionFunction()
+								.getEdp().retrieveEdpIM().getDistributionFunction()
 								.distribution(imVal).getNumericalMean(),
-								eLkLmIM.componentm.getEdp().getEdpIM()
+								eLkLmIM.componentm.getEdp().retrieveEdpIM()
 										.getDistributionFunction()
 										.distribution(imVal)
 										.getNumericalVariance());
@@ -153,34 +153,34 @@ public class ELkLmIM {
 					double edpK = 1.0 / tK - 1;
 
 					double lnMeanX = LNConverter
-							.mu(eLkLmIM.componentk.getEdp().getEdpIM()
+							.mu(eLkLmIM.componentk.getEdp().retrieveEdpIM()
 									.getDistributionFunction()
 									.distribution(imVal).getNumericalMean(),
-									eLkLmIM.componentk.getEdp().getEdpIM()
+									eLkLmIM.componentk.getEdp().retrieveEdpIM()
 											.getDistributionFunction()
 											.distribution(imVal)
 											.getNumericalVariance());
 					double lnMeanY = LNConverter
-							.mu(eLkLmIM.componentm.getEdp().getEdpIM()
+							.mu(eLkLmIM.componentm.getEdp().retrieveEdpIM()
 									.getDistributionFunction()
 									.distribution(imVal).getNumericalMean(),
-									eLkLmIM.componentm.getEdp().getEdpIM()
+									eLkLmIM.componentm.getEdp().retrieveEdpIM()
 											.getDistributionFunction()
 											.distribution(imVal)
 											.getNumericalVariance());
 					double sigmaX = LNConverter
-							.sigma(eLkLmIM.componentk.getEdp().getEdpIM()
+							.sigma(eLkLmIM.componentk.getEdp().retrieveEdpIM()
 									.getDistributionFunction()
 									.distribution(imVal).getNumericalMean(),
-									eLkLmIM.componentk.getEdp().getEdpIM()
+									eLkLmIM.componentk.getEdp().retrieveEdpIM()
 											.getDistributionFunction()
 											.distribution(imVal)
 											.getNumericalVariance());
 					double sigmaY = LNConverter
-							.sigma(eLkLmIM.componentm.getEdp().getEdpIM()
+							.sigma(eLkLmIM.componentm.getEdp().retrieveEdpIM()
 									.getDistributionFunction()
 									.distribution(imVal).getNumericalMean(),
-									eLkLmIM.componentm.getEdp().getEdpIM()
+									eLkLmIM.componentm.getEdp().retrieveEdpIM()
 											.getDistributionFunction()
 											.distribution(imVal)
 											.getNumericalVariance());

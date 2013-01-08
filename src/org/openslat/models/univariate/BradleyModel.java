@@ -21,9 +21,7 @@ import java.lang.Math;
  */
 @JsonSerialize
 public class BradleyModel implements DifferentiableFunction {
-	private double a;
-	private double b;
-	private double c;
+	private double[] parameters;
 
 	/**
 	 * sets the model parameters directly
@@ -34,20 +32,12 @@ public class BradleyModel implements DifferentiableFunction {
 	 * 
 	 * from a specified set of parameters <code>[a b c]</code>.
 	 * 
-	 * @param a
-	 * @param b
-	 * @param c
+	 * @param parameters[0]
+	 * @param parameters[1]
+	 * @param parameters[2]
 	 */
-	public void setBradleyModelParams(double a, double b, double c) {
-		this.a = a;
-		this.b = b;
-		this.c = c;
-	}
-
-	public void setBradleyModelParams(double[] parameters) {
-		this.a = parameters[0];
-		this.b = parameters[1];
-		this.c = parameters[2];
+	public void constructBradleyModel(double[] parameters) {
+		this.parameters = parameters;
 	}
 
 	/**
@@ -58,7 +48,7 @@ public class BradleyModel implements DifferentiableFunction {
 	 * @return output value
 	 */
 	public double value(double x) {
-		return a * Math.exp(c / Math.log(x / b));
+		return parameters[0] * Math.exp(parameters[2] / Math.log(x / parameters[1]));
 	}
 
 	/**
@@ -69,8 +59,8 @@ public class BradleyModel implements DifferentiableFunction {
 	 * @return output value
 	 */
 	public double derivative(double x) {
-		return -(a * c * Math.exp(c / Math.log(x / b)))
-				/ (x * Math.pow(Math.log(x / b), 2));
+		return -(parameters[0] * parameters[2] * Math.exp(parameters[2] / Math.log(x / parameters[1])))
+				/ (x * Math.pow(Math.log(x / parameters[1]), 2));
 	}
 
 	/**
@@ -80,6 +70,14 @@ public class BradleyModel implements DifferentiableFunction {
 	 */
 	public String toString() {
 		return "Bradley model y(x) = a*exp(c/ln(x/b)) with parameters a = "
-				+ this.a + " and b = " + this.b + " and c = " + this.c;
+				+ this.parameters[0] + " and b = " + this.parameters[1] + " and c = " + this.parameters[2];
+	}
+
+	public double[] getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(double[] parameters) {
+		this.parameters = parameters;
 	}
 }

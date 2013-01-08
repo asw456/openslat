@@ -11,7 +11,7 @@ import org.apache.commons.math3.util.FastMath;
 public class MagnitudeAdaptiveQuadratureIntegrator extends
 		BaseAbstractUnivariateIntegrator {
 
-	public static final int MAQ_MAX_ITERATIONS_COUNT = 1000;
+	public static final int MAQ_MAX_ITERATIONS_COUNT = 10000000;
 
 	public MagnitudeAdaptiveQuadratureIntegrator(double relativeAccuracy,
 			double absoluteAccuracy, int minimalIterationCount,
