@@ -1,17 +1,11 @@
 package org.openslat.receiver;
 
-import java.io.IOException;
-
-import org.openslat.control.SlatMainController;
-import org.openslat.jsonparser.SlatInputStore;
-import org.openslat.jsonparser.SlatParser;
-
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.QueueingConsumer;
 
-public class TaskReceiver {
+public class TaskReceiver1 {
 
 	private static final String TASK_QUEUE_NAME = "task_queue";
 
@@ -37,40 +31,19 @@ public class TaskReceiver {
 
 			System.out.println(" [x] Received '" + message + "'");
 			// TODO: this used to be a void method, is this OK
-			//String results = generateResults(message);
+			// String results = generateResults(message);
 			doWork(message);
-			
+
 			System.out.println(" [x] Done");
 
 			channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
 		}
 	}
 
-	private static void doWork(String task) throws InterruptedException{
-		 for (char ch: task.toCharArray()) {
-		        if (ch == '.') Thread.sleep(1000);
-		    }
-	}
-	
-	private static String generateResults(String inputString) {
-
-		SlatInputStore slatInputStore;
-		try {
-			slatInputStore = SlatParser.parseInputJsonString(inputString);
-
-			SlatMainController slatMainController = new SlatMainController();
-			slatMainController.setCalculationOptions(slatInputStore
-					.getCalculationOptions());
-			slatMainController.setStructure(slatInputStore.getStructure());
-
-			// and some magic happens
-			String outputString = slatMainController.generateOutputString();
-
-			return outputString;
-
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "fail";
+	private static void doWork(String task) throws InterruptedException {
+		for (char ch : task.toCharArray()) {
+			if (ch == '.')
+				Thread.sleep(1000);
 		}
 	}
 }

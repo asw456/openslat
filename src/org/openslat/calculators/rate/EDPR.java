@@ -21,8 +21,8 @@ import org.openslat.numerical.MagnitudeAdaptiveQuadratureIntegrator;
  */
 public class EDPR {
 
-	//private UnivariateIntegrator integrator = new SimpsonIntegrator();
-	private UnivariateIntegrator integrator = new MagnitudeAdaptiveQuadratureIntegrator();
+	private UnivariateIntegrator integrator = new SimpsonIntegrator();
+	//private UnivariateIntegrator integrator = new MagnitudeAdaptiveQuadratureIntegrator();
 	
 	/**
 	 * Returns the rate of exceedance for a specified seismic demand.

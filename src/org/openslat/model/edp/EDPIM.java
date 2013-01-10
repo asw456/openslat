@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class EDPIM {
 
 	private String name;
-	private Double epistemicWeight = 0.0;
+	private Double epistemicWeight = 1.0;
 	private DistributionFunction distributionFunction;
 
 	/**
@@ -36,31 +36,31 @@ public class EDPIM {
 		this.distributionFunction = model;
 	}
 
-	public void setDistributionFunctionFromModels(
+	public void constructDistributionFunctionFromModels(
 			DifferentiableFunction meanModel, DifferentiableFunction stddModel) {
 		this.distributionFunction = new EDPIMParametricModel(meanModel,
 				stddModel);
 	}
 
-	public void setDistributionFunctionDiscreteType1Table(
+	public void constructDistributionFunctionDiscreteType1Table(
 			ArrayList<ArrayList<Double>> table) {
 		this.distributionFunction = new EDPIMDiscreteModel();
 		((EDPIMDiscreteModel) distributionFunction).typeOneTableInput(table);
 	}
 
-	public void setDistributionFunctionDiscreteType2Table(
+	public void constructDistributionFunctionDiscreteType2Table(
 			ArrayList<ArrayList<Double>> table) {
 		this.distributionFunction = new EDPIMDiscreteModel();
 		((EDPIMDiscreteModel) distributionFunction).typeTwoTableInput(table);
 	}
 
-	public void setDistributionFunctionParametricType1Table(
+	public void constructDistributionFunctionParametricType1Table(
 			ArrayList<ArrayList<Double>> table) {
 		this.distributionFunction = new EDPIMParametricModel();
 		((EDPIMParametricModel) distributionFunction).typeOneTableInput(table);
 	}
 
-	public void setDistributionFunctionParametricType2Table(
+	public void constructDistributionFunctionParametricType2Table(
 			ArrayList<ArrayList<Double>> table) {
 		this.distributionFunction = new EDPIMParametricModel();
 		((EDPIMParametricModel) distributionFunction).typeTwoTableInput(table);
