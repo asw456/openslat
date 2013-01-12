@@ -65,7 +65,7 @@ public class PowerModel implements DifferentiableFunction {
 	 * @return output value
 	 */
 	public double value(double x) {
-		return parameters[0] * Math.pow(x, parameters[1]);
+		return (parameters[0] * Math.pow(x, parameters[1]));
 	}
 
 	/**
