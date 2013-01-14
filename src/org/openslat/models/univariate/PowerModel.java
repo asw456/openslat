@@ -1,8 +1,8 @@
 package org.openslat.models.univariate;
 
 import org.apache.commons.math3.stat.regression.SimpleRegression;
+import org.apache.commons.math3.util.FastMath;
 import org.openslat.interfaces.DifferentiableFunction;
-
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
@@ -48,12 +48,12 @@ public class PowerModel implements DifferentiableFunction {
 	public void estimatePowerModelParams(double[] x, double[] y) {
 		double[][] logdata = new double[x.length][2];
 		for (int i = 0; i < x.length; i++) {
-			logdata[i][0] = Math.log(x[i]);
-			logdata[i][1] = Math.log(y[i]);
+			logdata[i][0] = FastMath.log(x[i]);
+			logdata[i][1] = FastMath.log(y[i]);
 		}
 		SimpleRegression regressor = new SimpleRegression();
 		regressor.addData(logdata);
-		this.parameters[0] = Math.exp(regressor.getIntercept());
+		this.parameters[0] = FastMath.exp(regressor.getIntercept());
 		this.parameters[1] = regressor.getSlope();
 	}
 
@@ -65,7 +65,7 @@ public class PowerModel implements DifferentiableFunction {
 	 * @return output value
 	 */
 	public double value(double x) {
-		return (parameters[0] * Math.pow(x, parameters[1]));
+		return (parameters[0] * FastMath.pow(x, parameters[1]));
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class PowerModel implements DifferentiableFunction {
 	 * @return output value
 	 */
 	public double derivative(double x) {
-		return parameters[0] * parameters[1] * Math.pow(x, parameters[1] - 1);
+		return parameters[0] * parameters[1] * FastMath.pow(x, parameters[1] - 1);
 	}
 
 	public String toString() {

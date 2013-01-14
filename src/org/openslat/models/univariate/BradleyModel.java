@@ -1,5 +1,6 @@
 package org.openslat.models.univariate;
 
+import org.apache.commons.math3.util.FastMath;
 import org.openslat.interfaces.DifferentiableFunction;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -59,8 +60,9 @@ public class BradleyModel implements DifferentiableFunction {
 	 * @return output value
 	 */
 	public double derivative(double x) {
-		return -(parameters[0] * parameters[2] * Math.exp(parameters[2] / Math.log(x / parameters[1])))
-				/ (x * Math.pow(Math.log(x / parameters[1]), 2));
+		//return -(parameters[0] * parameters[2] * Math.exp(parameters[2] / Math.log(x / parameters[1])))
+		//		/ (x * Math.pow(Math.log(x / parameters[1]), 2));
+	    return -((parameters[0] * parameters[2] * FastMath.exp(parameters[2]/(FastMath.log(x)-FastMath.log(parameters[1])))/(x*FastMath.pow((FastMath.log(parameters[1] - FastMath.log(x))),2))));
 	}
 
 	/**

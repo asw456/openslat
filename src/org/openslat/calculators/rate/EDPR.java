@@ -22,8 +22,10 @@ import org.openslat.numerical.MagnitudeAdaptiveQuadratureIntegrator;
 public class EDPR {
 
 	private UnivariateIntegrator integrator = new SimpsonIntegrator();
-	//private UnivariateIntegrator integrator = new MagnitudeAdaptiveQuadratureIntegrator();
-	
+
+	// private UnivariateIntegrator integrator = new
+	// MagnitudeAdaptiveQuadratureIntegrator();
+
 	/**
 	 * Returns the rate of exceedance for a specified seismic demand.
 	 * 
@@ -31,39 +33,50 @@ public class EDPR {
 	 *            seismic demand
 	 * @return rate of exceedance
 	 */
-	public double edpRate(final double val, final EDP edp, final IM im, final PC pc) {
+	public double edpRate(double val, EDP edp, IM im, PC pc) {
 
 		if (pc != null) {
-			// TODO : Check that this works!!!
-			// final EDPR edpr = new SessionContext.getEJBObject(this);
-
-			UnivariateFunction temp = new UnivariateFunction() {
-				public double value(double t) {
-					return (edp.retrieveEdpIM().getDistributionFunction()
-							.distribution(1 / t - 1).cumulativeProbability(val)
-							* (1 - pc.getPcim().getDistribution()
-									.cumulativeProbability(1 / t - 1)) + pc
-							.getPcim().getDistribution()
-							.cumulativeProbability(1 / t - 1))
-							* FastMath.abs(im.retrieveImr().derivative(1 / t - 1))
-							* (-1 / FastMath.pow(t, 2));
-				}
-			};
-			
-			return integrator.integrate(1000000000, temp, 0, 1);
+			UnivariateFunction temp = integrandWithPc(edp, im, val, pc);
+			return integrator.integrate(10000000, temp, 0.0001, 0.9999);
 		}
 
 		else {
-			// TODO : Check that this works!!!
-			return integrator.integrate(1000000000, new UnivariateFunction() {
-				public double value(double t) {
-					return (edp.retrieveEdpIM().getDistributionFunction()
-							.distribution(1 / t - 1).cumulativeProbability(val))
-							* FastMath.abs(im.retrieveImr().derivative(1 / t - 1))
-							* (-1 / FastMath.pow(t, 2));
-				}
-			}, 0, 1);
+			UnivariateFunction temp = integrandWithoutPc(edp, im, val);
+			return integrator.integrate(10000000, temp, 0.01, 0.99);
 		}
+	}
+
+	// TODO: change private!
+	public UnivariateFunction integrandWithPc(final EDP edp, final IM im,
+			final double val, final PC pc) {
+		return new UnivariateFunction() {
+			public double value(double t) {
+				return (1
+						- edp.retrieveEdpIM().getDistributionFunction()
+								.distribution(1 / t - 1)
+								.cumulativeProbability(val)
+						* (1 - pc.getPcim().getDistribution()
+								.cumulativeProbability(1 / t - 1)) + pc
+						.getPcim().getDistribution()
+						.cumulativeProbability(1 / t - 1))
+						* FastMath.abs(im.retrieveImr().derivative(1 / t - 1))
+						* (-1 / FastMath.pow(t, 2));
+			}
+		};
+	}
+
+	// TODO: change private!
+	public UnivariateFunction integrandWithoutPc(final EDP edp, final IM im,
+			final double val) {
+		return new UnivariateFunction() {
+			public double value(double t) {
+				return (1 - edp.retrieveEdpIM().getDistributionFunction()
+						.distribution(1 / t - 1).cumulativeProbability(val))
+						* FastMath.abs(im.retrieveImr().derivative(1 / t - 1))
+						* (-1 / FastMath.pow(t, 2));
+			}
+		};
+
 	}
 
 	public UnivariateIntegrator getIntegrator() {

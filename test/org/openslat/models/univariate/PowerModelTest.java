@@ -17,7 +17,6 @@ public class PowerModelTest {
 
 	@Before
 	public void setUp() throws Exception {
-
 		pm1 = new PowerModel();
 		double[] pparams1 = { 0.5, 1.5 };
 		pm1.constructPowerModel(pparams1);
@@ -25,10 +24,6 @@ public class PowerModelTest {
 		pm2 = new PowerModel();
 		double[] pparams2 = { 0.5, 0.0 };
 		pm2.constructPowerModel(pparams2);
-
-		pm3 = new PowerModel();
-		double[] pparams3 = { 0.5, -1.5 };
-		pm3.constructPowerModel(pparams3);
 	}
 	
 	@Test
@@ -48,10 +43,14 @@ public class PowerModelTest {
 		assertEquals(0.5, pm2.value(1), 0.001);
 		assertEquals(0.5, pm2.value(2), 0.001);
 	}
-
+	
 	@Test
-	public void test3() {
-		assertEquals(0.5, pm3.value(0), 0.001);
-		assertEquals(0.1768, pm3.value(2), 0.001);
+	public void test4() {
+		assertEquals(0.49, pm1.derivative(0.4), 0.05);
+	}
+	
+	@Test
+	public void test5() {
+		assertEquals(0.49, pm1.derivative(0.4), 0.05);
 	}
 }
