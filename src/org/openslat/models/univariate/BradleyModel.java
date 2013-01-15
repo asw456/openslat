@@ -33,9 +33,7 @@ public class BradleyModel implements DifferentiableFunction {
 	 * 
 	 * from a specified set of parameters <code>[a b c]</code>.
 	 * 
-	 * @param parameters[0]
-	 * @param parameters[1]
-	 * @param parameters[2]
+	 * @param parameters
 	 */
 	public void constructBradleyModel(double[] parameters) {
 		this.parameters = parameters;
@@ -49,7 +47,12 @@ public class BradleyModel implements DifferentiableFunction {
 	 * @return output value
 	 */
 	public double value(double x) {
-		return parameters[0] * Math.exp(parameters[2] / Math.log(x / parameters[1]));
+		if (x >= (parameters[1] - 1e-10)) {
+			return 0;
+		} else {
+			return parameters[0]
+					* Math.exp(parameters[2] / Math.log(x / parameters[1]));
+		}
 	}
 
 	/**
@@ -60,9 +63,11 @@ public class BradleyModel implements DifferentiableFunction {
 	 * @return output value
 	 */
 	public double derivative(double x) {
-		//return -(parameters[0] * parameters[2] * Math.exp(parameters[2] / Math.log(x / parameters[1])))
+		double e = 1e-7;
+		return (value(x+e)-value(x-e))/(2*e);
+		//return -(parameters[0] * parameters[2] * Math.exp(parameters[2]
+		//		/ Math.log(x / parameters[1])))
 		//		/ (x * Math.pow(Math.log(x / parameters[1]), 2));
-	    return -((parameters[0] * parameters[2] * FastMath.exp(parameters[2]/(FastMath.log(x)-FastMath.log(parameters[1])))/(x*FastMath.pow((FastMath.log(parameters[1] - FastMath.log(x))),2))));
 	}
 
 	/**
@@ -72,7 +77,8 @@ public class BradleyModel implements DifferentiableFunction {
 	 */
 	public String toString() {
 		return "Bradley model y(x) = a*exp(c/ln(x/b)) with parameters a = "
-				+ this.parameters[0] + " and b = " + this.parameters[1] + " and c = " + this.parameters[2];
+				+ this.parameters[0] + " and b = " + this.parameters[1]
+				+ " and c = " + this.parameters[2];
 	}
 
 	public double[] getParameters() {

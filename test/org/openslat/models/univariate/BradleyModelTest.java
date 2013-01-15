@@ -10,38 +10,45 @@ import org.junit.Test;
 
 public class BradleyModelTest {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+	BradleyModel bm1;
 
 	@Before
 	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
+		bm1 = new BradleyModel();
+		double[] pparams1 = { 1221, 29.8, 62.2 };
+		bm1.constructBradleyModel(pparams1);
 	}
 
 	@Test
-	public void test() {
-		
-		BradleyModel bm1 = new BradleyModel();
-		double[] pparams1 = { 1221, 29.8, 62.2 };
-		bm1.constructBradleyModel(pparams1);
-		
-		BradleyModel bm2 = new BradleyModel();
-		double[] pparams2 = { 1221, 29.8, 62.2 };
-		bm2.constructBradleyModel(pparams2);
-
-		assertEquals(1.0,bm1.value(1),0.1);
-		assertEquals(1.0,bm1.derivative(1),0.1);
-		
-		assertEquals(1.0,bm2.value(1),0.1);
-		assertEquals(1.0,bm2.derivative(1),0.1);
+	public void test1() {
+		assertEquals(0.03, bm1.value(0.1), 0.01);
 	}
 
+	@Test
+	public void test2() {
+		assertEquals(0.00001345, bm1.value(1), 0.0000001);
+	}
+
+	@Test
+	public void test3() {
+		assertEquals(0.51279, bm1.value(0.01), 0.01);
+	}
+
+	@Test
+	public void test4() {
+		double one = bm1.value(0.5 + 0.000001);
+		double two = bm1.value(0.5 - 0.000001);
+		double deriv = (one - two) / (2 * 0.000001);
+		assertEquals(deriv, bm1.derivative(0.5), 0.00001);
+		//System.out.println(deriv);
+	}
+
+	@Test
+	public void test5() {
+		double one = bm1.value(0.001 + 0.00000001);
+		double two = bm1.value(0.001 - 0.00000001);
+		double deriv = (one - two) / (2 * 0.00000001);
+		assertEquals(deriv, bm1.derivative(0.001), 0.01);
+		//System.out.println(deriv);
+	}
 }

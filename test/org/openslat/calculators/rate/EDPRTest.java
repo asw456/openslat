@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import org.apache.commons.math3.analysis.UnivariateFunction;
-import org.apache.commons.math3.util.FastMath;
 import org.junit.Before;
 import org.junit.Test;
 import org.openslat.model.edp.EDP;
@@ -66,29 +65,22 @@ public class EDPRTest {
 
 	@Test
 	public final void testintegrandWithoutPc() {
-
 		EDPR edpr = new EDPR();
 		double val = 0.001;
 		UnivariateFunction function = edpr.integrandWithoutPc(edp, im, val);
-		
-		double min = 0.01;
-		double max = 0.99;
-		double step = 0.01;
-        for (int i = 0; i < max/step; i++){
-        	//System.out.println(min+i*step + "," + function.value(min+i*step));	
-        	System.out.println(1 / (min+i*step) - 1 + "," + FastMath.abs(im.retrieveImr().derivative(1 / (min+i*step) - 1)));
-        }
-		
+		assert(true);
+	}
+
+	@Test
+	public final void testEdpRate1() {
+		EDPR edpr = new EDPR();
+		assertEquals(2.22e-2, edpr.edpRate(3.17e-3, edp, im, null), 0.0001);
 	}
 	
-	
 	@Test
-	public final void testEdpRate() {
-
-		assert(true);
+	public final void testEdpRate2() {
 		EDPR edpr = new EDPR();
-		assertEquals(0.021, edpr.edpRate(0.01, edp, im, null), 0.01);
-
+		assertEquals(7.88e-2, edpr.edpRate(1e-3, edp, im, null), 1e-3);
 	}
 
 }

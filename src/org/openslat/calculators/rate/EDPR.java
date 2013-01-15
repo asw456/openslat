@@ -37,43 +37,58 @@ public class EDPR {
 
 		if (pc != null) {
 			UnivariateFunction temp = integrandWithPc(edp, im, val, pc);
-			return integrator.integrate(10000000, temp, 0.0001, 0.9999);
+			return integrator.integrate(10000000, temp, 0, 1);
 		}
 
 		else {
 			UnivariateFunction temp = integrandWithoutPc(edp, im, val);
-			return integrator.integrate(10000000, temp, 0.01, 0.99);
+			return integrator.integrate(10000000, temp, 0, 1);
 		}
 	}
 
-	// TODO: change private!
 	public UnivariateFunction integrandWithPc(final EDP edp, final IM im,
 			final double val, final PC pc) {
 		return new UnivariateFunction() {
 			public double value(double t) {
-				return (1
-						- edp.retrieveEdpIM().getDistributionFunction()
-								.distribution(1 / t - 1)
-								.cumulativeProbability(val)
-						* (1 - pc.getPcim().getDistribution()
-								.cumulativeProbability(1 / t - 1)) + pc
-						.getPcim().getDistribution()
-						.cumulativeProbability(1 / t - 1))
-						* FastMath.abs(im.retrieveImr().derivative(1 / t - 1))
-						* (-1 / FastMath.pow(t, 2));
+				double epsilon = 1e-10;
+				if (FastMath.abs(t) < epsilon) {
+					return 0;
+				}
+				if (FastMath.abs(1 - t) < epsilon) {
+					return 0;
+				} else {
+					return (1
+							- edp.retrieveEdpIM().getDistributionFunction()
+									.distribution(1 / t - 1)
+									.cumulativeProbability(val)
+							* (1 - pc.getPcim().getDistribution()
+									.cumulativeProbability(1 / t - 1)) + pc
+							.getPcim().getDistribution()
+							.cumulativeProbability(1 / t - 1))
+							* FastMath.abs(im.retrieveImr().derivative(
+									1 / t - 1)) * (1 / FastMath.pow(t, 2));
+				}
 			}
 		};
 	}
 
-	// TODO: change private!
 	public UnivariateFunction integrandWithoutPc(final EDP edp, final IM im,
 			final double val) {
 		return new UnivariateFunction() {
 			public double value(double t) {
-				return (1 - edp.retrieveEdpIM().getDistributionFunction()
-						.distribution(1 / t - 1).cumulativeProbability(val))
-						* FastMath.abs(im.retrieveImr().derivative(1 / t - 1))
-						* (-1 / FastMath.pow(t, 2));
+				double epsilon = 1e-10;
+				if (FastMath.abs(t) < epsilon) {
+					return 0;
+				}
+				if (FastMath.abs(1 - t) < epsilon) {
+					return 0;
+				} else {
+
+					return (1 - edp.retrieveEdpIM().getDistributionFunction()
+							.distribution(1 / t - 1).cumulativeProbability(val))
+							* FastMath.abs(im.retrieveImr().derivative(
+									1 / t - 1)) * (1 / FastMath.pow(t, 2));
+				}
 			}
 		};
 
