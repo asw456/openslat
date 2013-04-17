@@ -8,18 +8,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SlatParser {
 
-	public static SlatInputStore parseInputJsonString(String s)
+	public static SlatInputStore parseInputJsonString(String inputJsonString)
 			throws JsonParseException, JsonMappingException, IOException {
 
-		ObjectMapper objm = new ObjectMapper();
-		SlatInputStore c = objm.readValue(s, SlatInputStore.class);
-		// {"im":{"name":"happiness","iMR":[{"imRName":"imr1","epistemicWeight":1.0,"model":{"type":"PowerModel","a":2.2,"b":2.3}},{"imRName":"imr2","epistemicWeight":1.0,"model":{"type":"PowerModel","a":2.2,"b":2.3}}]},"structure":null,"calculationOptions":null}
-		StringWriter sw2 = new StringWriter();
-		objm.writeValue(sw2, c);
-		System.out.println(sw2.toString());
+		ObjectMapper objmapper = new ObjectMapper();
+		SlatInputStore slatInputStore = objmapper.readValue(inputJsonString, SlatInputStore.class);
+		
+		StringWriter stringWriter = new StringWriter();
+		objmapper.writeValue(stringWriter, slatInputStore);
+		
+		System.out.println("printing the JSON string for debugging  ");
+		System.out.println(stringWriter.toString());
 
+		System.out.println("printing the IM name for debugging - ");
 		System.out.println("the IM's name is: "
-				+ c.getStructure().getIm().getName());
-		return c;
+				+ slatInputStore.getStructure().getIm().getName());
+		
+		return slatInputStore;
 	}
 }

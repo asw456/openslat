@@ -13,6 +13,10 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import org.openslat.control.SlatMainController;
+import org.openslat.jsonparser.SlatInputStore;
+import org.openslat.jsonparser.SlatParser;
+
 public class HttpReceiver extends Thread {
 
 	static final String HTML_START = "<html>"
@@ -336,6 +340,29 @@ public class HttpReceiver extends Thread {
 		fin.close();
 	}
 
+	
+	private static String generateResults(String inputString) {
+
+		SlatInputStore slatInputStore;
+		try {
+			slatInputStore = SlatParser.parseInputJsonString(inputString);
+
+			SlatMainController slatMainController = new SlatMainController();
+			slatMainController.setCalculationOptions(slatInputStore
+					.getCalculationOptions());
+			slatMainController.setStructure(slatInputStore.getStructure());
+
+			// and some magic happens
+			String outputString = slatMainController.generateOutputString();
+
+			return outputString;
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "fail";
+		}
+	}
+	
 	public static void main(String args[]) throws Exception {
 
 		@SuppressWarnings("resource")
