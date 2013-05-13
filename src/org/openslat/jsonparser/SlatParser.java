@@ -17,11 +17,10 @@ public class SlatParser {
 		StringWriter stringWriter = new StringWriter();
 		objmapper.writeValue(stringWriter, slatInputStore);
 		
-		System.out.println("printing the JSON string for debugging  ");
+		System.out.println("printing the JSON string for debugging, after parsing into Objects and returning to string  ");
 		System.out.println(stringWriter.toString());
 
-		System.out.println("printing the IM name for debugging - ");
-		System.out.println("the IM's name is: "
+		System.out.println("printing the IM name for debugging - the IM's name is: "
 				+ slatInputStore.getStructure().getIm().getName());
 		
 		return slatInputStore;

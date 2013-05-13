@@ -46,7 +46,7 @@ public class PC {
 
 		for (int i = 0; i < table.size(); ++i) {
 			PCIM pcimi = new PCIM();
-			pcimi.setDistribution(table.get(i).get(0), table.get(i).get(1));
+			pcimi.generateDistribution(table.get(i).get(0), table.get(i).get(1));
 			pcimi.setEpistemicWeight(table.get(i).get(2));
 			pcim.add(pcimi);
 		}

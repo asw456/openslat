@@ -29,12 +29,12 @@ public class PCIM {
 		return distribution.cumulativeProbability(im);
 	}
 
-	public void setDistribution(double mean, double sigma) {
+	public void generateDistribution(double mean, double sigma) {
 		distribution = new LogNormalDistribution(LNConverter.muGivenMeanSigma(
 				mean, sigma), sigma);
 	}
 
-	public void setDistribution(double[] imValues) {
+	public void generateDistribution(double[] imValues) {
 		this.distribution = FitLogNormalDistribution
 				.calculateLogNormalParameters(imValues);
 	}

@@ -31,6 +31,17 @@ public class SlatParserTest {
 	public static void main(String[] args) throws JsonGenerationException,
 			JsonMappingException, IOException {
 
+		// String inputJsonString =
+		// "{\"im\":{\"name\":\"happiness\",\"iMR\":[{\"imRName\":\"imr1\",\"epistemicWeight\":1.0,\"model\":{\"type\":\"PowerModel\",\"a\":2.2,\"b\":2.3}},{\"imRName\":\"imr2\",\"epistemicWeight\":1.0,\"model\":{\"type\":\"PowerModel\",\"a\":2.2,\"b\":2.3}}]}}";
+		String inputJsonString = generateJsonString();
+
+		SlatInputStore myInputStore = SlatParser.parseInputJsonString(inputJsonString);		
+
+	}
+
+	private static String generateJsonString() throws IOException,
+			JsonGenerationException, JsonMappingException {
+
 		// Construct an IM ====================
 		PowerModel pm = new PowerModel();
 		double[] params = { 2.2, 2.3 };
@@ -53,39 +64,38 @@ public class SlatParserTest {
 		// =====================================
 
 		// Construct EDP =======================
-        LogNormalModel lgnmdl = new LogNormalModel();
-        lgnmdl.setMeanModel(pm);
-        lgnmdl.setStddModel(pm);
-        
-        EDPIM edpIm = new EDPIM();
-        edpIm.setDistributionFunction(lgnmdl);
-        
-        EDP edp = new EDP();
-        edp.setEdpIM(new ArrayList<EDPIM>());
-        edp.addEdpIM(edpIm);
-		// =====================================
+		LogNormalModel lgnmdl = new LogNormalModel();
+		lgnmdl.setMeanModel(pm);
+		lgnmdl.setStddModel(pm);
 
+		EDPIM edpIm = new EDPIM();
+		edpIm.setDistributionFunction(lgnmdl);
+
+		EDP edp = new EDP();
+		edp.setEdpIM(new ArrayList<EDPIM>());
+		edp.addEdpIM(edpIm);
+		// =====================================
 
 		// Construct FF ========================
-        DamageState ds = new DamageState();
-        FragilityFunction ff = new FragilityFunction();
-        ff.setDamageStates(new ArrayList<DamageState>());
-        ff.getDamageStates().add(ds);
+		DamageState ds = new DamageState();
+		FragilityFunction ff = new FragilityFunction();
+		ff.setDamageStates(new ArrayList<DamageState>());
+		ff.getDamageStates().add(ds);
 		// =====================================
-		
+
 		// Construct component
 		Component component = new Component();
 		component.setFf(ff);
 		component.setEdp(edp);
 		// =====================================
-		
+
 		// Construct Performance group
- 		PerformanceGroup pg = new PerformanceGroup();
+		PerformanceGroup pg = new PerformanceGroup();
 		pg.setName("performanceGroupName");
 		pg.setComponents(new ArrayList<Component>());
 		pg.addComponent(component);
 		// =====================================
-		
+
 		// Construct and add example Structure to Store
 		Structure structure = new Structure();
 		structure.setIm(im);
@@ -98,16 +108,14 @@ public class SlatParserTest {
 		// null ;)
 		// =====================================
 
-		SlatInputStore g = new SlatInputStore(structure, null);
+		SlatInputStore slatInputStore = new SlatInputStore(structure, null);
 		ObjectMapper objm = new ObjectMapper();
-		StringWriter sw = new StringWriter();
-		objm.writeValue(sw, g);
-		System.out.println(sw.toString());
-
-		// String myJsonString =
-		// "{\"im\":{\"name\":\"happiness\",\"iMR\":[{\"imRName\":\"imr1\",\"epistemicWeight\":1.0,\"model\":{\"type\":\"PowerModel\",\"a\":2.2,\"b\":2.3}},{\"imRName\":\"imr2\",\"epistemicWeight\":1.0,\"model\":{\"type\":\"PowerModel\",\"a\":2.2,\"b\":2.3}}]}}";
-		// SlatParser parser = new SlatParser();
-		// parser.parseInputJsonString(myJsonString);
+		StringWriter stringWriter = new StringWriter();
+		objm.writeValue(stringWriter, slatInputStore);
+		System.out.println("printing the JSON string for debugging, after generating Objects and converting to JSON  ");
+		System.out.println(stringWriter.toString());
+		
+		return stringWriter.toString();
 	}
 
 }
