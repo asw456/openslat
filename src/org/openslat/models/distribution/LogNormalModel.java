@@ -57,4 +57,36 @@ public class LogNormalModel implements DistributionFunction {
 		this.stddModel = stddModel;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((meanModel == null) ? 0 : meanModel.hashCode());
+		result = prime * result
+				+ ((stddModel == null) ? 0 : stddModel.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof LogNormalModel))
+			return false;
+		LogNormalModel other = (LogNormalModel) obj;
+		if (meanModel == null) {
+			if (other.meanModel != null)
+				return false;
+		} else if (!meanModel.equals(other.meanModel))
+			return false;
+		if (stddModel == null) {
+			if (other.stddModel != null)
+				return false;
+		} else if (!stddModel.equals(other.stddModel))
+			return false;
+		return true;
+	}
 }

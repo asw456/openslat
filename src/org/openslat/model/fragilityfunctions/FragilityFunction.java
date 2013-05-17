@@ -8,7 +8,7 @@ import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.CholeskyDecomposition;
-import org.openslat.control.SlatMainController;
+import org.openslat.control.SlatInputStore;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize
 public class FragilityFunction {
 	@JsonIgnore
-	private SlatMainController openslat;
+	private SlatInputStore openslat;
 
 	private int identifier;
 	private String name;
@@ -180,11 +180,11 @@ public class FragilityFunction {
 		this.randLDS = randLDS;
 	}
 
-	public SlatMainController getOpenslat() {
+	public SlatInputStore getOpenslat() {
 		return openslat;
 	}
 
-	public void setOpenslat(SlatMainController openslat) {
+	public void setOpenslat(SlatInputStore openslat) {
 		this.openslat = openslat;
 	}
 

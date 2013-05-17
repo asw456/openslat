@@ -2,7 +2,7 @@ package org.openslat.model.edp;
 
 import java.util.ArrayList;
 
-import org.openslat.control.SlatMainController;
+import org.openslat.control.SlatInputStore;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -10,10 +10,11 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class EDP {
 
 	@JsonIgnore
-	private SlatMainController slatMC;
+	private SlatInputStore slatMC;
 	private String name;
 	private ArrayList<EDPIM> edpIM = new ArrayList<EDPIM>();
-
+	private double maxValue;
+	
 	/**
 	 * Randomly returns an EDP-IM relationship according to the epistemic
 	 * weights.
@@ -55,11 +56,11 @@ public class EDP {
 		this.edpIM = edpIM;
 	}
 
-	public SlatMainController getSlatMC() {
+	public SlatInputStore getSlatMC() {
 		return slatMC;
 	}
 
-	public void setSlatMC(SlatMainController slatMC) {
+	public void setSlatMC(SlatInputStore slatMC) {
 		this.slatMC = slatMC;
 	}
 
@@ -73,5 +74,38 @@ public class EDP {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public double getMaxValue() {
+		return maxValue;
+	}
+
+	public void setMaxValue(double maxValue) {
+		this.maxValue = maxValue;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((edpIM == null) ? 0 : edpIM.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof EDP))
+			return false;
+		EDP other = (EDP) obj;
+		if (edpIM == null) {
+			if (other.edpIM != null)
+				return false;
+		} else if (!edpIM.equals(other.edpIM))
+			return false;
+		return true;
 	}
 }

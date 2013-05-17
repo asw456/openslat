@@ -1,5 +1,7 @@
 package org.openslat.models.univariate;
 
+import java.util.Arrays;
+
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.apache.commons.math3.util.FastMath;
 import org.openslat.interfaces.DifferentiableFunction;
@@ -31,7 +33,7 @@ public class PowerModel implements DifferentiableFunction {
 	 * @param a
 	 * @param parameters[1]
 	 */
-	public void constructPowerModel(double[] parameters) {
+	public void setPowerModelParams(double[] parameters) {
 		this.parameters = parameters;
 	}
 
@@ -90,5 +92,27 @@ public class PowerModel implements DifferentiableFunction {
 
 	public void setParameters(double[] parameters) {
 		this.parameters = parameters;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(parameters);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PowerModel other = (PowerModel) obj;
+		if (!Arrays.equals(parameters, other.parameters))
+			return false;
+		return true;
 	}
 }

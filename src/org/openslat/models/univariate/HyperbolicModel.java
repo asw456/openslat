@@ -1,49 +1,42 @@
 package org.openslat.models.univariate;
 
+import org.apache.commons.math3.util.FastMath;
 import org.openslat.interfaces.DifferentiableFunction;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import java.util.Arrays;
+
 /**
- * Represents the hyperbolic model
+ * Represents the model
  * 
  * <p align="center">
- * <code>y(x) = a*x/(1-b*x)</code>
+ * <code>y(x) = a*exp(c/ln(x/b))</code>
  * </p>
  * 
- * where <code>a</code> and <code>b</code> are specified parameters.
+ * proposed by Bradley <i>et al</i>. (2007) as an improvement to the power model
+ * where <code>a</code>, <code>b</code> and <code>c</code> are specified
+ * parameters.
  * 
  * @author Alan Williams
  */
 @JsonSerialize
 public class HyperbolicModel implements DifferentiableFunction {
-	private double a;
-	private double b;
+	private double[] parameters;
 
 	/**
 	 * sets the model parameters directly
 	 * 
 	 * <p align="center">
-	 * <code>y(x) = a*x/(1-b*x)</code>
+	 * <code>y(x) = a*exp(c/ln(x/b))</code>
 	 * </p>
 	 * 
-	 * from a specified set of parameters <code>[a b]</code>.
+	 * from a specified set of parameters <code>[a b c]</code>.
 	 * 
-	 * @param a
-	 * @param b
-	 * @param c
+	 * @param parameters
 	 */
-	public void setHyperbolicModelParams(double a, double b) {
-		this.a = a;
-		this.b = b;
-	}
-
-	/**
-	 * sets the model parameters directly
-	 */
-	public void setHyperbolicModelParams(double[] parameters) {
-		this.a = parameters[0];
-		this.b = parameters[1];
+	public void setBradleyModelParams(double[] parameters) {
+		this.parameters = parameters;
 	}
 
 	/**
@@ -54,9 +47,12 @@ public class HyperbolicModel implements DifferentiableFunction {
 	 * @return output value
 	 */
 	public double value(double x) {
-
-		return a * x / (1 - b * x);
-
+		if (x >= (parameters[1] - 1e-10)) {
+			return 0;
+		} else {
+			return parameters[0]
+					* FastMath.exp(parameters[2] / FastMath.log(x / parameters[1]));
+		}
 	}
 
 	/**
@@ -67,9 +63,11 @@ public class HyperbolicModel implements DifferentiableFunction {
 	 * @return output value
 	 */
 	public double derivative(double x) {
-
-		return a / Math.pow(1 - b * x, 2);
-
+		double e = 1e-7;
+		return (value(x+e)-value(x-e))/(2*e);
+		//return -(parameters[0] * parameters[2] * Math.exp(parameters[2]
+		//		/ Math.log(x / parameters[1])))
+		//		/ (x * Math.pow(Math.log(x / parameters[1]), 2));
 	}
 
 	/**
@@ -78,7 +76,38 @@ public class HyperbolicModel implements DifferentiableFunction {
 	 * @return string representation of the model
 	 */
 	public String toString() {
-		return "hyperbolic model y(x) = a*x/(1-b*x) with parameters a = "
-				+ this.a + " and b = " + this.b;
+		return "Bradley model y(x) = a*exp(c/ln(x/b)) with parameters a = "
+				+ this.parameters[0] + " and b = " + this.parameters[1]
+				+ " and c = " + this.parameters[2];
+	}
+
+	public double[] getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(double[] parameters) {
+		this.parameters = parameters;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(parameters);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		HyperbolicModel other = (HyperbolicModel) obj;
+		if (!Arrays.equals(parameters, other.parameters))
+			return false;
+		return true;
 	}
 }

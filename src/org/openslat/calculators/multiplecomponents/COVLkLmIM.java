@@ -1,12 +1,12 @@
 package org.openslat.calculators.multiplecomponents;
 
 import org.openslat.calculators.component.LossIMNC;
-import org.openslat.control.SlatMainController;
+import org.openslat.control.SlatInputStore;
 import org.openslat.model.structure.Component;
 
 public class COVLkLmIM {
 
-	private SlatMainController slatMC;
+	private SlatInputStore slatMC;
 
 	// private Component componentk;
 	// private Component componentm;
@@ -110,11 +110,11 @@ public class COVLkLmIM {
 		return cov_LIMNCkm;
 	}
 
-	public SlatMainController getSlatMainController() {
+	public SlatInputStore getSlatInputStore() {
 		return slatMC;
 	}
 
-	public void setSlatMainController(SlatMainController slatMainController) {
-		this.slatMC = slatMainController;
+	public void setSlatInputStore(SlatInputStore SlatInputStore) {
+		this.slatMC = SlatInputStore;
 	}
 }

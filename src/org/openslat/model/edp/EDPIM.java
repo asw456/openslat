@@ -82,4 +82,32 @@ public class EDPIM {
 		this.name = name;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((distributionFunction == null) ? 0 : distributionFunction
+						.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof EDPIM))
+			return false;
+		EDPIM other = (EDPIM) obj;
+		if (distributionFunction == null) {
+			if (other.distributionFunction != null)
+				return false;
+		} else if (!distributionFunction.equals(other.distributionFunction))
+			return false;
+		return true;
+	}
+
 }

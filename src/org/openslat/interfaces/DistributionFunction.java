@@ -21,4 +21,6 @@ import java.util.ArrayList;
 public interface DistributionFunction {
 	public RealDistribution distribution(double x);
 	public ArrayList<ArrayList<Double>> getTable();
+	public int hashCode();
+	public boolean equals(Object obj);
 }

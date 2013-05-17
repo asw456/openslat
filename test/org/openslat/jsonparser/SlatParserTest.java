@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
+import org.openslat.control.SlatInputStore;
 import org.openslat.model.edp.EDP;
 import org.openslat.model.edp.EDPIM;
 import org.openslat.model.fragilityfunctions.DamageState;
@@ -35,6 +36,7 @@ public class SlatParserTest {
 		// "{\"im\":{\"name\":\"happiness\",\"iMR\":[{\"imRName\":\"imr1\",\"epistemicWeight\":1.0,\"model\":{\"type\":\"PowerModel\",\"a\":2.2,\"b\":2.3}},{\"imRName\":\"imr2\",\"epistemicWeight\":1.0,\"model\":{\"type\":\"PowerModel\",\"a\":2.2,\"b\":2.3}}]}}";
 		String inputJsonString = generateJsonString();
 
+		@SuppressWarnings("unused")
 		SlatInputStore myInputStore = SlatParser.parseInputJsonString(inputJsonString);		
 
 	}
@@ -45,7 +47,7 @@ public class SlatParserTest {
 		// Construct an IM ====================
 		PowerModel pm = new PowerModel();
 		double[] params = { 2.2, 2.3 };
-		pm.constructPowerModel(params);
+		pm.setPowerModelParams(params);
 
 		IMR imr1 = new IMR();
 		imr1.setImRName("imr1");
@@ -72,6 +74,7 @@ public class SlatParserTest {
 		edpIm.setDistributionFunction(lgnmdl);
 
 		EDP edp = new EDP();
+		edp.setMaxValue(5.7);
 		edp.setEdpIM(new ArrayList<EDPIM>());
 		edp.addEdpIM(edpIm);
 		// =====================================

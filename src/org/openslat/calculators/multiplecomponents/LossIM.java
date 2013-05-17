@@ -2,7 +2,7 @@ package org.openslat.calculators.multiplecomponents;
 
 import java.util.ArrayList;
 import org.openslat.calculators.component.LossIMNC;
-import org.openslat.control.SlatMainController;
+import org.openslat.control.SlatInputStore;
 import org.openslat.model.collapse.LossCollapse;
 import org.openslat.model.structure.Component;
 
@@ -12,7 +12,7 @@ import org.openslat.model.structure.Component;
  */
 public class LossIM {
 
-	private SlatMainController openslat;
+	private SlatInputStore openslat;
 	private LossIMNC lossIMNC;
 	private COVLkLmIM covLkLmIM;
 
@@ -125,11 +125,11 @@ public class LossIM {
 		return sigmaTotalLoss;
 	}
 
-	public SlatMainController getOpenslat() {
+	public SlatInputStore getOpenslat() {
 		return openslat;
 	}
 
-	public void setOpenslat(SlatMainController openslat) {
+	public void setOpenslat(SlatInputStore openslat) {
 		this.openslat = openslat;
 	}
 

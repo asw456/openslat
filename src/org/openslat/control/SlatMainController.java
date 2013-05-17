@@ -13,7 +13,7 @@ public class SlatMainController {
 	public String generateOutputString() {
 		String outputString = "";
 
-		CompLossEdpOutput compLossEdpOutput = new CompLossEdpOutput(this);
+		//CompLossEdpOutput compLossEdpOutput = new CompLossEdpOutput(this);
 		
 		
 		
@@ -24,7 +24,7 @@ public class SlatMainController {
 		
 		// TODO: presentation of these can be taken care of in the browser
 		// ImROutput imROutput = new ImROutput();
-		// imROutput.setSlatMainController(this);
+		// imROutput.setSlatInputStore(this);
 		// EDP-IM output
 		// 
 

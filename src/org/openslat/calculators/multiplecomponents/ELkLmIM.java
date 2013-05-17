@@ -6,7 +6,7 @@ package org.openslat.calculators.multiplecomponents;
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
 import org.openslat.calculators.multiplecomponents.ELijEDPij;
-import org.openslat.control.SlatMainController;
+import org.openslat.control.SlatInputStore;
 import org.openslat.model.structure.Component;
 import org.openslat.numerical.LognormalPDF;
 import org.openslat.numerical.LognormalPDFBivariate;
@@ -18,7 +18,7 @@ import org.openslat.numerical.LNConverter;
  */
 public class ELkLmIM {
 
-	private SlatMainController slatMC;
+	private SlatInputStore slatMC;
 	private ELijEDPij eLijEDPij = new ELijEDPij();
 	private UnivariateIntegrator integrator;
 	private Component componentk;

@@ -12,7 +12,7 @@ import org.openslat.model.edp.EDPIM;
 import org.openslat.model.im.IM;
 import org.openslat.model.im.IMR;
 import org.openslat.models.distribution.LogNormalModel;
-import org.openslat.models.univariate.BradleyModel;
+import org.openslat.models.univariate.HyperbolicModel;
 import org.openslat.models.univariate.PowerModel;
 
 public class EDPRTest {
@@ -27,9 +27,9 @@ public class EDPRTest {
 	@Before
 	public void setUp() throws Exception {
 
-		BradleyModel bm = new BradleyModel();
+		HyperbolicModel bm = new HyperbolicModel();
 		double[] bparams = { 1221, 29.8, 62.2 };
-		bm.constructBradleyModel(bparams);
+		bm.setBradleyModelParams(bparams);
 
 		IMR imr1 = new IMR();
 		imr1.setImRName("imr1");
@@ -41,14 +41,15 @@ public class EDPRTest {
 		im = new IM();
 		im.setName("happiness");
 		im.setiMR(iMR);
+		im.setMaxValue(1);
 
 		pm1 = new PowerModel();
 		double[] pparams1 = { 0.1, 1.5 };
-		pm1.constructPowerModel(pparams1);
+		pm1.setPowerModelParams(pparams1);
 
 		pm2 = new PowerModel();
 		double[] pparams2 = { 0.5, 0.0 };
-		pm2.constructPowerModel(pparams2);
+		pm2.setPowerModelParams(pparams2);
 
 		lgnmdl = new LogNormalModel();
 		lgnmdl.setMeanModel(pm1);
@@ -67,7 +68,7 @@ public class EDPRTest {
 	public final void testintegrandWithoutPc() {
 		EDPR edpr = new EDPR();
 		double val = 0.001;
-		UnivariateFunction function = edpr.integrandWithoutPc(edp, im, val);
+		UnivariateFunction function = edpr.integrandWithoutPc(edp.retrieveEdpIM(), im, val);
 		assert(true);
 	}
 

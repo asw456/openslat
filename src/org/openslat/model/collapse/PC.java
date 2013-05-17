@@ -1,14 +1,14 @@
 package org.openslat.model.collapse;
 
 import java.util.ArrayList;
-import org.openslat.control.SlatMainController;
+import org.openslat.control.SlatInputStore;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize
 public class PC {
 	@JsonIgnore
-	private SlatMainController openslat;
+	private SlatInputStore openslat;
 	private ArrayList<PCIM> pcim = new ArrayList<PCIM>();
 
 	/**
@@ -61,11 +61,11 @@ public class PC {
 		return this.pcim.remove(pcim);
 	}
 
-	public SlatMainController getOpenslat() {
+	public SlatInputStore getOpenslat() {
 		return openslat;
 	}
 
-	public void setOpenslat(SlatMainController openslat) {
+	public void setOpenslat(SlatInputStore openslat) {
 		this.openslat = openslat;
 	}
 

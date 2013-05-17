@@ -2,8 +2,7 @@ package org.openslat.receiver;
 
 import java.io.IOException;
 
-import org.openslat.control.SlatMainController;
-import org.openslat.jsonparser.SlatInputStore;
+import org.openslat.control.SlatInputStore;
 import org.openslat.jsonparser.SlatParser;
 
 import com.rabbitmq.client.ConnectionFactory;
@@ -58,14 +57,16 @@ public class TaskReceiver {
 		try {
 			slatInputStore = SlatParser.parseInputJsonString(inputString);
 
-			SlatMainController slatMainController = new SlatMainController();
-			slatMainController.setCalculationOptions(slatInputStore
-					.getCalculationOptions());
-			slatMainController.setStructure(slatInputStore.getStructure());
+			//SlatInputStore SlatInputStore = new SlatInputStore();
+			//SlatInputStore.setCalculationOptions(slatInputStore
+			//		.getCalculationOptions());
+			//SlatInputStore.setStructure(slatInputStore.getStructure());
 
 			// and some magic happens
-			String outputString = slatMainController.generateOutputString();
+			//String outputString = SlatInputStore.generateOutputString();
 
+			String outputString = "";
+			
 			return outputString;
 
 		} catch (IOException e) {

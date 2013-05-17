@@ -1,9 +1,11 @@
 package org.openslat.model.structure;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.openslat.model.collapse.LossCollapse;
 import org.openslat.model.collapse.PC;
+import org.openslat.model.edp.EDP;
 import org.openslat.model.im.IM;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,6 +30,15 @@ public class Structure {
 			components.addAll(pg.getComponents());
 		}
 		return components;
+	}
+	
+	@JsonIgnore
+	public HashSet<EDP> getEDPHashSet(){
+		HashSet<EDP> edpHashSet = new HashSet<EDP>();
+		for (PerformanceGroup pg: performanceGroups){
+			edpHashSet.add(pg.getComponents().get(0).getEdp());
+		}
+		return edpHashSet;
 	}
 
 	public ArrayList<PerformanceGroup> getPerformanceGroups() {

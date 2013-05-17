@@ -5,7 +5,7 @@ package org.openslat.calculators.multiplecomponents;
 
 import java.util.HashMap;
 
-import org.openslat.control.SlatMainController;
+import org.openslat.control.SlatInputStore;
 import org.openslat.model.fragilityfunctions.FragilityFunction;
 import org.openslat.model.fragilityfunctions.Material;
 import org.openslat.model.structure.Component;
@@ -21,7 +21,7 @@ import org.openslat.numerical.RNGenerator;
  */
 public class LDSCorrelation {
 
-	private SlatMainController slatMC;
+	private SlatInputStore slatMC;
 
 	public double corr_Lossij_DS(Component componenti, Component componentj) {
 		if (slatMC.getCalculationOptions().getCorrelationOptions().getCOR_LDS() == 0) {
@@ -95,11 +95,11 @@ public class LDSCorrelation {
 				/ (var_mat + var_comp + var_ij);
 	}
 
-	public SlatMainController getSlatMainController() {
+	public SlatInputStore getSlatInputStore() {
 		return slatMC;
 	}
 
-	public void setSlatMainController(SlatMainController slatMainController) {
-		this.slatMC = slatMainController;
+	public void setSlatInputStore(SlatInputStore SlatInputStore) {
+		this.slatMC = SlatInputStore;
 	}
 }

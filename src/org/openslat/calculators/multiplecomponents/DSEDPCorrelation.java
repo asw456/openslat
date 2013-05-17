@@ -5,7 +5,7 @@ package org.openslat.calculators.multiplecomponents;
 
 import java.util.HashMap;
 
-import org.openslat.control.SlatMainController;
+import org.openslat.control.SlatInputStore;
 import org.openslat.model.edp.EDP;
 import org.openslat.model.fragilityfunctions.FragilityFunction;
 import org.openslat.model.fragilityfunctions.Material;
@@ -22,7 +22,7 @@ import org.openslat.numerical.RNGenerator;
  */
 public class DSEDPCorrelation {
 
-	private SlatMainController slatMC;
+	private SlatInputStore slatMC;
 
 	public double corr_DSij_EDP(Component componenti, Component componentj) {
 		if (slatMC.getCalculationOptions().getCorrelationOptions()

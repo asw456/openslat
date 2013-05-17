@@ -3,7 +3,7 @@ package org.openslat.models.distribution;
 import java.util.ArrayList;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
-import org.apache.commons.math3.analysis.UnivariateFunction;
+import org.openslat.interfaces.DifferentiableFunction;
 import org.openslat.interfaces.DistributionFunction;
 
 /**
@@ -14,8 +14,8 @@ import org.openslat.interfaces.DistributionFunction;
  */
 public class NormalModel implements DistributionFunction {
 
-	private UnivariateFunction meanModel;
-	private UnivariateFunction stddModel;
+	private DifferentiableFunction meanModel;
+	private DifferentiableFunction stddModel;
 
 	/**
 	 * Constructs the combined model from the two parametric models.
@@ -23,8 +23,8 @@ public class NormalModel implements DistributionFunction {
 	 * @param meanModel
 	 * @param stddModel
 	 */
-	public NormalModel(UnivariateFunction meanModel,
-			UnivariateFunction stddModel) {
+	public NormalModel(DifferentiableFunction meanModel,
+			DifferentiableFunction stddModel) {
 
 		this.meanModel = meanModel;
 		this.stddModel = stddModel;
@@ -67,6 +67,39 @@ public class NormalModel implements DistributionFunction {
 	public ArrayList<ArrayList<Double>> getTable() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((meanModel == null) ? 0 : meanModel.hashCode());
+		result = prime * result
+				+ ((stddModel == null) ? 0 : stddModel.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		NormalModel other = (NormalModel) obj;
+		if (meanModel == null) {
+			if (other.meanModel != null)
+				return false;
+		} else if (!meanModel.equals(other.meanModel))
+			return false;
+		if (stddModel == null) {
+			if (other.stddModel != null)
+				return false;
+		} else if (!stddModel.equals(other.stddModel))
+			return false;
+		return true;
 	}
 
 }

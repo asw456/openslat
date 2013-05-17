@@ -13,8 +13,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-import org.openslat.control.SlatMainController;
-import org.openslat.jsonparser.SlatInputStore;
+import org.openslat.control.SlatInputStore;
 import org.openslat.jsonparser.SlatParser;
 
 public class HttpReceiver extends Thread {
@@ -347,14 +346,15 @@ public class HttpReceiver extends Thread {
 		try {
 			slatInputStore = SlatParser.parseInputJsonString(inputString);
 
-			SlatMainController slatMainController = new SlatMainController();
-			slatMainController.setCalculationOptions(slatInputStore
-					.getCalculationOptions());
-			slatMainController.setStructure(slatInputStore.getStructure());
+			//SlatInputStore SlatInputStore = new SlatInputStore();
+			//SlatInputStore.setCalculationOptions(slatInputStore
+			//		.getCalculationOptions());
+			//SlatInputStore.setStructure(slatInputStore.getStructure());
 
 			// and some magic happens
-			String outputString = slatMainController.generateOutputString();
-
+			//String outputString = SlatInputStore.generateOutputString();
+			String outputString = "";
+			
 			return outputString;
 
 		} catch (IOException e) {

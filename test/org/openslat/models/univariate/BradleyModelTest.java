@@ -10,13 +10,13 @@ import org.junit.Test;
 
 public class BradleyModelTest {
 
-	BradleyModel bm1;
+	HyperbolicModel bm1;
 
 	@Before
 	public void setUp() throws Exception {
-		bm1 = new BradleyModel();
+		bm1 = new HyperbolicModel();
 		double[] pparams1 = { 1221, 29.8, 62.2 };
-		bm1.constructBradleyModel(pparams1);
+		bm1.setBradleyModelParams(pparams1);
 	}
 
 	@Test

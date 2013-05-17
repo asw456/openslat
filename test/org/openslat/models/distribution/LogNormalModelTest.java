@@ -18,10 +18,10 @@ public class LogNormalModelTest {
 	public void setUp() throws Exception {
 		pm1 = new PowerModel();
 		double[] pparams1 = { 0.1, 1.5 };
-		pm1.constructPowerModel(pparams1);
+		pm1.setPowerModelParams(pparams1);
 		pm2 = new PowerModel();
 		double[] pparams2 = { 0.5, 0.0 };
-		pm2.constructPowerModel(pparams2);
+		pm2.setPowerModelParams(pparams2);
 		lgnmdl.setMeanModel(pm1);
 		lgnmdl.setStddModel(pm2);
 	}

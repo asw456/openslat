@@ -2,7 +2,7 @@ package org.openslat.model.im;
 
 import java.util.ArrayList;
 
-import org.openslat.control.SlatMainController;
+import org.openslat.control.SlatInputStore;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -15,8 +15,9 @@ public class IM {
 
 	private String name = "defaultName";
 	@JsonIgnore
-	private SlatMainController slatMC;
+	private SlatInputStore slatMC;
 	private ArrayList<IMR> iMR = new ArrayList<IMR>();
+	private double maxValue;
 
 	/**
 	 * Randomly returns an IM-R relationship according to the epistemic weights.
@@ -64,12 +65,20 @@ public class IM {
 		this.name = name;
 	}
 
-	public SlatMainController getSlatMC() {
+	public SlatInputStore getSlatMC() {
 		return slatMC;
 	}
 
-	public void setSlatMC(SlatMainController slatMC) {
+	public void setSlatMC(SlatInputStore slatMC) {
 		this.slatMC = slatMC;
+	}
+
+	public void setMaxValue(double maxValue){
+		this.maxValue = maxValue;
+	}
+	
+	public double getMaxValue() {
+		return maxValue;
 	}
 
 }

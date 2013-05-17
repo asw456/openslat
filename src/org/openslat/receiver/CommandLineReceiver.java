@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
-import org.openslat.control.SlatMainController;
-import org.openslat.jsonparser.SlatInputStore;
+import org.openslat.control.SlatInputStore;
 import org.openslat.jsonparser.SlatParser;
 
 public class CommandLineReceiver {
@@ -16,17 +15,17 @@ public class CommandLineReceiver {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
+		/*
 		try {
 			String inputString = FileUtils.readFileToString(new File(args[0]));
 			SlatInputStore slatInputStore = SlatParser.parseInputJsonString(inputString);
 
-			SlatMainController slatMainController = new SlatMainController();
-			slatMainController.setCalculationOptions(slatInputStore.getCalculationOptions());
-			slatMainController.setStructure(slatInputStore.getStructure());
+			SlatInputStore SlatInputStore = new SlatInputStore();
+			SlatInputStore.setCalculationOptions(slatInputStore.getCalculationOptions());
+			SlatInputStore.setStructure(slatInputStore.getStructure());
 
 			// and some magic happens
-			String outputString = slatMainController.generateOutputString();
+			String outputString = SlatInputStore.generateOutputString();
 			
 			File outputFile = new File(args[1]);
 			outputFile.mkdirs();
@@ -36,5 +35,6 @@ public class CommandLineReceiver {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 }

@@ -3,7 +3,7 @@
  */
 package org.openslat.calculators.output;
 
-import org.openslat.control.SlatMainController;
+import org.openslat.control.SlatInputStore;
 
 /**
  * @author alan
@@ -11,22 +11,22 @@ import org.openslat.control.SlatMainController;
  */
 public class CompLossEdpOutput {
 
-	private SlatMainController slatMainController;
+	private SlatInputStore SlatInputStore;
 
-	public CompLossEdpOutput(SlatMainController slatMainController) {
-		this.slatMainController = slatMainController;
+	public CompLossEdpOutput(SlatInputStore SlatInputStore) {
+		this.SlatInputStore = SlatInputStore;
 	}
 
 	public void doThisAndThat() {
 
 	}
 
-	public SlatMainController getSlatMainController() {
-		return slatMainController;
+	public SlatInputStore getSlatInputStore() {
+		return SlatInputStore;
 	}
 
-	public void setSlatMainController(SlatMainController slatMainController) {
-		this.slatMainController = slatMainController;
+	public void setSlatInputStore(SlatInputStore SlatInputStore) {
+		this.SlatInputStore = SlatInputStore;
 	}
 
 }

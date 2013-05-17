@@ -26,7 +26,7 @@ public class SlatAttempt1 {
 
 		PowerModel pm = new PowerModel();
 		double[] params = {2.2, 2.3};
-		pm.constructPowerModel(params);
+		pm.setPowerModelParams(params);
 		
 		IMR imr1 = new IMR();
 		imr1.setImRName("imr1");
