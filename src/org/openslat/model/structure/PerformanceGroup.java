@@ -12,7 +12,7 @@ public class PerformanceGroup {
 
 	public void setNumberOfComponents() {
 		for (Component each : components) {
-			//each.getFf().setMeans(components.size());
+			each.getFf().setMeans(components.size());
 		}
 	}
 
