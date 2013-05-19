@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 
 import org.apache.commons.math3.analysis.UnivariateFunction;
+import org.apache.commons.math3.distribution.LogNormalDistribution;
 import org.junit.Before;
 import org.junit.Test;
 import org.openslat.calculators.rate.EDPR;
@@ -67,7 +68,6 @@ public class EDPIMTest {
 		EDPR edpr = new EDPR();
 		double val = 0.001;
 		UnivariateFunction function = edpr.integrandWithoutPc(edp.retrieveEdpIM(), im, val);
-		assert(true);
 	}
 
 	@Test
@@ -81,4 +81,16 @@ public class EDPIMTest {
 		EDPR edpr = new EDPR();
 		assertEquals(7.88e-2, edpr.edpRate(1e-3, edp, im, null), 1e-3);
 	}
+	
+	@Test
+	public final void testEdpIm(){
+		LogNormalDistribution lgnd = (LogNormalDistribution) edp.retrieveEdpIM().getDistributionFunction().distribution(1);
+		
+		
+		
+	}
+	
+	
+	
+	
 }

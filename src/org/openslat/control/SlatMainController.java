@@ -1,7 +1,5 @@
 package org.openslat.control;
 
-import org.openslat.calculators.output.CompLossEdpOutput;
-import org.openslat.calculators.output.ImROutput;
 import org.openslat.model.structure.Structure;
 import org.openslat.options.CalculationOptions;
 

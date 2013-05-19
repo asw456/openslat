@@ -14,7 +14,7 @@ import org.openslat.control.SlatInputStore;
 public class LossR {
 
 	private UnivariateIntegrator integrator = new SimpsonIntegrator();
-	private SlatInputStore openslat;
+	private SlatInputStore sis;
 
 	public double lossRate(double inputLoss) {
 
@@ -70,15 +70,15 @@ public class LossR {
 				lossIM.sigmaLoss(im)).cumulativeProbability(loss);
 
 		double gLIM; 
-		if (openslat.getCalculationOptions().isCollapse()) {
-			double lnMeanLC = openslat.getStructure().getLossCollapse()
+		if (sis.getCalculationOptions().isCollapse()) {
+			double lnMeanLC = sis.getStructure().getLossCollapse()
 					.meanLoss();
-			double sigmaLC = openslat.getStructure().getLossCollapse()
+			double sigmaLC = sis.getStructure().getLossCollapse()
 					.sigmaLoss();
 			double probLIMC = new LogNormalDistribution(lnMeanLC, sigmaLC)
 					.cumulativeProbability(loss);
 
-			double probCollapse = openslat.getStructure().getPc().getPcim()
+			double probCollapse = sis.getStructure().getPc().getPcim()
 					.probability(im);
 		
 			gLIM = (1-probCollapse)*(1-probLIMNC) + probCollapse*(1-probLIMC); 
@@ -86,7 +86,7 @@ public class LossR {
 			gLIM = 1-probLIMNC;
 		}
 
-		double lossRi = (1/Math.pow(t,2))*gLIM*openslat.getStructure().getIm().retrieveImr().derivative(im);
+		double lossRi = (1/Math.pow(t,2))*gLIM*sis.getStructure().getIm().retrieveImr().derivative(im);
 		return lossRi;
 	}
 
@@ -99,10 +99,10 @@ public class LossR {
 	}
 
 	public SlatInputStore getOpenslat() {
-		return openslat;
+		return sis;
 	}
 
 	public void setOpenslat(SlatInputStore openslat) {
-		this.openslat = openslat;
+		this.sis = openslat;
 	}
 }

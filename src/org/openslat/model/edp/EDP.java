@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class EDP {
 
 	@JsonIgnore
-	private SlatInputStore slatMC;
+	private SlatInputStore sis;
 	private String name;
 	private ArrayList<EDPIM> edpIM = new ArrayList<EDPIM>();
 	private double maxValue;
@@ -28,7 +28,7 @@ public class EDP {
 		} else if (edpIM.size() == 1) {
 			return edpIM.get(0);
 		} else {
-			double rn = slatMC.getCalculationOptions().getEpistemicLogicTreeValues().getRandEDPIM();
+			double rn = sis.getCalculationOptions().getEpistemicLogicTreeValues().getRandEDPIM();
 			ArrayList<Double> epistemicWeights = new ArrayList<Double>();
 			double total = 0;
 			for (EDPIM each : edpIM) {
@@ -57,11 +57,11 @@ public class EDP {
 	}
 
 	public SlatInputStore getSlatMC() {
-		return slatMC;
+		return sis;
 	}
 
-	public void setSlatMC(SlatInputStore slatMC) {
-		this.slatMC = slatMC;
+	public void setSis(SlatInputStore slatMC) {
+		this.sis = slatMC;
 	}
 
 	public ArrayList<EDPIM> getEdpIM() {

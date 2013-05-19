@@ -13,14 +13,13 @@ import org.openslat.model.structure.Component;
 public class LossIM {
 
 	private SlatInputStore sis;
-	private LossIMNC lossIMNC;
-	private COVLkLmIM covLkLmIM;
+	private LossIMNC lossIMNC = new LossIMNC();
+	private COVLkLmIM covLkLmIM = new COVLkLmIM();
 
 	public double meanLoss(double im) {
-		ArrayList<Component> components = sis.getStructure()
-				.getComponents();
+		ArrayList<Component> components = sis.getStructure().getComponents();
 
-		// compute mean loss (no collapse)
+		// compute mean loss (no collapse) TODO:replicated in sigma. Combine
 		double lossNC = 0;
 		double lossC = 0;
 		for (Component c : components) {
@@ -30,8 +29,7 @@ public class LossIM {
 		// COMPUTE LOSS taking col/no col into account
 		double probCollapse;
 		if (sis.getCalculationOptions().isCollapse()) {
-			probCollapse = sis.getStructure().getPc().getPcim()
-					.probability(im);
+			probCollapse = sis.getStructure().getPc().getPcim().probability(im);
 		} else {
 			probCollapse = 0;
 		}
@@ -44,8 +42,7 @@ public class LossIM {
 	}
 
 	public double meanLossNC(double im) {
-		ArrayList<Component> components = sis.getStructure()
-				.getComponents();
+		ArrayList<Component> components = sis.getStructure().getComponents();
 
 		// compute mean loss (no collapse)
 		double lossNC = 0;
@@ -65,10 +62,8 @@ public class LossIM {
 	}
 
 	public double sigmaLoss(double im) {
-		ArrayList<Component> components = sis.getStructure()
-				.getComponents();
+		ArrayList<Component> components = sis.getStructure().getComponents();
 		// TODO: return sigma (as coded...?) or variance?
-
 		// compute mean loss (no collapse)
 		double lossNC = 0;
 		double lossC = 0;
@@ -82,6 +77,9 @@ public class LossIM {
 			for (int m = 0; m <= k; ++m) {
 				double cov_LIMNCkm = covLkLmIM.covLIMNCkm(components.get(k),
 						components.get(m), im);
+				
+				System.out.println("varLoss:  " + varLossNC);
+				
 				if (k == m) {
 					varLossNC = varLossNC + cov_LIMNCkm;
 				} else {
@@ -98,8 +96,7 @@ public class LossIM {
 		// COMPUTE LOSS taking col/no col into account
 		double probCollapse;
 		if (sis.getCalculationOptions().isCollapse()) {
-			probCollapse = sis.getStructure().getPc().getPcim()
-					.probability(im);
+			probCollapse = sis.getStructure().getPc().getPcim().probability(im);
 		} else {
 			probCollapse = 0;
 		}
@@ -125,12 +122,12 @@ public class LossIM {
 		return sigmaTotalLoss;
 	}
 
-	public SlatInputStore getOpenslat() {
+	public SlatInputStore getSis() {
 		return sis;
 	}
 
-	public void setOpenslat(SlatInputStore openslat) {
-		this.sis = openslat;
+	public void setSis(SlatInputStore sis) {
+		this.sis = sis;
 	}
 
 	public LossIMNC getLossIMNC() {

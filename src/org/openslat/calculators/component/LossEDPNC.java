@@ -76,12 +76,17 @@ public class LossEDPNC {
 							.calcMeanLoss(), 2)
 					* (Math.exp(Math.pow(component.getFf().getDamageStates()
 							.get(i).calcSigmaLoss(), 2) - 1) - 1.0);
+			
 			mu_L2_EDP = mu_L2_EDP + mu_L2_DS * pDSedp[i];
+			//System.out.println("mu_L2_EDP:  " + mu_L2_EDP);
+			
 		}
 
 		if (meanLoss <= 0) {
 			sigmaLoss = 0;
 		} else {
+			System.out.println("mu_L2_EDP:    " + Math.log(mu_L2_EDP / Math.pow(meanLoss, 2)));
+			// SQUARE ROOT OF A NEGATIVE HERE!!
 			sigmaLoss = Math.sqrt(Math.log(mu_L2_EDP / Math.pow(meanLoss, 2)));
 		}
 

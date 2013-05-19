@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize
 public class FragilityFunction {
 	@JsonIgnore
-	private SlatInputStore openslat;
+	private SlatInputStore sis;
 
 	private int identifier;
 	private String name;
@@ -61,7 +61,7 @@ public class FragilityFunction {
 		randDSEDP = new double[damageStates.size()];
 		randLDS = new double[damageStates.size()];
 
-		if (openslat.getCalculationOptions().getCorrelationOptions()
+		if (sis.getCalculationOptions().getCorrelationOptions()
 				.getCORE_DSEDP() == 0) {
 			NormalDistribution nd = new NormalDistribution();
 			for (int i = 0; i < damageStates.size(); i = i + 1) {
@@ -70,7 +70,7 @@ public class FragilityFunction {
 			}
 		}
 
-		if (openslat.getCalculationOptions().getCorrelationOptions()
+		if (sis.getCalculationOptions().getCorrelationOptions()
 				.getCORE_DSEDP() == 1) {
 			NormalDistribution nd = new NormalDistribution();
 			double rn = nd.sample();
@@ -181,11 +181,11 @@ public class FragilityFunction {
 	}
 
 	public SlatInputStore getOpenslat() {
-		return openslat;
+		return sis;
 	}
 
-	public void setOpenslat(SlatInputStore openslat) {
-		this.openslat = openslat;
+	public void setSis(SlatInputStore sis) {
+		this.sis = sis;
 	}
 
 }

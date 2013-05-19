@@ -6,15 +6,10 @@ import org.openslat.model.structure.Component;
 
 public class COVLkLmIM {
 
-	private SlatInputStore slatMC;
-
-	// private Component componentk;
-	// private Component componentm;
+	private SlatInputStore sis;
 
 	public double covLIMNCkm(Component componentk, Component componentm,
 			double im) {
-		// this.componentk = componentk;
-		// this.componentm = componentm;
 
 		double corr_lnEDPij_IM = 0;
 		double corr_Lossij_DS = 0;
@@ -30,19 +25,19 @@ public class COVLkLmIM {
 		}
 
 		// DETERMINE aleatory correlation for EDPIM relationship
-		if (slatMC.getCalculationOptions().getCorrelationOptions()
+		if (sis.getCalculationOptions().getCorrelationOptions()
 				.getCOR_EDPIM() == 0) {
 			corr_lnEDPij_IM = 0;
-		} else if (slatMC.getCalculationOptions().getCorrelationOptions()
+		} else if (sis.getCalculationOptions().getCorrelationOptions()
 				.getCOR_EDPIM() == 1) {
 			corr_lnEDPij_IM = 1;
-		} else if (slatMC.getCalculationOptions().getCorrelationOptions()
+		} else if (sis.getCalculationOptions().getCorrelationOptions()
 				.getCOR_EDPIM() == 2) {
 			if (componentk.getEdp().equals(componentm.getEdp())) {
 				corr_lnEDPij_IM = 1;
 			} else {
-				EDPIMCorrelations edpIMCorrelations = new EDPIMCorrelations();
-				corr_lnEDPij_IM = edpIMCorrelations.edpCorrelation(componentk,
+				//EDPIMCorrelations edpIMCorrelations = new EDPIMCorrelations();
+				corr_lnEDPij_IM = EDPIMCorrelations.edpCorrelation(componentk,
 						componentm, im);
 			}
 		}
@@ -51,12 +46,12 @@ public class COVLkLmIM {
 		// Loss EDP correlation
 
 		// determine aleatory correlation for loss-DS relationship
-		if (slatMC.getCalculationOptions().getCorrelationOptions().getCOR_LDS() == 0) {
+		if (sis.getCalculationOptions().getCorrelationOptions().getCOR_LDS() == 0) {
 			corr_Lossij_DS = 0;
-		} else if (slatMC.getCalculationOptions().getCorrelationOptions()
+		} else if (sis.getCalculationOptions().getCorrelationOptions()
 				.getCOR_LDS() == 1) {
 			corr_lnEDPij_IM = 1;
-		} else if (slatMC.getCalculationOptions().getCorrelationOptions()
+		} else if (sis.getCalculationOptions().getCorrelationOptions()
 				.getCOR_LDS() == 2) {
 			corr_lnEDPij_IM = 2; // The exact value is determined in the
 									// integration scheme for each EDP
@@ -64,13 +59,13 @@ public class COVLkLmIM {
 		// end of computing CORR_lnLossilnLossj|DS
 
 		// determine aleatory correlation for DS-EDP relationship
-		if (slatMC.getCalculationOptions().getCorrelationOptions()
+		if (sis.getCalculationOptions().getCorrelationOptions()
 				.getCOR_DSEDP() == 0) {
 			corr_DSij_EDP = 0;
-		} else if (slatMC.getCalculationOptions().getCorrelationOptions()
+		} else if (sis.getCalculationOptions().getCorrelationOptions()
 				.getCOR_DSEDP() == 1) {
 			corr_DSij_EDP = 1;
-		} else if (slatMC.getCalculationOptions().getCorrelationOptions()
+		} else if (sis.getCalculationOptions().getCorrelationOptions()
 				.getCOR_DSEDP() == 2) {
 			corr_DSij_EDP = 2; // The exact value is determined in the
 								// integration scheme for each EDP
@@ -111,10 +106,10 @@ public class COVLkLmIM {
 	}
 
 	public SlatInputStore getSlatInputStore() {
-		return slatMC;
+		return sis;
 	}
 
 	public void setSlatInputStore(SlatInputStore SlatInputStore) {
-		this.slatMC = SlatInputStore;
+		this.sis = SlatInputStore;
 	}
 }
