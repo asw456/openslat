@@ -109,8 +109,8 @@ public class LossIMNC {
 			// LossEDP(1) is E[X] and LossEDP(2) is beta[X] so Var[X] =
 			// E[X]^2*(EXP(beta[X]^2)-1)
 			
-			//System.out.println(meanLossEDP); //always 1
-			//System.out.println(sigmaLossEDP); //NaN
+			//System.out.println(meanLossEDP); 
+			//System.out.println(sigmaLossEDP); 
 			
 			double varLedp = Math.pow(meanLossEDP, 2)
 					* (Math.exp(Math.pow(sigmaLossEDP, 2)) - 1.0);

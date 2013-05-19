@@ -218,7 +218,6 @@ public class DamageState {
 					* epistemicStdDev_Var_LNloss));
 			return sigmaLoss;
 		}
-
 		return sigmaLoss;
 	}
 

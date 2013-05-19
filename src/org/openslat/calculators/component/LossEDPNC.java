@@ -2,6 +2,7 @@ package org.openslat.calculators.component;
 
 import org.apache.commons.math3.distribution.LogNormalDistribution;
 import org.openslat.model.structure.Component;
+import org.openslat.numerical.LNConverter;
 
 public class LossEDPNC {
 
@@ -77,6 +78,14 @@ public class LossEDPNC {
 					* (Math.exp(Math.pow(component.getFf().getDamageStates()
 							.get(i).calcSigmaLoss(), 2) - 1) - 1.0);
 			
+			//another go
+			mu_L2_DS = Math.pow(
+					 component.getFf().getDamageStates().get(i)
+					 .getMeanLoss(), 2)
+					 + LNConverter.variance(component.getFf().getDamageStates()
+					 .get(i).calcMuLoss(), component.getFf()
+					 .getDamageStates().get(i).calcSigmaLoss());
+			
 			mu_L2_EDP = mu_L2_EDP + mu_L2_DS * pDSedp[i];
 			//System.out.println("mu_L2_EDP:  " + mu_L2_EDP);
 			
@@ -87,7 +96,8 @@ public class LossEDPNC {
 		} else {
 			System.out.println("mu_L2_EDP:    " + Math.log(mu_L2_EDP / Math.pow(meanLoss, 2)));
 			// SQUARE ROOT OF A NEGATIVE HERE!!
-			sigmaLoss = Math.sqrt(Math.log(mu_L2_EDP / Math.pow(meanLoss, 2)));
+			sigmaLoss = Math.sqrt(Math.log(mu_L2_EDP / Math.pow(meanLoss, 2)));			
+			sigmaLoss = mu_L2_EDP - Math.pow(this.meanLoss(component, edp),2);
 		}
 
 		return sigmaLoss;
