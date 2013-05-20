@@ -6,6 +6,7 @@ package org.openslat.model.structure;
 import org.openslat.model.edp.EDP;
 import org.openslat.model.fragilityfunctions.FragilityFunction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class Component {
 
 	private FragilityFunction ff;
+	@JsonIgnore
 	private EDP edp;
 	
 	// generate random numbers for each DS

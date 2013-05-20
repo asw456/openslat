@@ -36,7 +36,7 @@ public class Structure {
 	public HashSet<EDP> getEDPHashSet(){
 		HashSet<EDP> edpHashSet = new HashSet<EDP>();
 		for (PerformanceGroup pg: performanceGroups){
-			edpHashSet.add(pg.getComponents().get(0).getEdp());
+			edpHashSet.add(pg.getEdp());
 		}
 		return edpHashSet;
 	}
