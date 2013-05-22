@@ -5,6 +5,7 @@ import org.openslat.calculators.component.LossIMNC;
 import org.openslat.control.SlatInputStore;
 import org.openslat.model.collapse.LossCollapse;
 import org.openslat.model.structure.Component;
+import org.openslat.numerical.LNConverter;
 
 /**
  * @author alan
@@ -72,18 +73,18 @@ public class LossIM {
 		}
 
 		// compute variance (no collapse)
-		double varLossNC = 0;
+		double varTotalLossNC = 0;
 		for (int k = 0; k < components.size(); ++k) {
 			for (int m = 0; m <= k; ++m) {
 				double cov_LIMNCkm = covLkLmIM.covLIMNCkm(components.get(k),
 						components.get(m), im);
-				
-				System.out.println("varLoss:  " + varLossNC);
-				
+
+				System.out.println("varLoss:  " + varTotalLossNC);
+
 				if (k == m) {
-					varLossNC = varLossNC + cov_LIMNCkm;
+					varTotalLossNC = varTotalLossNC + cov_LIMNCkm;
 				} else {
-					varLossNC = varLossNC + 2 * cov_LIMNCkm;
+					varTotalLossNC = varTotalLossNC + 2 * cov_LIMNCkm;
 				}
 			}
 		}
@@ -95,10 +96,15 @@ public class LossIM {
 
 		// COMPUTE LOSS taking col/no col into account
 		double probCollapse;
+		double varTotalLossC;
 		if (sis.getCalculationOptions().isCollapse()) {
 			probCollapse = sis.getStructure().getPc().getPcim().probability(im);
+			varTotalLossC = sis.getStructure().getLossCollapse()
+					.calculateCollapseVariance();
+
 		} else {
 			probCollapse = 0;
+			varTotalLossC = 0;
 		}
 
 		LossCollapse lossCollapse = new LossCollapse();
@@ -106,15 +112,18 @@ public class LossIM {
 		lossC = lossCollapse.meanLoss();
 		double totalLoss = lossNC * (1 - probCollapse) + lossC * (probCollapse);
 
-		double varTotalLossNC = Math.pow(lossNC, 2)
-				* (Math.exp(Math.pow(lossNC, 2) - 1));
-		double varTLossC = Math.pow(lossC, 2)
-				* (Math.exp(Math.pow(lossC, 2) - 1));
+		// Brendon: is there a massive glaring error here????
+		// manual page 28 top gives an overview of this calculation and the bit below shouldn't be here.
 
-		double varTotalLoss = varTotalLossNC * (1.0 - probCollapse) + varTLossC
+		// double varTotalLossNC = Math.pow(lossNC, 2)
+		// * (Math.exp(Math.pow(lossNC, 2) - 1));
+		// double varTLossC = Math.pow(lossC, 2) * (Math.exp(Math.pow(lossC, 2)
+		// - 1));
+
+		double varTotalLoss = varTotalLossNC * (1.0 - probCollapse) + varTotalLossC
 				* probCollapse + Math.pow((lossNC - totalLoss), 2)
-				* (1.0 - probCollapse) + Math.pow((lossC - totalLoss), 2)
-				* probCollapse;
+				* probCollapse * (1.0 - probCollapse); // + Math.pow((lossC -
+														// totalLoss), 2)
 
 		// convert variance back to dispersion
 		double sigmaTotalLoss = Math.sqrt(Math.log(varTotalLoss

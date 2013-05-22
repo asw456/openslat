@@ -15,6 +15,8 @@ public class COVLkLmIM {
 		double corr_Lossij_DS = 0;
 		double corr_DSij_EDP = 0;
 
+		
+		
 		// if components are the same, covariance equals the variance
 		if (componentk.equals(componentm)) {
 			LossIMNC lossIMNC = new LossIMNC();
@@ -95,12 +97,16 @@ public class COVLkLmIM {
 									lossIMNC.sigmaLoss(componentm, im), 2)) - 1));
 
 		if (lnCOR_Lossij_IM > 1) {
+			//Brendon: should be 1?? numerical error set to 
+			
+			//*LNConverter.getvariance(mean,sigma) on the bottom to make code cleaner
 			cov_LIMNCkm = lossIMNC.meanLoss(componentk, im)
 					* Math.sqrt(Math.exp(Math.pow(
 							lossIMNC.sigmaLoss(componentk, im), 2)))
 					* lossIMNC.meanLoss(componentm, im)
 					* Math.sqrt(Math.exp(Math.pow(
 							lossIMNC.sigmaLoss(componentm, im), 2)));
+		
 		}
 		return cov_LIMNCkm;
 	}

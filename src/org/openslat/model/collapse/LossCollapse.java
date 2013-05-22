@@ -251,4 +251,18 @@ public class LossCollapse {
 		this.openslat = openslat;
 	}
 
+	public double calculateCollapseVariance() {
+		// TODO Auto-generated method stub
+		
+		//calculate variance as sum of variance of all the top damage states
+		//loss function specifies mean and variance of loss.
+		
+		//or use user defined input as part of collapse inputs.
+		
+		//loop over all pairwise component final damage states, if i==j use component variance otherwise covariance
+		//this calculation is independent of IM. so NO integrals.
+		
+		return 0;
+	}
+
 }
