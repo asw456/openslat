@@ -1,6 +1,8 @@
 package org.openslat.examples;
 
 import java.io.IOException;
+import java.io.StringWriter;
+
 import org.openslat.calculators.output.LossIMOutput;
 import org.openslat.control.SlatInputStore;
 import org.openslat.jsonparser.SlatParser;
@@ -10,6 +12,7 @@ import org.openslat.options.EpistemicUncertOptions;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SimplifiedBridge {
 
@@ -30,6 +33,14 @@ public class SimplifiedBridge {
 		sis.getCalculationOptions().setCollapse(false);
 		sis.getCalculationOptions().setEpistemicUncertOptions(new EpistemicUncertOptions());
 		sis.getCalculationOptions().getEpistemicUncertOptions().setEpistemicUncert(false);
+		
+		
+		ObjectMapper objm = new ObjectMapper();
+		StringWriter stringWriter = new StringWriter();
+		objm.writeValue(stringWriter, sis);
+		System.out
+				.println("printing the JSON string for debugging, after generating Objects and converting to JSON  ");
+		System.out.println(stringWriter.toString());
 		
 		//String edprOutput = EDPROutput.edpRateOutput(sis);
 		//System.out.println(edprOutput);

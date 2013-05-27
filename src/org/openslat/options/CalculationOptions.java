@@ -1,6 +1,5 @@
 package org.openslat.options;
 
-//import org.openslat.calculators.multiplecomponents.EDPIMCorrelations;
 import org.openslat.model.fragilityfunctions.EpistemicCorrArrays;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,12 +15,14 @@ public class CalculationOptions {
 	private boolean collLossType;
 	private boolean downTime;
 
+	@JsonIgnore
 	private EpistemicUncertOptions epistemicUncertOptions;
+	@JsonIgnore
 	private CorrelationOptions correlationOptions;
 
 	// is this where this goes?
 	// private EDPIMCorrelations edpIMCorrelations;
-
+	
 	@JsonIgnore
 	private EpistemicCorrArrays epistemicCorrArrays;
 	@JsonIgnore
@@ -92,5 +93,4 @@ public class CalculationOptions {
 			EpistemicLogicTreeValues epistemicLogicTreeValues) {
 		this.epistemicLogicTreeValues = epistemicLogicTreeValues;
 	}
-
 }

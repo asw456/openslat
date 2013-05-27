@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import org.openslat.calculators.multiplecomponents.LossIM;
 import org.openslat.control.SlatInputStore;
+
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -11,7 +12,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class LossIMOutput {
-
+	
 	public static String lossOutput(SlatInputStore sis)
 			throws JsonGenerationException, JsonMappingException, IOException {
 
@@ -29,7 +30,7 @@ public class LossIMOutput {
 		double[] sigmaLossArray = new double[1000];
 
 		for (int i = 0; i < 1000; i++) {
-			imArray[i] = 1.001 + i * stepsize;
+			imArray[i] = 0 + i * stepsize;
 			meanLossArray[i] = lossIM.meanLossNC(imArray[i]);
 			sigmaLossArray[i] = lossIM.sigmaLoss(imArray[i]);
 			System.out.println(imArray[i] + ",   " + meanLossArray[i] + ",    " + sigmaLossArray[i]);
