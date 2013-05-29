@@ -18,6 +18,7 @@ public class COVLkLmIM {
 		
 		// if components are the same, covariance equals the variance
 		if (componentk.equals(componentm)) {
+			System.out.println("components are equal");
 			LossIMNC lossIMNC = new LossIMNC();
 			// now convert to non-log form and add to continuing sum
 			// return COV_LIMNCkm

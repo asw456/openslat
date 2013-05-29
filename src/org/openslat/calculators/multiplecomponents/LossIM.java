@@ -128,7 +128,7 @@ public class LossIM {
 		// convert variance back to dispersion
 		double sigmaTotalLoss = Math.sqrt(Math.log(varTotalLoss
 				/ Math.pow(totalLoss, 2) + 1.0));
-		return sigmaTotalLoss;
+		return LNConverter.sigma(totalLoss, varTotalLoss); //sigmaTotalLoss;
 	}
 
 	public SlatInputStore getSis() {

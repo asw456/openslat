@@ -31,6 +31,7 @@ def main():
 
     x1 = data["structureLoss"]["im"]
     y1 = data["structureLoss"]["sigmaLoss"]
+    plot(x,y,'r')
     plot(x1,y1)
     show()
 

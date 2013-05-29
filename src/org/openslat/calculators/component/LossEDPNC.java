@@ -95,9 +95,10 @@ public class LossEDPNC {
 		if (meanLoss <= 0) {
 			sigmaLoss = 0;
 		} else {
-			System.out.println("mu_L2_EDP:    " + Math.log(mu_L2_EDP / Math.pow(meanLoss, 2)));
-			//sigmaLoss = Math.sqrt(Math.log(mu_L2_EDP / Math.pow(meanLoss, 2)));			
-			sigmaLoss = mu_L2_EDP - Math.pow(this.meanLoss(component, edp),2);
+			//System.out.println("mu_L2_EDP:    " + Math.log(mu_L2_EDP / Math.pow(meanLoss, 2)));
+			//sigmaLoss = Math.log(mu_L2_EDP / Math.pow(meanLoss, 2));
+			sigmaLoss = Math.sqrt(Math.log(mu_L2_EDP / Math.pow(meanLoss, 2)));			
+			//sigmaLoss = mu_L2_EDP - Math.pow(this.meanLoss(component, edp),2);
 		}
 
 		return sigmaLoss;

@@ -64,18 +64,6 @@ public class LossIMNC {
 			double fEDPIM = lgnd.density(edp);
 			double eLossEDP = lossEDPNC.meanLoss(component, edp);
 
-			/*
-			 * System.out.println("t                  " + t);
-			 * System.out.println("edp                " + edp);
-			 * System.out.println("lgnd probability   " + lgnd.density(edp));
-			 * System.out.println("lgnd mean          " +
-			 * lgnd.getNumericalMean());
-			 * System.out.println("eLossEDP           " + eLossEDP);
-			 * System.out.println("fEDPIM             " + fEDPIM);
-			 * System.out.println("integrand          " + (1.0 / Math.pow(t, 2))
-			 * * eLossEDP * fEDPIM + "\n");
-			 */
-
 			// L_IMi=1.0/t**2*EL_EDP*fEDPIM
 			return (1.0 / Math.pow(t, 2)) * eLossEDP * fEDPIM;
 		}
@@ -140,13 +128,6 @@ public class LossIMNC {
 			double varLedp = Math.pow(meanLossEDP, 2)
 					* (Math.exp(Math.pow(sigmaLossEDP, 2)) - 1.0);
 
-			System.out.println("im           " + im); // 0.001 - is OK
-			System.out.println("edp          " + edp);
-			System.out.println("fEDPIM       " + fEDPIM);
-			System.out.println("meanLossEDP  " + meanLossEDP);
-			System.out.println("sigmaLossEDP " + sigmaLossEDP + "\n");
-
-			
 			//return 1.0 / Math.pow(t, 2) * (varLedp + Math.pow( (meanLossEDP -
 			//meanLoss(component, im)), 2)) * fEDPIM;
 			return 1.0 / Math.pow(t, 2) * (varLedp + Math.pow( (meanLossEDP -
