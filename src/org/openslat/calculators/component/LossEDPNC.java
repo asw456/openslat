@@ -7,6 +7,7 @@ import org.openslat.numerical.LNConverter;
 public class LossEDPNC {
 
 	public double meanLoss(Component component, double edp) {
+		
 		double[] cdfValue = new double[component.getFf().getDamageStates()
 				.size() + 1];
 		double[] pDSedp = new double[component.getFf().getDamageStates().size() + 1];
@@ -44,13 +45,13 @@ public class LossEDPNC {
 		double sigmaLoss = 0;
 		double mu_L2_EDP = 0;
 
-		for (int i = 0; i < component.getFf().getDamageStates().size(); i = i + 1) {
+		for (int i = 0; i < component.getFf().getDamageStates().size(); i++) {
 			LogNormalDistribution lgnd = component.getFf().getDamageStates()
 					.get(i).calcEDPOnset();
 			cdfValue[i] = lgnd.cumulativeProbability(edp);
 		}
 		// TODO: hmm...
-		for (int i = 0; i < component.getFf().getDamageStates().size(); i = i + 1) {
+		for (int i = 0; i < component.getFf().getDamageStates().size(); i++) {
 			if (cdfValue[i + 1] > cdfValue[i]) {
 				cdfValue[i + 1] = cdfValue[i];
 			}
@@ -95,8 +96,7 @@ public class LossEDPNC {
 			sigmaLoss = 0;
 		} else {
 			System.out.println("mu_L2_EDP:    " + Math.log(mu_L2_EDP / Math.pow(meanLoss, 2)));
-			// SQUARE ROOT OF A NEGATIVE HERE!!
-			sigmaLoss = Math.sqrt(Math.log(mu_L2_EDP / Math.pow(meanLoss, 2)));			
+			//sigmaLoss = Math.sqrt(Math.log(mu_L2_EDP / Math.pow(meanLoss, 2)));			
 			sigmaLoss = mu_L2_EDP - Math.pow(this.meanLoss(component, edp),2);
 		}
 

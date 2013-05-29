@@ -3,6 +3,7 @@ package org.openslat.calculators.multiplecomponents;
 import org.openslat.calculators.component.LossIMNC;
 import org.openslat.control.SlatInputStore;
 import org.openslat.model.structure.Component;
+import org.openslat.numerical.LNConverter;
 
 public class COVLkLmIM {
 
@@ -14,16 +15,18 @@ public class COVLkLmIM {
 		double corr_lnEDPij_IM = 0;
 		double corr_Lossij_DS = 0;
 		double corr_DSij_EDP = 0;
-
-		
 		
 		// if components are the same, covariance equals the variance
 		if (componentk.equals(componentm)) {
 			LossIMNC lossIMNC = new LossIMNC();
 			// now convert to non-log form and add to continuing sum
 			// return COV_LIMNCkm
-			return Math.pow(lossIMNC.muLoss(componentk, im), 2)
-					* Math.exp(Math.pow(lossIMNC.sigmaLoss(componentk, im), 2) - 1);
+			//return Math.pow(lossIMNC.muLoss(componentk, im), 2)
+			//		* Math.exp(Math.pow(lossIMNC.sigmaLoss(componentk, im), 2) - 1);
+		
+			//return LNConverter.variance(lossIMNC.muLoss(componentk, im), lossIMNC.sigmaLoss(componentk, im));
+			return lossIMNC.varLoss(componentk, im);
+		
 		}
 
 		// DETERMINE aleatory correlation for EDPIM relationship

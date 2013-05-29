@@ -20,7 +20,6 @@ public class PerformanceGroup {
 	private ConcurrentSkipListMap<Double,Double> imMeanLossMap = new ConcurrentSkipListMap<Double,Double>();
 	@JsonIgnore
 	private ConcurrentSkipListMap<Double,Double> imVarLossMap = new ConcurrentSkipListMap<Double,Double>();
-
 	
 	public void setNumberOfComponents() {
 		for (Component each : components) {

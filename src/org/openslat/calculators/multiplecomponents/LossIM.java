@@ -74,7 +74,7 @@ public class LossIM {
 
 		// compute variance (no collapse)
 		double varTotalLossNC = 0;
-		for (int k = 0; k < components.size(); ++k) {
+		for (int k = 0; k < components.size(); k++) {
 			for (int m = 0; m <= k; ++m) {
 				double cov_LIMNCkm = covLkLmIM.covLIMNCkm(components.get(k),
 						components.get(m), im);

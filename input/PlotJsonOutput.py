@@ -22,6 +22,7 @@ def main():
 
     #pprint(data)
     pprint(data["structureLoss"]["im"])
+    pprint(data["structureLoss"]["sigmaLoss"])
 
     x = data["structureLoss"]["im"]
     y = data["structureLoss"]["meanLoss"]

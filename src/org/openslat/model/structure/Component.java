@@ -24,9 +24,9 @@ public class Component {
 	private EDP edp;
 	
 	@JsonIgnore
-	private ConcurrentSkipListMap<Double,Double> imMeanLossMap = new ConcurrentSkipListMap<Double,Double>();
+	private ConcurrentSkipListMap<Double,Double> imMeanLossMap;
 	@JsonIgnore
-	private ConcurrentSkipListMap<Double,Double> imVarLossMap = new ConcurrentSkipListMap<Double,Double>();
+	private ConcurrentSkipListMap<Double,Double> imVarLossMap;
 	
 	public FragilityFunction getFf() {
 		return ff;

@@ -1,8 +1,10 @@
 package org.openslat.examples;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 
+import org.apache.commons.io.FileUtils;
 import org.openslat.calculators.output.LossIMOutput;
 import org.openslat.control.SlatInputStore;
 import org.openslat.jsonparser.SlatParser;
@@ -42,6 +44,8 @@ public class SimplifiedBridge {
 		
 		String lossOutput = LossIMOutput.lossOutput(sis,50);
 		System.out.println(lossOutput);
+		
+		FileUtils.writeStringToFile(new File("C:\\Users\\alanlaptop\\Desktop\\temp.json"), lossOutput);
 		
 	}
 	
