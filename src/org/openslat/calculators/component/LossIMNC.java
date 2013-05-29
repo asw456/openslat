@@ -18,6 +18,11 @@ public class LossIMNC {
 	private UnivariateIntegrator integrator;
 
 	public double meanLoss(Component component, double imIn) {
+		
+		if (component.getImMeanLossMap().containsKey(imIn)){
+			return component.getImMeanLossMap().get(imIn);
+		}
+		
 		this.component = component;
 
 		final LossIMNC lossIMNC = this;
@@ -35,6 +40,7 @@ public class LossIMNC {
 		long duration = endTime-startTime;
 		System.out.println("duration: " + duration);
 
+		component.getImMeanLossMap().put(imIn, temp);
 		
 		return temp;
 	}
@@ -73,6 +79,11 @@ public class LossIMNC {
 	}
 
 	public double varLoss(Component component, double imIn) {
+
+		if (component.getImVarLossMap().containsKey(imIn)){
+			return component.getImVarLossMap().get(imIn);
+		}
+
 		this.component = component;
 
 		final LossIMNC lossIMNC = this;
@@ -85,6 +96,8 @@ public class LossIMNC {
 				return lossIMNC.calculateVarIntegrand(t, im);
 			}
 		}, 0, 1);
+
+		component.getImVarLossMap().put(imIn, temp);
 
 		return temp;
 

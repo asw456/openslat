@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class LossIMOutput {
 	
-	public static String lossOutput(SlatInputStore sis)
+	public static String lossOutput(SlatInputStore sis, int numSteps)
 			throws JsonGenerationException, JsonMappingException, IOException {
 
 		final LossIM lossIM = new LossIM();
@@ -24,12 +24,20 @@ public class LossIMOutput {
 		JsonGenerator g = f.createGenerator(ostream, JsonEncoding.UTF8);
 
 		final double imMaxValue = sis.getStructure().getIm().getMaxValue();
-		final double stepsize = imMaxValue / 1000.0;
-		double[] imArray = new double[1000];
-		double[] meanLossArray = new double[1000];
-		double[] sigmaLossArray = new double[1000];
+		
+		final double stepsize = imMaxValue / numSteps;
+		
+		double[] imArray = new double[numSteps];
+		double[] meanLossArray = new double[numSteps];
+		double[] sigmaLossArray = new double[numSteps];
 
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < numSteps; i++){
+			
+			
+		}
+		
+		
+		for (int i = 0; i < numSteps; i++) {
 			System.out.println("iteration:    ----------      " + i);
 			imArray[i] = 0 + i * stepsize;
 			meanLossArray[i] = lossIM.meanLossNC(imArray[i]);

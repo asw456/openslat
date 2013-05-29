@@ -28,16 +28,6 @@ public class SlatParser {
 		System.out.println("printing the IM name for debugging - the IM's name is: "
 				+ slatInputStore.getStructure().getIm().getName());
 		
-		for (Component c : slatInputStore.getStructure().getComponents()){
-			c.getFf().setMeans(1);
-		}
-		
-		for (PerformanceGroup pg: slatInputStore.getStructure().getPerformanceGroups()){
-			for (Component c: pg.getComponents()){
-				c.setEdp(pg.getEdp());
-			}
-		}
-		
 		return slatInputStore;
 	}
 }
