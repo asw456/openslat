@@ -24,12 +24,18 @@ public class LossIMNC {
 		final double im = imIn;
 		// integrator = new SimpsonIntegrator();
 		integrator = new RombergIntegrator();
+		
+		long startTime = System.nanoTime();
 		double temp = integrator.integrate(10000000, new UnivariateFunction() {
 			public double value(double t) {
 				return lossIMNC.calculateMeanIntegrand(t, im);
 			}
 		}, 0, 1);
+		long endTime = System.nanoTime();
+		long duration = endTime-startTime;
+		System.out.println("duration: " + duration);
 
+		
 		return temp;
 	}
 

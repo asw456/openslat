@@ -30,6 +30,7 @@ public class LossIMOutput {
 		double[] sigmaLossArray = new double[1000];
 
 		for (int i = 0; i < 1000; i++) {
+			System.out.println("iteration:    ----------      " + i);
 			imArray[i] = 0 + i * stepsize;
 			meanLossArray[i] = lossIM.meanLossNC(imArray[i]);
 			sigmaLossArray[i] = lossIM.sigmaLoss(imArray[i]);

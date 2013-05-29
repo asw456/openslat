@@ -56,7 +56,7 @@ public class EDP {
 		this.edpIM = edpIM;
 	}
 
-	public SlatInputStore getSlatMC() {
+	public SlatInputStore getSis() {
 		return sis;
 	}
 

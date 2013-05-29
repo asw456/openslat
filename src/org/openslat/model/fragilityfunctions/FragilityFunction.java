@@ -180,7 +180,7 @@ public class FragilityFunction {
 		this.randLDS = randLDS;
 	}
 
-	public SlatInputStore getOpenslat() {
+	public SlatInputStore getSis() {
 		return sis;
 	}
 

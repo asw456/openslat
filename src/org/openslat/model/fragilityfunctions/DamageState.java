@@ -455,7 +455,7 @@ public class DamageState {
 		this.sigmaTime = sigmaTime;
 	}
 
-	public SlatInputStore getOpenslat() {
+	public SlatInputStore getSis() {
 		return sis;
 	}
 
