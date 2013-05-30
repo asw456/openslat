@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 import org.apache.commons.io.FileUtils;
+import org.openslat.calculators.output.CollapseOutput;
 import org.openslat.calculators.output.LossIMOutput;
 import org.openslat.control.SlatInputStore;
 import org.openslat.jsonparser.SlatParser;
@@ -42,11 +43,13 @@ public class SimplifiedBridge {
 		//String edprOutput = EDPROutput.edpRateOutput(sis);
 		//System.out.println(edprOutput);
 		
-		String lossOutput = LossIMOutput.lossOutput(sis,50);
-		System.out.println(lossOutput);
+		//String lossOutput = LossIMOutput.lossOutput(sis,50);
+		String collapseOutput = CollapseOutput.collapseOutput(sis,50);
+		//System.out.println(lossOutput);
+		System.out.println(collapseOutput);
 		
-		FileUtils.writeStringToFile(new File("C:\\Users\\alanlaptop\\Desktop\\temp.json"), lossOutput);
-		
+		//FileUtils.writeStringToFile(new File("C:\\Users\\alanlaptop\\Desktop\\temp.json"), lossOutput);
+		FileUtils.writeStringToFile(new File("C:\\Users\\alanlaptop\\Desktop\\temp.json"), collapseOutput);
 	}
 	
 }

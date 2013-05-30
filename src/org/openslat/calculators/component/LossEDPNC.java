@@ -7,7 +7,7 @@ import org.openslat.numerical.LNConverter;
 public class LossEDPNC {
 
 	public double meanLoss(Component component, double edp) {
-		
+
 		double[] cdfValue = new double[component.getFf().getDamageStates()
 				.size() + 1];
 		double[] pDSedp = new double[component.getFf().getDamageStates().size() + 1];
@@ -26,10 +26,14 @@ public class LossEDPNC {
 
 			pDSedp[i] = cdfValue[i] - cdfValue[i + 1];
 			// TODO: paint fragility modification goes here
-			//BAB comment: In response to the above I suggest that we leave this modification at the moment and think how 
-			//we can solve this more generally by introducing (non-probabilistic) dependence among the components
-			//Rameriz and Miranda (Stanford report) have discussed this.  To implement its easy, so its more a matter 
-			//of thinking how it can be implemented in the interface to prevent things from getting messy
+			// BAB comment: In response to the above I suggest that we leave
+			// this modification at the moment and think how
+			// we can solve this more generally by introducing
+			// (non-probabilistic) dependence among the components
+			// Rameriz and Miranda (Stanford report) have discussed this. To
+			// implement its easy, so its more a matter
+			// of thinking how it can be implemented in the interface to prevent
+			// things from getting messy
 			meanLoss = meanLoss
 					+ component.getFf().getDamageStates().get(i).calcMeanLoss()
 					* pDSedp[i];
@@ -44,6 +48,7 @@ public class LossEDPNC {
 		double meanLoss = 0;
 		double sigmaLoss = 0;
 		double mu_L2_EDP = 0;
+		double mu_L2_DS = 0;
 
 		for (int i = 0; i < component.getFf().getDamageStates().size(); i++) {
 			LogNormalDistribution lgnd = component.getFf().getDamageStates()
@@ -57,11 +62,12 @@ public class LossEDPNC {
 			}
 
 			pDSedp[i] = cdfValue[i] - cdfValue[i + 1];
-			// TODO: paint fragility modification goes here //BAB - see comment on TODO above
+			// TODO: paint fragility modification goes here //BAB - see comment
+			// on TODO above
 			meanLoss = meanLoss
 					+ component.getFf().getDamageStates().get(i).calcMeanLoss()
 					* pDSedp[i];
-			
+
 			// TODO: make sure this is mean and not mu
 			// could be this instead: (try this out if it doesn't work)
 			// fortran: mu_L2_DS=(mu_L_DS)^2+var_L_DS
@@ -71,34 +77,29 @@ public class LossEDPNC {
 			// + LNConverter.variance(component.getFf().getDamageStates()
 			// .get(i).getMuLoss(), component.getFf()
 			// .getDamageStates().get(i).getSigmaLoss());
-			double mu_L2_DS = Math
-					.pow(component.getFf().getDamageStates().get(i)
-							.calcMeanLoss(), 2)
-					+ Math.pow(component.getFf().getDamageStates().get(i)
-							.calcMeanLoss(), 2)
-					* (Math.exp(Math.pow(component.getFf().getDamageStates()
-							.get(i).calcSigmaLoss(), 2) - 1) - 1.0);
 			
-			//another go
-			mu_L2_DS = Math.pow(
-					 component.getFf().getDamageStates().get(i)
-					 .getMeanLoss(), 2)
-					 + LNConverter.variance(component.getFf().getDamageStates()
-					 .get(i).calcMuLoss(), component.getFf()
-					 .getDamageStates().get(i).calcSigmaLoss());
-			
+			//mu_L2_DS = (Math.pow(component.getFf().getDamageStates().get(i)
+			//		.calcMeanLoss(), 2) + LNConverter.variance(component
+			//		.getFf().getDamageStates().get(i).calcMeanLoss(), component
+			//		.getFf().getDamageStates().get(i).calcSigmaLoss()));
+
+			mu_L2_DS = Math.pow(component.getFf().getDamageStates().get(i)
+					.calcMeanLoss(), 2)
+					+ LNConverter.variance(component.getFf().getDamageStates()
+							.get(i).calcMuLoss(), component.getFf()
+							.getDamageStates().get(i).getSigmaLoss());
+
 			mu_L2_EDP = mu_L2_EDP + mu_L2_DS * pDSedp[i];
-			//System.out.println("mu_L2_EDP:  " + mu_L2_EDP);
-			
+
 		}
+
+		mu_L2_DS = mu_L2_DS - Math.pow(this.meanLoss(component, edp), 2);
 
 		if (meanLoss <= 0) {
 			sigmaLoss = 0;
 		} else {
-			//System.out.println("mu_L2_EDP:    " + Math.log(mu_L2_EDP / Math.pow(meanLoss, 2)));
-			//sigmaLoss = Math.log(mu_L2_EDP / Math.pow(meanLoss, 2));
-			sigmaLoss = Math.sqrt(Math.log(mu_L2_EDP / Math.pow(meanLoss, 2)));			
-			//sigmaLoss = mu_L2_EDP - Math.pow(this.meanLoss(component, edp),2);
+			sigmaLoss = Math.sqrt(Math.log(mu_L2_EDP
+					/ Math.pow(this.meanLoss(component, edp), 2)));
 		}
 
 		return sigmaLoss;
@@ -122,7 +123,8 @@ public class LossEDPNC {
 			}
 
 			pDSedp[i] = cdfValue[i] - cdfValue[i + 1];
-			// TODO: paint fragility modification goes here  //BAB - see comment on TODO above
+			// TODO: paint fragility modification goes here //BAB - see comment
+			// on TODO above
 			meanTime = meanTime
 					+ component.getFf().getDamageStates().get(i).calcMeanTime()
 					* pDSedp[i];
@@ -150,7 +152,8 @@ public class LossEDPNC {
 			}
 
 			pDSedp[i] = cdfValue[i] - cdfValue[i + 1];
-			// TODO: paint fragility modification goes here  //BAB - see comment on TODO above
+			// TODO: paint fragility modification goes here //BAB - see comment
+			// on TODO above
 			meanTime = meanTime
 					+ component.getFf().getDamageStates().get(i)
 							.calcMeanEDPOnset() * pDSedp[i];

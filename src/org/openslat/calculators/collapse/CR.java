@@ -3,8 +3,7 @@ package org.openslat.calculators.collapse;
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
 import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
-import org.openslat.model.collapse.PC;
-import org.openslat.model.im.IM;
+import org.openslat.control.SlatInputStore;
 
 /**
  * Collapse hazard relationship or Collapse-Rate. Represents the annual
@@ -17,8 +16,7 @@ import org.openslat.model.im.IM;
  */
 public class CR {
 
-	private IM im;
-	private PC pC;
+	private SlatInputStore sis;
 	private UnivariateIntegrator integrator = new SimpsonIntegrator();
 
 	/**
@@ -33,29 +31,14 @@ public class CR {
 		final CR cr = this;
 		return integrator.integrate(10000, new UnivariateFunction() {
 			public double value(double t) {
-				return cr.pC.getPcim().getDistribution()
+				return cr.getSis().getStructure().getPc().getPcim().getDistribution()
 						.cumulativeProbability(1 / t - 1)
-						* Math.abs(cr.im.retrieveImr().derivative(1 / t - 1))
+						* Math.abs(cr.getSis().getStructure().getIm().retrieveImr().derivative(1 / t - 1))
 						* (-1 / Math.pow(t, 2));
 			}
 		}, 0, 1);
 	}
 
-	public PC getpC() {
-		return pC;
-	}
-
-	public void setpC(PC pC) {
-		this.pC = pC;
-	}
-
-	public IM getIm() {
-		return im;
-	}
-
-	public void setIm(IM im) {
-		this.im = im;
-	}
 
 	public UnivariateIntegrator getIntegrator() {
 		return integrator;
@@ -63,6 +46,16 @@ public class CR {
 
 	public void setIntegrator(UnivariateIntegrator integrator) {
 		this.integrator = integrator;
+	}
+
+
+	public SlatInputStore getSis() {
+		return sis;
+	}
+
+
+	public void setSis(SlatInputStore sis) {
+		this.sis = sis;
 	}
 
 }

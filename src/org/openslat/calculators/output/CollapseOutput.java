@@ -2,6 +2,8 @@ package org.openslat.calculators.output;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import org.openslat.calculators.collapse.CR;
 import org.openslat.calculators.multiplecomponents.LossIM;
 import org.openslat.control.SlatInputStore;
 
@@ -11,13 +13,13 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-public class LossIMOutput {
+public class CollapseOutput {
 	
-	public static String lossOutput(SlatInputStore sis, int numSteps)
+	public static String collapseOutput(SlatInputStore sis, int numSteps)
 			throws JsonGenerationException, JsonMappingException, IOException {
 
-		final LossIM lossIM = new LossIM();
-		lossIM.setSis(sis);
+		final CR cR = new CR();
+		cR.setSis(sis);
 
 		JsonFactory f = new JsonFactory();
 		ByteArrayOutputStream ostream = new ByteArrayOutputStream();
@@ -28,11 +30,10 @@ public class LossIMOutput {
 		final double stepsize = imMaxValue / numSteps;
 		
 		double[] imArray = new double[numSteps];
-		double[] meanLossArray = new double[numSteps];
-		double[] sigmaLossArray = new double[numSteps];
-
+		double[] collapseRateArray = new double[numSteps];
+		
 		for (int i = 0; i < numSteps; i++){
-			//precache results?
+			
 			
 		}
 		
@@ -40,9 +41,8 @@ public class LossIMOutput {
 		for (int i = 0; i < numSteps; i++) {
 			System.out.println("iteration:    ----------      " + i);
 			imArray[i] = 0 + i * stepsize;
-			meanLossArray[i] = lossIM.meanLossNC(imArray[i]);
-			sigmaLossArray[i] = lossIM.sigmaLoss(imArray[i]);
-			System.out.println(imArray[i] + ",   " + meanLossArray[i] + ",    " + sigmaLossArray[i]);
+			collapseRateArray[i] = cR.evaluate(imArray[i]);
+			System.out.println(imArray[i] + ",   " + collapseRateArray[i] + ",    " + sigmaLossArray[i]);
 		}
 
 		g.writeStartObject();
@@ -55,12 +55,12 @@ public class LossIMOutput {
 		}
 		g.writeEndArray();
 		g.writeArrayFieldStart("meanLoss");
-		for (int i = 0; i < meanLossArray.length; i++) {
-			g.writeNumber(meanLossArray[i]);
+		for (int i = 0; i < collapseRateArray.length; i++) {
+			g.writeNumber(collapseRateArray[i]);
 		}
 		g.writeEndArray();
 		g.writeArrayFieldStart("sigmaLoss");
-		for (int i = 0; i < meanLossArray.length; i++) {
+		for (int i = 0; i < collapseRateArray.length; i++) {
 			g.writeNumber(sigmaLossArray[i]);
 		}
 		g.writeEndArray();
