@@ -15,9 +15,9 @@ from pprint import pprint
 from pylab import plot, show, ylim, yticks
 from matplotlib import *
 
-def main():
+def imLoss():
 
-    with open('C:\\Users\\alanlaptop\\Desktop\\temp.json') as df:
+    with open('C:\\Users\\alanlaptop\\Desktop\\imLoss.json') as df:
         data = json.load(df)
 
     #pprint(data)
@@ -35,5 +35,27 @@ def main():
     plot(x1,y1)
     show()
 
+def collapseRate():
+
+    with open('C:\\Users\\alanlaptop\\Desktop\\collapseRate.json') as df:
+        data = json.load(df)
+
+    #pprint(data)
+    pprint(data["structureLoss"]["im"])
+    pprint(data["structureLoss"]["sigmaLoss"])
+
+    x = data["structureLoss"]["im"]
+    y = data["structureLoss"]["meanLoss"]
+    plot(x,y)
+    show()
+
+    x1 = data["structureLoss"]["im"]
+    y1 = data["structureLoss"]["sigmaLoss"]
+    plot(x,y,'r')
+    plot(x1,y1)
+    show()
+
+
 if __name__ == '__main__':
-    main()
+    #imLoss()
+    collapseRate()
