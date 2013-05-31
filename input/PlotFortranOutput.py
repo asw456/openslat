@@ -16,43 +16,43 @@ from pylab import plot, show, ylim, yticks
 from matplotlib import *
 import csv
 
-def imLoss():
+def lossEDP():
 
     f = open('D:\\projects\\openslat resources\\SLATv1.15_Public\\Files for examples\\example1_simplifiedbridge\\outLEDP').readlines()
 
     x = [None]*len(f)
     y = [None]*len(f)
+    y1 = [None]*len(f)
 
     for i in range(3,len(f)):
         line = f[i].split()
         x[i] = line[0]
         y[i] = line[1]
+        y1[i] = line[2]
 
     plot(x,y)
+    plot(x,y1,'r')
     show()
 
+def lossIM():
 
-def collapseRate():
+    f = open('D:\\projects\\openslat resources\\SLATv1.15_Public\\Files for examples\\example1_simplifiedbridge\\outLIM').readlines()
 
-    with open('C:\\Users\\alanlaptop\\Desktop\\collapseRate.json') as df:
-        data = json.load(df)
+    x = [None]*len(f)
+    y = [None]*len(f)
+    y1 = [None]*len(f)
 
-    #pprint(data)
-    pprint(data["structureLoss"]["im"])
-    pprint(data["structureLoss"]["sigmaLoss"])
+    for i in range(3,len(f)):
+        line = f[i].split()
+        x[i] = line[0]
+        y[i] = line[1]
+        y1[i] = line[2]
 
-    x = data["structureLoss"]["im"]
-    y = data["structureLoss"]["meanLoss"]
     plot(x,y)
-    show()
-
-    x1 = data["structureLoss"]["im"]
-    y1 = data["structureLoss"]["sigmaLoss"]
-    plot(x,y,'r')
-    plot(x1,y1)
+    plot(x,y1,'r')
     show()
 
 
 if __name__ == '__main__':
-    #imLoss()
-    collapseRate()
+    #lossEDP()
+    lossIM()

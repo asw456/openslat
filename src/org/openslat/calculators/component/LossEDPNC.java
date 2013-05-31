@@ -51,8 +51,6 @@ public class LossEDPNC {
 		
 		double meanLossDS = 0;
 		double sigmaLoss = 0;
-		double mu_L2_EDP = 0;
-		double mu_L2_DS = 0;
 
 		double eLDS2 = 0;
 		double varLDS = 0;
@@ -65,7 +63,7 @@ public class LossEDPNC {
 					.get(i).calcEDPOnset();
 			cdfValue[i] = lgnd.cumulativeProbability(edp);
 		}
-		// TODO: hmm...
+
 		for (int i = 0; i < c.getFf().getDamageStates().size(); i++) {
 			if (cdfValue[i + 1] > cdfValue[i]) {
 				cdfValue[i + 1] = cdfValue[i];
@@ -76,29 +74,6 @@ public class LossEDPNC {
 			// on TODO above
 
 			meanLossDS = c.getFf().getDamageStates().get(i).calcMeanLoss();
-					
-			// TODO: make sure this is mean and not mu
-			// could be this instead: (try this out if it doesn't work)
-			// fortran: mu_L2_DS=(mu_L_DS)^2+var_L_DS
-			// java: double mu_L2_DS = FastMath.pow(
-			// component.getFf().getDamageStates().get(i)
-			// .getMeanEDPOnset(), 2)
-			// + LNConverter.variance(component.getFf().getDamageStates()
-			// .get(i).getMuLoss(), component.getFf()
-			// .getDamageStates().get(i).getSigmaLoss());
-			
-			//mu_L2_DS = (FastMath.pow(component.getFf().getDamageStates().get(i)
-			//		.calcMeanLoss(), 2) + LNConverter.variance(component
-			//		.getFf().getDamageStates().get(i).calcMeanLoss(), component
-			//		.getFf().getDamageStates().get(i).calcSigmaLoss()));
-
-			//mu_L2_DS = FastMath.pow(component.getFf().getDamageStates().get(i)
-			//		.calcMeanLoss(), 2)
-			//		+ LNConverter.variance(component.getFf().getDamageStates()
-			//				.get(i).calcMuLoss(), component.getFf()
-			//				.getDamageStates().get(i).getSigmaLoss());
-
-			//mu_L2_EDP = mu_L2_EDP + mu_L2_DS * pDSedp[i];
 
 			eLDS2 = FastMath.pow(meanLossDS,2);
 			varLDS = LNConverter.variance(c.getFf().getDamageStates().get(i).calcMuLoss(), c.getFf().getDamageStates().get(i).calcSigmaLoss());
@@ -108,19 +83,16 @@ public class LossEDPNC {
 			
 			
 		}
-
-		mu_L2_DS = mu_L2_DS - FastMath.pow(this.meanLoss(c, edp), 2);
 	
 		total = total - FastMath.pow(meanLoss,2);
 		
 		if (meanLoss <= 0) {
 			sigmaLoss = 0;
 		} else {
-			sigmaLoss = Math.sqrt(Math.log(mu_L2_EDP
-					/ FastMath.pow(meanLoss, 2)));
+			sigmaLoss = LNConverter.sigma(meanLoss, total);
 		}
 
-		return LNConverter.sigma(meanLoss, total); //sigmaLoss;
+		return sigmaLoss;
 	}
 
 	public double meanTime(Component component, double edp) {

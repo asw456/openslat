@@ -32,8 +32,25 @@ def lossIM():
     x1 = data["structureLoss"]["im"]
     y1 = data["structureLoss"]["sigmaLoss"]
     plot(x,y,'r')
-    plot(x1,y1)
+    plot(x1,y1,'r')
+
+
+    f = open('D:\\projects\\openslat resources\\SLATv1.15_Public\\Files for examples\\example1_simplifiedbridge\\outLIM').readlines()
+
+    x_fortran = [None]*len(f)
+    y_fortran = [None]*len(f)
+    y1_fortran = [None]*len(f)
+
+    for i in range(3,len(f)):
+        line = f[i].split()
+        x_fortran[i] = line[0]
+        y_fortran[i] = line[1]
+        y1_fortran[i] = line[2]
+
+    plot(x_fortran,y_fortran,'b')
+    plot(x_fortran,y1_fortran,'b')
     show()
+
 
 def collapseRate():
 

@@ -42,18 +42,20 @@ public class SimplifiedBridge {
 		System.out.println(stringWriter.toString());
 		
 		//String edprOutput = EDPROutput.edpRateOutput(sis);
-		//String lossIMOutput = LossIMOutput.lossOutput(sis,50);
+		String lossIMOutput = LossIMOutput.lossOutput(sis,50);
 		//String collapseOutput = CollapseOutput.collapseOutput(sis,50);
 		String lossEDPOutput = LossEDPOutput.lossEDPOutput(sis.getStructure().getComponents().get(0), 50);
 
 		//System.out.println(edprOutput);
-		//System.out.println(lossIMOutput);
+		System.out.println(lossIMOutput);
 		//System.out.println(collapseOutput);
 		System.out.println(lossEDPOutput);
 		
-		//FileUtils.writeStringToFile(new File("C:\\temp\\lossIM.json"), lossIMOutput);
+		FileUtils.writeStringToFile(new File("C:\\temp\\lossIM.json"), lossIMOutput);
 		//FileUtils.writeStringToFile(new File("C:\\temp\\collapseRate.json"), collapseOutput);
 		FileUtils.writeStringToFile(new File("C:\\temp\\lossEDP.json"), lossEDPOutput);
+		
+		
 	}
 	
 }

@@ -27,8 +27,8 @@ def lossEDP():
 
     x = data["structureLoss"]["edp"]
     y = data["structureLoss"]["meanLoss"]
-    plot(x,y)
-    show()
+    #plot(x,y)
+    #show()
 
     x1 = data["structureLoss"]["edp"]
     y1 = data["structureLoss"]["sigmaLoss"]
