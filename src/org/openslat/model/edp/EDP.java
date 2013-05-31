@@ -11,6 +11,7 @@ public class EDP {
 
 	@JsonIgnore
 	private SlatInputStore sis;
+	
 	private String name;
 	private ArrayList<EDPIM> edpIM = new ArrayList<EDPIM>();
 	private double maxValue;
