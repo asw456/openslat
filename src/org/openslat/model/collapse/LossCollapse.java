@@ -15,23 +15,23 @@ public class LossCollapse {
 	@JsonIgnore
 	private SlatInputStore sis;
 	
-	//private double randMeanLoss = 1.1;
-	//private double randSigmaLoss = 1.1;
+	private double randMeanLoss = 1.1;
+	private double randSigmaLoss = 1.1;
 
 	private double additionalLoss = 1.1;
-	//private double additionalTime = 1.1;
+	private double additionalTime = 1.1;
 
 	private double meanLoss = 1.1;
 	private double epistemicStdDev_Mean_LNloss = 1.1;
 
 	private double sigmaLoss = 1.1;
-	//private double epistemicStdDev_Var_LNloss = 1.1;
+	private double epistemicStdDev_Var_LNloss = 1.1;
 
-	//private double meanTime = 1.1;
-	//private double epistemicStdDev_Mean_LNtime = 1.1;
+	private double meanTime = 1.1;
+	private double epistemicStdDev_Mean_LNtime = 1.1;
 
-	//private double sigmaTime = 1.1;
-	//private double epistemicStdDev_Var_LNTime = 1.1;
+	private double sigmaTime = 1.1;
+	private double epistemicStdDev_Var_LNTime = 1.1;
 
 	public double meanLoss() {
 
