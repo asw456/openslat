@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize
 public class PCIM {
 
+	private String name;
 	private LogNormalDistribution distribution;
 	private Double epistemicWeight;
 
@@ -53,6 +54,14 @@ public class PCIM {
 
 	public void setEpistemicWeight(Double epistemicWeight) {
 		this.epistemicWeight = epistemicWeight;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

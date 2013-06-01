@@ -44,6 +44,24 @@ public class SimplifiedBridge {
 				.println("printing the JSON string for debugging, after generating Objects and converting to JSON  ");
 		System.out.println(stringWriter.toString());
 		
+		// this is what the output needs to be like
+		/*
+		{
+			   "demolitionRate":0.002,
+			   "collapseRate":0.0015,
+			   "edpRates":[
+			      {
+			         "name":"<edpname>",
+			         "x":[]
+			         "y":[]
+			         ]
+			      }
+			   ]
+			}
+		*/
+		
+		
+		
 		//String edprOutput = EDPROutput.edpRateOutput(sis);
 		//String lossIMOutput = LossIMOutput.lossOutput(sis,50);
 		//String collapseOutput = CollapseOutput.collapseOutput(sis,50);

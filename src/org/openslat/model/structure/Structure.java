@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.openslat.model.collapse.LossCollapse;
-import org.openslat.model.collapse.PC;
+import org.openslat.model.collapse.BuildingPancaked;
 import org.openslat.model.edp.EDP;
 import org.openslat.model.im.IM;
 
@@ -20,7 +20,7 @@ public class Structure {
 
 	private ArrayList<PerformanceGroup> performanceGroups = new ArrayList<PerformanceGroup>();
 	private LossCollapse lossCollapse;
-	private PC pc;
+	private BuildingPancaked pc;
 	private IM im;
 
 	@JsonIgnore
@@ -53,11 +53,11 @@ public class Structure {
 		this.performanceGroups.remove(performanceGroup);
 	}
 
-	public PC getPc() {
+	public BuildingPancaked getPc() {
 		return pc;
 	}
 
-	public void setPc(PC pc) {
+	public void setPc(BuildingPancaked pc) {
 		this.pc = pc;
 	}
 

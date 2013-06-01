@@ -6,10 +6,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize
-public class PC {
+public class BuildingPancaked {
+	
 	@JsonIgnore
 	private SlatInputStore openslat;
 	private ArrayList<PCIM> pcim = new ArrayList<PCIM>();
+	private LossCollapse lossCollapse;
 
 	/**
 	 * Randomly returns an PC-IM relationship according to the epistemic
@@ -71,5 +73,13 @@ public class PC {
 
 	public void setPcim(ArrayList<PCIM> pcim) {
 		this.pcim = pcim;
+	}
+
+	public LossCollapse getLossCollapse() {
+		return lossCollapse;
+	}
+
+	public void setLossCollapse(LossCollapse lossCollapse) {
+		this.lossCollapse = lossCollapse;
 	}
 }
