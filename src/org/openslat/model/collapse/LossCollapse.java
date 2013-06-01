@@ -13,9 +13,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class LossCollapse {
 
 	@JsonIgnore
-	private SlatInputStore openslat;
+	private SlatInputStore sis;
 	
-	private double randMeanLoss;
+	private double randMeanLoss = 1.1;
 	private double randSigmaLoss;
 
 	private double additionalLoss;
@@ -36,16 +36,16 @@ public class LossCollapse {
 	public double meanLoss() {
 
 		ArrayList<Component> components = new ArrayList<Component>();
-		for (PerformanceGroup pg : openslat.getStructure()
+		for (PerformanceGroup pg : sis.getStructure()
 				.getPerformanceGroups()) {
 			components.addAll(pg.getComponents());
 		}
 
-		if (openslat.getCalculationOptions().isCollLossType()) {
+		if (sis.getCalculationOptions().isCollLossType()) {
 
 			// TODO: does this work? if not return meanLoss
-			if (openslat.getCalculationOptions().getEpistemicUncertOptions().isEpistemicUncert()
-					&& openslat.getCalculationOptions().getEpistemicUncertOptions()
+			if (sis.getCalculationOptions().getEpistemicUncertOptions().isEpistemicUncert()
+					&& sis.getCalculationOptions().getEpistemicUncertOptions()
 							.isEpistemicUncertLossCollapse()) {
 				double medianLoss = Math.exp(Math.log(meanLoss) - 0.5
 						* Math.pow(sigmaLoss, 2) + randMeanLoss
@@ -92,16 +92,16 @@ public class LossCollapse {
 	public double sigmaLoss() {
 
 		ArrayList<Component> components = new ArrayList<Component>();
-		for (PerformanceGroup pg : openslat.getStructure()
+		for (PerformanceGroup pg : sis.getStructure()
 				.getPerformanceGroups()) {
 			components.addAll(pg.getComponents());
 		}
 
-		if (openslat.getCalculationOptions().isCollLossType()) {
+		if (sis.getCalculationOptions().isCollLossType()) {
 
 			// TODO: does this work? if not return meanLoss
-			if (openslat.getCalculationOptions().getEpistemicUncertOptions().isEpistemicUncert()
-					&& openslat.getCalculationOptions().getEpistemicUncertOptions()
+			if (sis.getCalculationOptions().getEpistemicUncertOptions().isEpistemicUncert()
+					&& sis.getCalculationOptions().getEpistemicUncertOptions()
 							.isEpistemicUncertLossCollapse()) {
 				double medianLoss = Math.exp(Math.log(meanLoss) - 0.5
 						* Math.pow(sigmaLoss, 2) + randMeanLoss
@@ -243,12 +243,12 @@ public class LossCollapse {
 		this.randSigmaLoss = randSigmaLoss;
 	}
 
-	public SlatInputStore getOpenslat() {
-		return openslat;
+	public SlatInputStore getSis() {
+		return sis;
 	}
 
-	public void setOpenslat(SlatInputStore openslat) {
-		this.openslat = openslat;
+	public void setSis(SlatInputStore sis) {
+		this.sis = sis;
 	}
 
 	public double calculateCollapseVariance() {

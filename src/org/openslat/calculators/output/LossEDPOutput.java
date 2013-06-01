@@ -3,6 +3,7 @@ package org.openslat.calculators.output;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import org.apache.commons.math3.util.FastMath;
 import org.openslat.calculators.component.LossEDPNC;
 import org.openslat.model.structure.Component;
 
@@ -36,7 +37,6 @@ public class LossEDPOutput {
 			
 		}
 		
-		
 		for (int i = 0; i < numSteps; i++) {
 			System.out.println("iteration:    ----------      " + i);
 			edpArray[i] = 0.00 + i * stepsize;
@@ -62,6 +62,22 @@ public class LossEDPOutput {
 		g.writeArrayFieldStart("sigmaLoss");
 		for (int i = 0; i < meanLossArray.length; i++) {
 			g.writeNumber(sigmaLossArray[i]);
+		}
+		g.writeEndArray();
+		
+		g.writeArrayFieldStart("percentile_16_Loss"); 		//percentile_16.append(y[i]*math.exp(-0.5*y1[i]**2 - y1[i]))
+		for (int i = 0; i < meanLossArray.length; i++) {
+			g.writeNumber(meanLossArray[i]*FastMath.exp(-0.5*FastMath.pow(sigmaLossArray[i],2)-meanLossArray[i]));
+		}
+		g.writeEndArray();
+		g.writeArrayFieldStart("percentile_84_Loss");         //percentile_84.append(y[i]*math.exp(-0.5*y1[i]**2 - y1[i]))
+		for (int i = 0; i < meanLossArray.length; i++) {
+			g.writeNumber(meanLossArray[i]*FastMath.exp(-0.5*FastMath.pow(sigmaLossArray[i],2)-meanLossArray[i]));
+		}
+		g.writeEndArray();
+		g.writeArrayFieldStart("stddevLoss");        //std_dev.append(y[i]*math.sqrt(math.exp(y1[i]**2)-1))
+		for (int i = 0; i < meanLossArray.length; i++) {
+			g.writeNumber(meanLossArray[i]*FastMath.sqrt(FastMath.exp(FastMath.pow(sigmaLossArray[i],2)-1)));
 		}
 		g.writeEndArray();
 		

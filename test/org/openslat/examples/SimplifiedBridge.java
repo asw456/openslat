@@ -10,6 +10,7 @@ import org.openslat.calculators.output.LossEDPOutput;
 import org.openslat.calculators.output.LossIMOutput;
 import org.openslat.control.SlatInputStore;
 import org.openslat.jsonparser.SlatParser;
+import org.openslat.model.collapse.LossCollapse;
 import org.openslat.model.structure.Component;
 import org.openslat.options.CalculationOptions;
 import org.openslat.options.EpistemicUncertOptions;
@@ -34,6 +35,8 @@ public class SimplifiedBridge {
 
 		sis.setupSis();
 		
+		LossCollapse lossCollapse = new LossCollapse();
+		
 		ObjectMapper objm = new ObjectMapper();
 		StringWriter stringWriter = new StringWriter();
 		objm.writeValue(stringWriter, sis);
@@ -42,18 +45,18 @@ public class SimplifiedBridge {
 		System.out.println(stringWriter.toString());
 		
 		//String edprOutput = EDPROutput.edpRateOutput(sis);
-		String lossIMOutput = LossIMOutput.lossOutput(sis,50);
+		//String lossIMOutput = LossIMOutput.lossOutput(sis,50);
 		//String collapseOutput = CollapseOutput.collapseOutput(sis,50);
-		String lossEDPOutput = LossEDPOutput.lossEDPOutput(sis.getStructure().getComponents().get(0), 50);
+		//String lossEDPOutput = LossEDPOutput.lossEDPOutput(sis.getStructure().getComponents().get(0), 50);
 
 		//System.out.println(edprOutput);
-		System.out.println(lossIMOutput);
+		//System.out.println(lossIMOutput);
 		//System.out.println(collapseOutput);
-		System.out.println(lossEDPOutput);
+		//System.out.println(lossEDPOutput);
 		
-		FileUtils.writeStringToFile(new File("C:\\temp\\lossIM.json"), lossIMOutput);
+		//FileUtils.writeStringToFile(new File("C:\\temp\\lossIM.json"), lossIMOutput);
 		//FileUtils.writeStringToFile(new File("C:\\temp\\collapseRate.json"), collapseOutput);
-		FileUtils.writeStringToFile(new File("C:\\temp\\lossEDP.json"), lossEDPOutput);
+		//FileUtils.writeStringToFile(new File("C:\\temp\\lossEDP.json"), lossEDPOutput);
 		
 		
 	}

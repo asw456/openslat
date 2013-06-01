@@ -26,8 +26,6 @@ def lossIM():
 
     x = data["structureLoss"]["im"]
     y = data["structureLoss"]["meanLoss"]
-    plot(x,y)
-    show()
 
     x1 = data["structureLoss"]["im"]
     y1 = data["structureLoss"]["sigmaLoss"]

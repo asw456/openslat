@@ -36,7 +36,7 @@ public class LossIM {
 		}
 
 		LossCollapse lossCollapse = new LossCollapse();
-		lossCollapse.setOpenslat(sis);
+		lossCollapse.setSis(sis);
 		lossC = lossCollapse.meanLoss();
 		double totalLoss = lossNC * (1 - probCollapse) + lossC * (probCollapse);
 		return totalLoss;
@@ -56,7 +56,7 @@ public class LossIM {
 		probCollapse = 0;
 
 		LossCollapse lossCollapse = new LossCollapse();
-		lossCollapse.setOpenslat(sis);
+		lossCollapse.setSis(sis);
 		lossC = lossCollapse.meanLoss();
 		double totalLoss = lossNC * (1 - probCollapse) + lossC * (probCollapse);
 		return totalLoss;
@@ -108,7 +108,7 @@ public class LossIM {
 		}
 
 		LossCollapse lossCollapse = new LossCollapse();
-		lossCollapse.setOpenslat(sis);
+		lossCollapse.setSis(sis);
 		lossC = lossCollapse.meanLoss();
 		double totalLoss = lossNC * (1 - probCollapse) + lossC * (probCollapse);
 
