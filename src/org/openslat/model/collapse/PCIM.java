@@ -7,6 +7,7 @@ import org.apache.commons.math3.distribution.LogNormalDistribution;
 import org.openslat.numerical.FitLogNormalDistribution;
 import org.openslat.numerical.LNConverter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
@@ -23,7 +24,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class PCIM {
 
 	private String name;
+	@JsonIgnore
 	private LogNormalDistribution distribution;
+	private double mean;
+	private double sigma;
 	private Double epistemicWeight;
 
 	public double probability(double im) {
@@ -40,11 +44,11 @@ public class PCIM {
 				.calculateLogNormalParameters(imValues);
 	}
 
-	public LogNormalDistribution getDistribution() {
-		return distribution;
+	public LogNormalDistribution calcDistribution() {
+		return (new LogNormalDistribution(LNConverter.muGivenMeanSigma(this.mean, this.sigma),this.sigma));
 	}
 
-	public void setDistribution(LogNormalDistribution distribution) {
+	public void replaceDistribution(LogNormalDistribution distribution) {
 		this.distribution = distribution;
 	}
 
@@ -62,6 +66,22 @@ public class PCIM {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public double getMean() {
+		return mean;
+	}
+
+	public void setMean(double mean) {
+		this.mean = mean;
+	}
+
+	public double getSigma() {
+		return sigma;
+	}
+
+	public void setSigma(double sigma) {
+		this.sigma = sigma;
 	}
 
 }

@@ -68,12 +68,12 @@ public class SlatInputStore {
 		}
 
 		// temporary
-		this.setCalculationOptions(new CalculationOptions());
-		this.getCalculationOptions().setConsiderCollapse(false);
-		this.getCalculationOptions().setEpistemicUncertOptions(
-				new EpistemicUncertOptions());
-		this.getCalculationOptions().getEpistemicUncertOptions()
-				.setEpistemicUncert(false);
+		//this.setCalculationOptions(new CalculationOptions());
+		//this.getCalculationOptions().setConsiderCollapse(false);
+		//this.getCalculationOptions().setEpistemicUncertOptions(
+		//		new EpistemicUncertOptions());
+		//this.getCalculationOptions().getEpistemicUncertOptions()
+		//		.setEpistemicUncert(false);
 
 	}
 

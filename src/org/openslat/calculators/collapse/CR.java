@@ -31,7 +31,7 @@ public class CR {
 		final CR cr = this;
 		return integrator.integrate(10000, new UnivariateFunction() {
 			public double value(double t) {
-				return cr.getSis().getStructure().getPc().getPcim().getDistribution()
+				return cr.getSis().getStructure().getPc().getPcim().calcDistribution()
 						.cumulativeProbability(1 / t - 1)
 						* Math.abs(cr.getSis().getStructure().getIm().retrieveImr().derivative(1 / t - 1))
 						* (-1 / Math.pow(t, 2));

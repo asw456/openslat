@@ -68,9 +68,9 @@ public class EDPR {
 							- edpIm.getDistributionFunction()
 									.distribution(1 / t - 1)
 									.cumulativeProbability(val)
-							* (1 - pc.getPcim().getDistribution()
+							* (1 - pc.getPcim().calcDistribution()
 									.cumulativeProbability(1 / t - 1)) + pc
-							.getPcim().getDistribution()
+							.getPcim().calcDistribution()
 							.cumulativeProbability(1 / t - 1))
 							* FastMath.abs(im.retrieveImr().derivative(
 									1 / t - 1)) * (1 / FastMath.pow(t, 2));
