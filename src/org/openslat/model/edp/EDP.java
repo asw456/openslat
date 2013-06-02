@@ -14,7 +14,8 @@ public class EDP {
 	
 	private String name;
 	private ArrayList<EDPIM> edpIM = new ArrayList<EDPIM>();
-	private double maxValue;
+	private double minEDPValue;
+	private double maxEDPValue;
 	
 	/**
 	 * Randomly returns an EDP-IM relationship according to the epistemic
@@ -77,12 +78,12 @@ public class EDP {
 		this.name = name;
 	}
 
-	public double getMaxValue() {
-		return maxValue;
+	public double getMaxEDPValue() {
+		return maxEDPValue;
 	}
 
-	public void setMaxValue(double maxValue) {
-		this.maxValue = maxValue;
+	public void setMaxEDPValue(double maxValue) {
+		this.maxEDPValue = maxValue;
 	}
 
 	@Override
@@ -108,5 +109,13 @@ public class EDP {
 		} else if (!edpIM.equals(other.edpIM))
 			return false;
 		return true;
+	}
+
+	public double getMinEDPValue() {
+		return minEDPValue;
+	}
+
+	public void setMinEDPValue(double minEDP) {
+		this.minEDPValue = minEDP;
 	}
 }

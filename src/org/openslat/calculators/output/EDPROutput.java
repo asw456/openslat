@@ -28,7 +28,7 @@ public class EDPROutput {
 		JsonGenerator g = f.createGenerator(ostream, JsonEncoding.UTF8);
 
 		for (EDP edp : edpHs) {
-			final double edpMaxValue = edp.getMaxValue();
+			final double edpMaxValue = edp.getMaxEDPValue();
 			final double stepsize = edpMaxValue / 1000.0;
 			double[] outputArrayX = new double[1000];
 			double[] outputArrayY = new double[1000];

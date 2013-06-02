@@ -15,23 +15,23 @@ public class LossCollapse {
 	@JsonIgnore
 	private SlatInputStore sis;
 	
-	private double randMeanLoss = 1.1;
-	private double randSigmaLoss = 1.1;
+	private double randMeanLoss;
+	private double randSigmaLoss;
 
-	private double additionalLoss = 1.1;
-	private double additionalTime = 1.1;
+	private double additionalLoss;
+	private double additionalTime;
 
-	private double meanLoss = 1.1;
-	private double epistemicStdDev_Mean_LNloss = 1.1;
+	private double meanLoss;
+	private double epistemicStdDev_Mean_LNloss;
 
-	private double sigmaLoss = 1.1;
-	private double epistemicStdDev_Var_LNloss = 1.1;
+	private double sigmaLoss;
+	private double epistemicStdDev_Var_LNloss;
 
-	private double meanTime = 1.1;
-	private double epistemicStdDev_Mean_LNtime = 1.1;
+	private double meanTime;
+	private double epistemicStdDev_Mean_LNtime;
 
-	private double sigmaTime = 1.1;
-	private double epistemicStdDev_Var_LNTime = 1.1;
+	private double sigmaTime;
+	private double epistemicStdDev_Var_LNTime;
 
 	public double meanLoss() {
 
@@ -41,7 +41,7 @@ public class LossCollapse {
 			components.addAll(pg.getComponents());
 		}
 
-		if (sis.getCalculationOptions().isCollLossType()) {
+		if (!sis.getCalculationOptions().isComponentBasedCollapseCost()) {
 
 			// TODO: does this work? if not return meanLoss
 			if (sis.getCalculationOptions().getEpistemicUncertOptions().isEpistemicUncert()
@@ -97,7 +97,7 @@ public class LossCollapse {
 			components.addAll(pg.getComponents());
 		}
 
-		if (sis.getCalculationOptions().isCollLossType()) {
+		if (!sis.getCalculationOptions().isComponentBasedCollapseCost()) {
 
 			// TODO: does this work? if not return meanLoss
 			if (sis.getCalculationOptions().getEpistemicUncertOptions().isEpistemicUncert()

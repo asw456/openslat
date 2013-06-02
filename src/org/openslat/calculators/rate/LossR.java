@@ -6,6 +6,7 @@ import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
 import org.apache.commons.math3.distribution.LogNormalDistribution;
 import org.openslat.calculators.multiplecomponents.LossIM;
 import org.openslat.control.SlatInputStore;
+import org.openslat.model.collapse.CollapseDemolition;
 
 /**
  * @author alan
@@ -70,10 +71,10 @@ public class LossR {
 				lossIM.sigmaLoss(im)).cumulativeProbability(loss);
 
 		double gLIM; 
-		if (sis.getCalculationOptions().isCollapse()) {
-			double lnMeanLC = sis.getStructure().getLossCollapse()
+		if (sis.getCalculationOptions().isConsiderCollapse()) {
+			double lnMeanLC = sis.getStructure().getCollapse().getLossCollapse()
 					.meanLoss();
-			double sigmaLC = sis.getStructure().getLossCollapse()
+			double sigmaLC = sis.getStructure().getCollapse().getLossCollapse()
 					.sigmaLoss();
 			double probLIMC = new LogNormalDistribution(lnMeanLC, sigmaLC)
 					.cumulativeProbability(loss);

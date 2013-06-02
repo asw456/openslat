@@ -24,7 +24,7 @@ public class LossEDPOutput {
 		ByteArrayOutputStream ostream = new ByteArrayOutputStream();
 		JsonGenerator g = f.createGenerator(ostream, JsonEncoding.UTF8);
 
-		final double edpMaxValue = c.getEdp().getMaxValue();
+		final double edpMaxValue = c.getEdp().getMaxEDPValue();
 		
 		final double stepsize = edpMaxValue / numSteps;
 		

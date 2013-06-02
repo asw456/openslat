@@ -29,7 +29,7 @@ public class LossIM {
 
 		// COMPUTE LOSS taking col/no col into account
 		double probCollapse;
-		if (sis.getCalculationOptions().isCollapse()) {
+		if (sis.getCalculationOptions().isConsiderCollapse()) {
 			probCollapse = sis.getStructure().getPc().getPcim().probability(im);
 		} else {
 			probCollapse = 0;
@@ -97,9 +97,9 @@ public class LossIM {
 		// COMPUTE LOSS taking col/no col into account
 		double probCollapse;
 		double varTotalLossC;
-		if (sis.getCalculationOptions().isCollapse()) {
+		if (sis.getCalculationOptions().isConsiderCollapse()) {
 			probCollapse = sis.getStructure().getPc().getPcim().probability(im);
-			varTotalLossC = sis.getStructure().getLossCollapse()
+			varTotalLossC = sis.getStructure().getCollapse().getLossCollapse()
 					.calculateCollapseVariance();
 
 		} else {

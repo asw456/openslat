@@ -17,7 +17,8 @@ public class IM {
 	@JsonIgnore
 	private SlatInputStore slatMC;
 	private ArrayList<IMR> iMR = new ArrayList<IMR>();
-	private double maxValue;
+	private double minIMValue;
+	private double maxIMValue;
 
 	/**
 	 * Randomly returns an IM-R relationship according to the epistemic weights.
@@ -73,12 +74,20 @@ public class IM {
 		this.slatMC = slatMC;
 	}
 
-	public void setMaxValue(double maxValue){
-		this.maxValue = maxValue;
+	public void setMaxIMValue(double maxValue){
+		this.maxIMValue = maxValue;
 	}
 	
-	public double getMaxValue() {
-		return maxValue;
+	public double getMaxIMValue() {
+		return maxIMValue;
+	}
+
+	public double getMinIMValue() {
+		return minIMValue;
+	}
+
+	public void setMinIMValue(double minIMValue) {
+		this.minIMValue = minIMValue;
 	}
 
 }

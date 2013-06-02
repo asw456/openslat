@@ -44,12 +44,12 @@ public class EDPR {
 
 		if (pc != null) {
 			UnivariateFunction temp = integrandWithPc(edpIm, im, val, pc);
-			return integrator.integrate(10000000, temp, 0, im.getMaxValue());
+			return integrator.integrate(10000000, temp, 0, im.getMaxIMValue());
 		}
 
 		else {
 			UnivariateFunction temp = integrandWithoutPc(edpIm, im, val);
-			return integrator.integrate(10000000, temp, 0, im.getMaxValue());
+			return integrator.integrate(10000000, temp, 0, im.getMaxIMValue());
 		}
 	}
 

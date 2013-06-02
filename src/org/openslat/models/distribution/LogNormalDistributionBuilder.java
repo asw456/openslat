@@ -2,7 +2,10 @@ package org.openslat.models.distribution;
 
 import org.apache.commons.math3.distribution.LogNormalDistribution;
 
-public class SimpleLogNormalDistribution extends LogNormalDistribution {
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonSerialize
+public class LogNormalDistributionBuilder extends LogNormalDistribution {
 
 	private double mean;
 	private double sigma;
