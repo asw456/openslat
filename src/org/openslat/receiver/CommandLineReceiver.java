@@ -1,40 +1,39 @@
 package org.openslat.receiver;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
-import org.apache.commons.io.FileUtils;
 import org.openslat.control.SlatInputStore;
 import org.openslat.jsonparser.SlatParser;
 
 public class CommandLineReceiver {
 	
 	/**
-	 * args[0] is the path for the input JSON file
-	 * args[1] is the path for the output JSON file 
+	 * Reads from stdin, writes to stdout.
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		/*
 		try {
-			String inputString = FileUtils.readFileToString(new File(args[0]));
-			SlatInputStore slatInputStore = SlatParser.parseInputJsonString(inputString);
+			BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
-			SlatInputStore SlatInputStore = new SlatInputStore();
-			SlatInputStore.setCalculationOptions(slatInputStore.getCalculationOptions());
-			SlatInputStore.setStructure(slatInputStore.getStructure());
-
-			// and some magic happens
-			String outputString = SlatInputStore.generateOutputString();
+			String input;
 			
-			File outputFile = new File(args[1]);
-			outputFile.mkdirs();
-			outputFile.createNewFile();
-			FileUtils.writeStringToFile(outputFile, outputString);
+			StringBuilder sb = new StringBuilder();
+			while((input = stdin.readLine()) != null){
+				sb.append(input);
+			}
+			
+			String inputString = sb.toString();
+
+			// TODO: Perform the calculation here
+			String outputString = "{\"demolitionRate\": 0.002,\"collapseRate\": 0.0015,\"edpRates\": [{\"name\": \"2nd storey drift (cm)\",\"x\": [0.010001702,0.016490019,0.027187445,0.044824519,0.073903137,0.121845674,0.200889555,0.331210882,0.546074427,0.900324523,1.484384191],\"y\": [0.241203936,0.136305495,0.070972726,0.033410241,0.013863709,0.004898612,0.001404113,0.000304362,4.48971E-05,3.81657E-06,1.41564E-07]}]}";
+			
+			System.out.println(outputString);
 		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		*/
 	}
 }
