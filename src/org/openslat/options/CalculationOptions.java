@@ -17,8 +17,8 @@ public class CalculationOptions {
 	private boolean componentBasedDemolitionCost;
 	private boolean considerDownTime;
 
-	private boolean imCalcSteps;
-	private boolean edpCalcSteps;
+	private int imCalcSteps;
+	private int edpCalcSteps;
 
 	private boolean demolitionRateCalc;
 	private boolean collapseRateCalc;
@@ -68,16 +68,16 @@ public class CalculationOptions {
 	public void setConsiderDownTime(boolean considerDownTime) {
 		this.considerDownTime = considerDownTime;
 	}
-	public boolean isImCalcSteps() {
+	public int getImCalcSteps() {
 		return imCalcSteps;
 	}
-	public void setImCalcSteps(boolean imCalcSteps) {
+	public void setImCalcSteps(int imCalcSteps) {
 		this.imCalcSteps = imCalcSteps;
 	}
-	public boolean isEdpCalcSteps() {
+	public int getEdpCalcSteps() {
 		return edpCalcSteps;
 	}
-	public void setEdpCalcSteps(boolean edpCalcSteps) {
+	public void setEdpCalcSteps(int edpCalcSteps) {
 		this.edpCalcSteps = edpCalcSteps;
 	}
 	public boolean isDemolitionRateCalc() {
@@ -124,7 +124,7 @@ public class CalculationOptions {
 			EpistemicLogicTreeValues epistemicLogicTreeValues) {
 		this.epistemicLogicTreeValues = epistemicLogicTreeValues;
 	}
-
+	
 	
 	// public EDPIMCorrelations getEdpIMCorrelations() {
 	// return edpIMCorrelations;
