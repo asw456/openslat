@@ -1,57 +1,71 @@
 package org.openslat.control;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import org.apache.commons.io.FileUtils;
-import org.jetlang.core.Callback;
-import org.openslat.calculators.output.CollapseOutput;
 import org.openslat.calculators.output.EDPROutput;
-import org.openslat.calculators.output.LossEDPOutput;
-import org.openslat.calculators.output.LossIMOutput;
 import org.openslat.control.SlatInputStore;
 import org.openslat.jsonparser.SlatParser;
-import org.openslat.model.collapse.LossCollapse;
-import org.openslat.model.structure.Component;
-import org.openslat.options.CalculationOptions;
-import org.openslat.options.EpistemicUncertOptions;
-
 import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SlatController {
 
-	private String inputJsonString;
-	
-	public SlatController(String inputString){
-		this.inputJsonString = inputString;
-	}
-	
-	public String run() {
+	public static void run(String inputJsonString) {
 		
 		SlatInputStore sis;
 		try {
-			sis = SlatParser.parseInputJsonString(inputJsonString);
 			
+			sis = SlatParser.parseInputJsonString(inputJsonString);
 			sis.setupSis();
 			
+			//testing
 			StringWriter stringWriter = new StringWriter();
 			(new ObjectMapper()).writeValue(stringWriter, sis);
 			System.out.println("JSON string after parsing and re-stringifying");
 			System.out.println(stringWriter.toString());
+			//end testing
+			
+			String results = calculate(sis);
+			System.out.println(results);
 			
 			
-			
-			return null;
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null;
+			return;
 		}		
 	}
+	
+	
+	private static String calculate(SlatInputStore sis){
+		
+		if (sis.getCalculationOptions().isEdpRateCalc()){
+			String edprOutput = EDPROutput.edpRateOutput(sis);
+		} else {
+			String edprOutput = "";
+		}
+		
+		if (sis.getCalculationOptions().isCollapseRateCalc()){
+			String collapseOutput = CollapseOutput.collapseRateOutput(sis);
+		} else {
+			String collapseOutput = "";
+		}
+		
+		if (sis.getCalculationOptions().isDemolitionRateCalc()){
+			String demolitionOutput = DemolitionOutput.demolitionRateOutput(sis);
+		} else {
+			String demolitionOutput = "";
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
 	
 	/**
 	 * @param args
