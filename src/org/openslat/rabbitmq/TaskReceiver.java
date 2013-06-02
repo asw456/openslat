@@ -1,4 +1,4 @@
-package org.openslat.receiver;
+package org.openslat.rabbitmq;
 
 import java.io.IOException;
 
