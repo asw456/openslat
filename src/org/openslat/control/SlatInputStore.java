@@ -69,7 +69,7 @@ public class SlatInputStore {
 
 		// temporary
 		this.setCalculationOptions(new CalculationOptions());
-		this.getCalculationOptions().setCollapse(false);
+		this.getCalculationOptions().setConsiderCollapse(false);
 		this.getCalculationOptions().setEpistemicUncertOptions(
 				new EpistemicUncertOptions());
 		this.getCalculationOptions().getEpistemicUncertOptions()

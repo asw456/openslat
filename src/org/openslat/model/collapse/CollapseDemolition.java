@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize
-public class BuildingPancaked {
+public class CollapseDemolition {
 	
 	@JsonIgnore
 	private SlatInputStore openslat;

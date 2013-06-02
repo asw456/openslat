@@ -19,6 +19,7 @@ public class LossIMNCOutput {
 	public static String edpRateOutput(SlatInputStore sis)
 			throws JsonGenerationException, JsonMappingException, IOException {
 
+		/* not finished; copy of EDPOutput class or something
 		final EDPR edprCalc = new EDPR();
 
 		HashSet<EDP> edpHs = sis.getStructure().getEDPHashSet();
@@ -28,7 +29,7 @@ public class LossIMNCOutput {
 		JsonGenerator g = f.createGenerator(ostream, JsonEncoding.UTF8);
 
 		for (EDP edp : edpHs) {
-			final double edpMaxValue = edp.getMaxValue();
+			final double edpMaxValue = edp.getMaxEDPValue();
 			final double stepsize = edpMaxValue / 1000.0;
 			double[] outputArrayX = new double[1000];
 			double[] outputArrayY = new double[1000];
@@ -55,6 +56,8 @@ public class LossIMNCOutput {
 
 		g.close();
 		return ostream.toString();
+		*/
+		return null;
 	}
 
 	

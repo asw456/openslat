@@ -23,7 +23,7 @@ public class LossIMOutput {
 		ByteArrayOutputStream ostream = new ByteArrayOutputStream();
 		JsonGenerator g = f.createGenerator(ostream, JsonEncoding.UTF8);
 
-		final double imMaxValue = sis.getStructure().getIm().getMaxValue();
+		final double imMaxValue = sis.getStructure().getIm().getMaxIMValue();
 		
 		final double stepsize = imMaxValue / numSteps;
 		

@@ -4,7 +4,7 @@ import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
 import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
 import org.apache.commons.math3.util.FastMath;
-import org.openslat.model.collapse.BuildingPancaked;
+import org.openslat.model.collapse.CollapseDemolition;
 import org.openslat.model.edp.EDP;
 import org.openslat.model.edp.EDPIM;
 import org.openslat.model.im.IM;
@@ -34,7 +34,7 @@ public class EDPR {
 	 *            seismic demand
 	 * @return rate of exceedance
 	 */
-	public double edpRate(double val, EDP edp, IM im, BuildingPancaked pc) {
+	public double edpRate(double val, EDP edp, IM im, CollapseDemolition pc) {
 
 		if (val == 0){
 			val = val + 1e-10; //TODO: is this enough
@@ -44,17 +44,17 @@ public class EDPR {
 
 		if (pc != null) {
 			UnivariateFunction temp = integrandWithPc(edpIm, im, val, pc);
-			return integrator.integrate(10000000, temp, 0, im.getMaxValue());
+			return integrator.integrate(10000000, temp, 0, im.getMaxIMValue());
 		}
 
 		else {
 			UnivariateFunction temp = integrandWithoutPc(edpIm, im, val);
-			return integrator.integrate(10000000, temp, 0, im.getMaxValue());
+			return integrator.integrate(10000000, temp, 0, im.getMaxIMValue());
 		}
 	}
 
 	public UnivariateFunction integrandWithPc(final EDPIM edpIm, final IM im,
-			final double val, final BuildingPancaked pc) {
+			final double val, final CollapseDemolition pc) {
 		return new UnivariateFunction() {
 			public double value(double t) {
 				double epsilon = 1e-10;
