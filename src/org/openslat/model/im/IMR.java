@@ -36,12 +36,12 @@ public class IMR {
 		return model.derivative(im);
 	}
 	
-	public String getImRName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setImRName(String imRName) {
-		this.name = imRName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public double getEpistemicWeight() {

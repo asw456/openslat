@@ -13,9 +13,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize
 public class IM {
 
-	private String name = "defaultName";
+	private String name;
 	@JsonIgnore
-	private SlatInputStore slatMC;
+	private SlatInputStore sis;
 	private ArrayList<IMR> iMR = new ArrayList<IMR>();
 	private double minIMValue;
 	private double maxIMValue;
@@ -29,10 +29,10 @@ public class IM {
 		// TODO : exceptions..
 		if (iMR.size() == 0) {
 			return null;
-		} else if (iMR.size() == 1) {
+		} else if (true) { //iMR.size() == 1 TODO: bastardized this
 			return iMR.get(0);
 		} else {
-			double rn = slatMC.getCalculationOptions()
+			double rn = sis.getCalculationOptions()
 					.getEpistemicLogicTreeValues().getRandIMR();
 			ArrayList<Double> epistemicWeights = new ArrayList<Double>();
 			double total = 0;
@@ -66,13 +66,6 @@ public class IM {
 		this.name = name;
 	}
 
-	public SlatInputStore getSlatMC() {
-		return slatMC;
-	}
-
-	public void setSlatMC(SlatInputStore slatMC) {
-		this.slatMC = slatMC;
-	}
 
 	public void setMaxIMValue(double maxValue){
 		this.maxIMValue = maxValue;
@@ -88,6 +81,14 @@ public class IM {
 
 	public void setMinIMValue(double minIMValue) {
 		this.minIMValue = minIMValue;
+	}
+
+	public SlatInputStore getSis() {
+		return sis;
+	}
+
+	public void setSis(SlatInputStore sis) {
+		this.sis = sis;
 	}
 
 }

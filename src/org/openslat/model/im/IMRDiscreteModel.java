@@ -42,14 +42,17 @@ public class IMRDiscreteModel implements DifferentiableFunction {
 	 * method that deals with a type 1 table
 	 */
 	private void parseTable() {
-		iMi = new double[table.size()];
-		annualFreqi = new double[table.size()];
+		iMi = new double[table.size()+1];
+		annualFreqi = new double[table.size()+1];
 		minKnot = table.get(0).get(0);
 		maxKnot = table.get(table.size() - 1).get(0);
 
+		iMi[0] = 0;
+		annualFreqi[0] = 0;
+		
 		for (int i = 0; i < table.size(); i++) {
-			iMi[i] = Math.log10(table.get(i).get(0).doubleValue());
-			annualFreqi[i] = Math.log10(table.get(i).get(1).doubleValue());
+			iMi[i+1] = Math.log10(table.get(i).get(0).doubleValue());
+			annualFreqi[i+1] = Math.log10(table.get(i).get(1).doubleValue());
 		}
 		annualFreq = new LinearInterpolator().interpolate(iMi, annualFreqi);
 	}
@@ -60,12 +63,12 @@ public class IMRDiscreteModel implements DifferentiableFunction {
 	 */
 	@Override
 	public double value(double x) {
-		if (x >= minKnot && x <= maxKnot) {
+		if (x >= 0 && x <= maxKnot) {
 			return Math.pow(annualFreq.value(Math.log10(x)), 10);
 		}
 		// easy method: return consant
-		if (x < minKnot)
-			return table.get(0).get(1).doubleValue();
+		if (x < 0)
+			return annualFreqi[0];
 		else
 			return table.get(table.size() - 1).get(1).doubleValue();
 
@@ -92,5 +95,13 @@ public class IMRDiscreteModel implements DifferentiableFunction {
 		else
 			return annualFreq.derivative().value(maxKnot);
 
+	}
+
+	public ArrayList<ArrayList<Double>> getTable() {
+		return table;
+	}
+
+	public void setTable(ArrayList<ArrayList<Double>> table) {
+		this.table = table;
 	}
 }

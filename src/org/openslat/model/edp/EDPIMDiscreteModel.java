@@ -1,7 +1,5 @@
 package org.openslat.model.edp;
 
-import gnu.trove.list.array.TDoubleArrayList;
-
 import java.util.ArrayList;
 import org.apache.commons.math3.distribution.LogNormalDistribution;
 import org.openslat.interfaces.DistributionFunction;
@@ -24,7 +22,7 @@ import java.lang.Math;
 public class EDPIMDiscreteModel implements DistributionFunction {
 
 	private ArrayList<ArrayList<Double>> table;
-	
+
 	@JsonIgnore
 	private double logMinKnot;
 	@JsonIgnore
@@ -35,12 +33,12 @@ public class EDPIMDiscreteModel implements DistributionFunction {
 	private PolynomialSplineFunction logSigma;
 	@JsonIgnore
 	private PolynomialSplineFunction logEpistemic;
-	
+
 	/**
 	 * method that deals with a type 1 table
 	 */
 	public void typeOneTableInput() {
-		
+		//TODO: add zero to start of table for linear interpolator
 		double[] logiMi = new double[table.size()];
 		double[] logMeani = new double[table.size()];
 		double[] logSigmai = new double[table.size()];
@@ -54,8 +52,7 @@ public class EDPIMDiscreteModel implements DistributionFunction {
 			logiMi[i] = Math.log10(table.get(i).get(0).doubleValue());
 			logMeani[i] = Math.log10(table.get(i).get(1).doubleValue());
 			logSigmai[i] = Math.log10(table.get(i).get(2).doubleValue());
-			logEpistemici[i] = Math.log10(table.get(i).get(3)
-					.doubleValue());
+			logEpistemici[i] = Math.log10(table.get(i).get(3).doubleValue());
 		}
 
 		logMean = new LinearInterpolator().interpolate(logiMi, logMeani);
@@ -71,27 +68,33 @@ public class EDPIMDiscreteModel implements DistributionFunction {
 	 */
 	public void typeTwoTableInput() {
 
-		double[] logiMi = new double[table.size()];
-		double[] logMeani = new double[table.size()];
-		double[] logaSigmai = new double[table.size()];
-		double[] logEpistemici = new double[table.size()];
+		double[] logiMi = new double[table.size() + 1];
+		double[] logMeani = new double[table.size() + 1];
+		double[] logaSigmai = new double[table.size() + 1];
+		double[] logEpistemici = new double[table.size() + 1];
 		// minKnot = inputTable.get(0).get(0);
 		// maxKnot = inputTable.get(inputTable.size()).get(0);
 
+		logiMi[0] = 0;
+		logMeani[0] = 0;
+		logaSigmai[0] = 0;
+		logEpistemici[0] = 0;
+		
 		for (int i = 0; i < table.size(); i++) {
-			logiMi[i] = Math.log10(table.get(i).get(0).doubleValue());
+			logiMi[i + 1] = Math.log10(table.get(i).get(0).doubleValue());
 			table.get(i).remove(0);
-			logMeani[i] = Math.log10(FitLogNormalDistribution.calculateLogNormalParameters(table
-					.get(i)).getNumericalMean());
-			logaSigmai[i] = Math.log10(FitLogNormalDistribution.calculateLogNormalParameters(table
-					.get(i)).getShape());
+			logMeani[i + 1] = Math.log10(FitLogNormalDistribution
+					.calculateLogNormalParameters(table.get(i))
+					.getNumericalMean());
+			logaSigmai[i + 1] = Math.log10(FitLogNormalDistribution
+					.calculateLogNormalParameters(table.get(i)).getShape());
 		}
 
 		logMean = new LinearInterpolator().interpolate(logiMi, logMeani);
 		logSigma = new LinearInterpolator().interpolate(logiMi, logaSigmai);
 
-		logMinKnot = logiMi[0];
-		logMaxKnot = logiMi[logiMi.length - 1];
+		logMinKnot = logiMi[0 + 1];
+		logMaxKnot = logiMi[logiMi.length - 1 + 1];
 
 	}
 
@@ -108,10 +111,21 @@ public class EDPIMDiscreteModel implements DistributionFunction {
 					(logSigma.value(Math.log10(x))), 10));
 		}
 		if (Math.log10(x) >= 0 && Math.log10(x) < logMinKnot) {
+			return new LogNormalDistribution(LNConverter.muGivenMeanSigma(
+					Math.pow(logMean.value(Math.log10(x)), 10),
+					Math.pow((logSigma.value(Math.log10(x))), 10)), Math.pow(
+					(logSigma.value(Math.log10(x))), 10));
+		}
+		if (Math.log10(x) < 0 ) {
 			return null;
 		}
-		// Do something with out-of-bounds values here
-		return null;
+		else { //(Math.log10(x) > logMaxKnot )
+			return new LogNormalDistribution(LNConverter.muGivenMeanSigma(
+					Math.pow(logMean.value(logMaxKnot), 10),
+					Math.pow((logSigma.value(logMaxKnot)), 10)), Math.pow(
+					(logSigma.value(logMaxKnot)), 10));
+		}
+		
 	}
 
 	public ArrayList<ArrayList<Double>> getTable() {
@@ -121,6 +135,5 @@ public class EDPIMDiscreteModel implements DistributionFunction {
 	public void setTable(ArrayList<ArrayList<Double>> table) {
 		this.table = table;
 	}
-
 
 }

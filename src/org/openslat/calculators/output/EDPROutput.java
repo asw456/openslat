@@ -2,8 +2,7 @@ package org.openslat.calculators.output;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
-
+import java.util.ArrayList;
 import org.openslat.calculators.rate.EDPR;
 import org.openslat.control.SlatInputStore;
 import org.openslat.model.edp.EDP;
@@ -21,18 +20,22 @@ public class EDPROutput {
 
 		final EDPR edprCalc = new EDPR();
 
-		HashSet<EDP> edpHs = sis.getStructure().getEDPHashSet();
+		ArrayList<EDP> edpHs = sis.getStructure().getEdps();
 
 		JsonFactory f = new JsonFactory();
 		ByteArrayOutputStream ostream = new ByteArrayOutputStream();
 		JsonGenerator g = f.createGenerator(ostream, JsonEncoding.UTF8);
 
+		g.writeStartObject();
+		g.writeArrayFieldStart("edpRates");
+		
 		for (EDP edp : edpHs) {
 			final double edpMaxValue = edp.getMaxEDPValue();
-			final double stepsize = edpMaxValue / 1000.0;
-			double[] outputArrayX = new double[1000];
-			double[] outputArrayY = new double[1000];
-			for (int i = 0; i < 1000; i++) {
+			final double stepsize = edpMaxValue / 20.0;
+			double[] outputArrayX = new double[20];
+			double[] outputArrayY = new double[20];
+			for (int i = 0; i < 20; i++) {
+				System.out.println("edpr step " + i);
 				outputArrayX[i] = 0.001 + i * stepsize;
 				outputArrayY[i] = edprCalc.edpRate(outputArrayX[i], edp, sis
 						.getStructure().getIm(), sis.getStructure().getPc());
@@ -40,9 +43,9 @@ public class EDPROutput {
 
 			}
 
+
 			g.writeStartObject();
-			g.writeObjectFieldStart(edp.getName());
-			//g.writeStringField("x", Arrays.toString(outputArrayX));
+			g.writeStringField("name", edp.getName());
 			//g.writeStringField("y", Arrays.toString(outputArrayY));
 			g.writeArrayFieldStart("x");
 			for (int i=0;i<outputArrayX.length;i++){ g.writeNumber(outputArrayX[i]);};
@@ -51,9 +54,12 @@ public class EDPROutput {
 			for (int i=0;i<outputArrayY.length;i++){ g.writeNumber(outputArrayY[i]);};			
 			g.writeEndArray();
 			g.writeEndObject();
+		
 		}
 
+		g.writeEndArray();
 		g.close();
+		
 		return ostream.toString();
 	}
 

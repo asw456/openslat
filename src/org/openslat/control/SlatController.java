@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SlatController {
 
-	public static void run(String inputJsonString) {
+	public static String run(String inputJsonString) {
 		
 		SlatInputStore sis;
 		try {
@@ -32,37 +32,42 @@ public class SlatController {
 			String results = calculate(sis);
 			System.out.println(results);
 			
+			return results;
 			
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-			return;
+			return "error";
 		}		
+		
 	}
 	
 	
-	private static String calculate(SlatInputStore sis){
+	private static String calculate(SlatInputStore sis) throws IOException{
 		
+		String edprOutput;
 		if (sis.getCalculationOptions().isEdpRateCalc()){
-			String edprOutput = EDPROutput.edpRateOutput(sis);
+			edprOutput = EDPROutput.edpRateOutput(sis);
+			System.out.println("edprOutput:   " + edprOutput);
+
 		} else {
-			String edprOutput = "";
+			edprOutput = "";
 		}
 		
 		if (sis.getCalculationOptions().isCollapseRateCalc()){
-			String collapseOutput = CollapseOutput.collapseRateOutput(sis);
+			String collapseOutput = ""; //CollapseOutput.collapseRateOutput(sis);
 		} else {
 			String collapseOutput = "";
 		}
 		
 		if (sis.getCalculationOptions().isDemolitionRateCalc()){
-			String demolitionOutput = DemolitionOutput.demolitionRateOutput(sis);
+			String demolitionOutput = ""; //DemolitionOutput.demolitionRateOutput(sis);
 		} else {
 			String demolitionOutput = "";
 		}
 		
 		
-		
+		return edprOutput;
 	}
 	
 	
@@ -78,37 +83,11 @@ public class SlatController {
 	public static void main(String[] args) throws JsonGenerationException,
 			JsonMappingException, IOException {
 
-		String inputJsonString = "{\"structure\":{\"performanceGroups\":[{\"components\":[{\"ff\":{\"identifier\":1,\"name\":\"simplified_bridge_FF_name\",\"material\":null,\"damageStates\":[{\"meanEDPOnset\":0.0062,\"epistemicStdDev_Mean_LNedp\":0,\"sigmaEDPOnset\":0.4,\"epistemicStdDev_Var_LNedp\":0,\"upperLimitMeanLoss\":0.03,\"lowerLimitMeanLoss\":0.03,\"numberComponentsUpperLimitLoss\":1,\"numberComponentsLowerLimitLoss\":1,\"epistemicStdDev_Mean_LNloss\":0,\"sigmaLoss\":0.4,\"epistemicStdDev_Var_LNloss\":0,\"upperLimitMeanTime\":1,\"lowerLimitMeanTime\":1,\"numberComponentsUpperLimitTime\":1,\"numberComponentsLowerLimitTime\":1,\"epistemicStdDev_Mean_LNtime\":0,\"sigmaTime\":0,\"epistemicStdDev_Var_LNtime\":0},{\"meanEDPOnset\":0.023,\"epistemicStdDev_Mean_LNedp\":0,\"sigmaEDPOnset\":0.4,\"epistemicStdDev_Var_LNedp\":0,\"upperLimitMeanLoss\":0.08,\"lowerLimitMeanLoss\":0.08,\"numberComponentsUpperLimitLoss\":1,\"numberComponentsLowerLimitLoss\":1,\"epistemicStdDev_Mean_LNloss\":0,\"sigmaLoss\":0.4,\"epistemicStdDev_Var_LNloss\":0,\"upperLimitMeanTime\":1,\"lowerLimitMeanTime\":1,\"numberComponentsUpperLimitTime\":1,\"numberComponentsLowerLimitTime\":1,\"epistemicStdDev_Mean_LNtime\":0,\"sigmaTime\":0,\"epistemicStdDev_Var_LNtime\":0},{\"meanEDPOnset\":0.044,\"epistemicStdDev_Mean_LNedp\":0,\"sigmaEDPOnset\":0.4,\"epistemicStdDev_Var_LNedp\":0,\"upperLimitMeanLoss\":0.25,\"lowerLimitMeanLoss\":0.25,\"numberComponentsUpperLimitLoss\":1,\"numberComponentsLowerLimitLoss\":1,\"epistemicStdDev_Mean_LNloss\":0,\"sigmaLoss\":0.4,\"epistemicStdDev_Var_LNloss\":0,\"upperLimitMeanTime\":1,\"lowerLimitMeanTime\":1,\"numberComponentsUpperLimitTime\":1,\"numberComponentsLowerLimitTime\":1,\"epistemicStdDev_Mean_LNtime\":0,\"sigmaTime\":0,\"epistemicStdDev_Var_LNtime\":0},{\"meanEDPOnset\":0.0564,\"epistemicStdDev_Mean_LNedp\":0,\"sigmaEDPOnset\":0.4,\"epistemicStdDev_Var_LNedp\":0,\"upperLimitMeanLoss\":1,\"lowerLimitMeanLoss\":1,\"numberComponentsUpperLimitLoss\":1,\"numberComponentsLowerLimitLoss\":1,\"epistemicStdDev_Mean_LNloss\":0,\"sigmaLoss\":0.4,\"epistemicStdDev_Var_LNloss\":0,\"upperLimitMeanTime\":1,\"lowerLimitMeanTime\":1,\"numberComponentsUpperLimitTime\":1,\"numberComponentsLowerLimitTime\":1,\"epistemicStdDev_Mean_LNtime\":0,\"sigmaTime\":0,\"epistemicStdDev_Var_LNtime\":0}]}}],\"edp\":{\"name\":\"simplified_bridge_EDP_name\",\"edpIM\":[{\"name\":null,\"epistemicWeight\":1,\"distributionFunction\":{\"type\":\"LogNormalModel\",\"meanModel\":{\"type\":\"PowerModel\",\"parameters\":[0.1,1.5]},\"stddModel\":{\"type\":\"PowerModel\",\"parameters\":[0.5,0]},\"table\":null}}],\"minEDPValue\":0,\"maxEDPValue\":0.15},\"name\":\"simplified_bridge_PG_name\"}],\"collapse\":{\"pcim\":[{\"name\":\"pcim-collapse-relationship-1\",\"epistemicWeight\":0.5,\"mean\":2,\"sigma\":0.01}],\"lossCollapse\":{\"randMeanLoss\":-99,\"randSigmaLoss\":-99,\"additionalLoss\":10000,\"additionalTime\":-99,\"meanLoss\":1500000000,\"epistemicStdDev_Mean_LNloss\":200000,\"sigmaLoss\":10000000,\"epistemicStdDev_Var_LNloss\":-99,\"meanTime\":-99,\"epistemicStdDev_Mean_LNtime\":-99,\"sigmaTime\":-99,\"epistemicStdDev_Var_LNTime\":-99}},\"demolition\":{\"pcim\":[{\"name\":\"pcim-demolition-relationship-1\",\"epistemicWeight\":0.5,\"mean\":2,\"sigma\":0.01}],\"lossCollapse\":{\"randMeanLoss\":-99,\"randSigmaLoss\":-99,\"additionalLoss\":10000,\"additionalTime\":-99,\"meanLoss\":1500000000,\"epistemicStdDev_Mean_LNloss\":200000,\"sigmaLoss\":10000000,\"epistemicStdDev_Var_LNloss\":-99,\"meanTime\":-99,\"epistemicStdDev_Mean_LNtime\":-99,\"sigmaTime\":-99,\"epistemicStdDev_Var_LNTime\":-99}},\"im\":{\"name\":\"simplified_bridge_IM_name\",\"iMR\":[{\"epistemicWeight\":1,\"model\":{\"type\":\"HyperbolicModel\",\"parameters\":[1221,29.8,62.2]},\"imRName\":\"imr1\"}],\"minIMValue\":0,\"maxIMValue\":2.5}},\"calculationOptions\":{\"considerCollapse\":true,\"componentBasedCollapseCost\":false,\"considerDemolition\":false,\"componentBasedDemolitionCost\":false,\"considerDownTime\":false,\"imCalcSteps\":50,\"edpCalcSteps\":50,\"demolitionRateCalc\":false,\"collapseRateCalc\":false,\"edpRateCalc\":true}}		";
-		SlatInputStore sis = SlatParser.parseInputJsonString(inputJsonString);		
-
-		sis.setupSis();
+		//String inputJsonString = "";
+		String inputJsonString = "{\"structure\":{\"performanceGroups\":[],\"edps\":[{\"name\":\"2nd storey drift (cm)\",\"identifier\":1,\"edpIM\":[{\"name\":null,\"epistemicWeight\":1,\"distributionFunction\":{\"type\":\"LogNormalModel\",\"meanModel\":{\"type\":\"PowerModel\",\"parameters\":[0.1,1.5]},\"stddModel\":{\"type\":\"PowerModel\",\"parameters\":[0.5,0]}}}],\"minEDPValue\":0,\"maxEDPValue\":0.15}],\"collapse\":{\"pcim\":[{\"name\":\"relationship-2\",\"epistemicWeight\":1,\"mean\":2,\"sigma\":0.01}],\"lossCollapse\":{\"meanLoss\":1500000000,\"sigmaLoss\":10000000,\"epistemicStdDev_Mean_LNloss\":200000,\"randMeanLoss\":-99,\"randSigmaLoss\":-99,\"additionalTime\":-99,\"epistemicStdDev_Var_LNloss\":-99,\"meanTime\":-99,\"epistemicStdDev_Mean_LNtime\":-99,\"sigmaTime\":-99,\"epistemicStdDev_Var_LNTime\":-99}},\"demolition\":{\"pcim\":[{\"name\":\"relationship-1\",\"epistemicWeight\":1,\"mean\":1,\"sigma\":0.1}],\"lossCollapse\":{\"additionalLoss\":1000000,\"randMeanLoss\":-99,\"randSigmaLoss\":-99,\"additionalTime\":-99,\"epistemicStdDev_Var_LNloss\":-99,\"meanTime\":-99,\"epistemicStdDev_Mean_LNtime\":-99,\"sigmaTime\":-99,\"epistemicStdDev_Var_LNTime\":-99}}},\"im\":{\"name\":\"Peak Ground Acceleration (m/s^2)\",\"iMR\":[{\"name\":\"relationship-1\",\"epistemicWeight\":0.5,\"model\":{\"type\":\"HyperbolicModel\",\"parameters\":[1221,27,65]}},{\"name\":\"relationship-2\",\"epistemicWeight\":0.5,\"model\":{\"type\":\"HyperbolicModel\",\"parameters\":[1221,29,68]}}],\"minIMValue\":0,\"maxIMValue\":2.5},\"calculationOptions\":{\"considerCollapse\":true,\"componentBasedCollapseCost\":false,\"considerDemolition\":false,\"componentBasedDemolitionCost\":false,\"considerDownTime\":false,\"imCalcSteps\":50,\"edpCalcSteps\":50,\"demolitionRateCalc\":false,\"collapseRateCalc\":false,\"edpRateCalc\":true}}";
 		
-		StringWriter stringWriter = new StringWriter();
-		(new ObjectMapper()).writeValue(stringWriter, sis);
-		System.out.println("JSON string after parsing and re-stringifying");
-		System.out.println(stringWriter.toString());
-		
-		String edprOutput = EDPROutput.edpRateOutput(sis);
-		System.out.println(edprOutput);
-		
-		
-		
-		// this is what the output needs to be like
-		/*
-		{
-			   "demolitionRate":0.002,
-			   "collapseRate":0.0015,
-			   "edpRates":[
-			      {
-			         "name":"<edpname>",
-			         "x":[]
-			         "y":[]
-			         ]
-			      }
-			   ]
-			}
-		*/
-		
+		String outputString = run(inputJsonString);
+		System.out.println("output:  " + outputString);
 		
 		
 		//String lossIMOutput = LossIMOutput.lossOutput(sis,50);

@@ -1,12 +1,12 @@
 package org.openslat.control;
 
+import org.openslat.model.edp.EDP;
 import org.openslat.model.fragilityfunctions.DamageState;
+import org.openslat.model.im.IM;
 import org.openslat.model.structure.Component;
 import org.openslat.model.structure.PerformanceGroup;
 import org.openslat.model.structure.Structure;
 import org.openslat.options.CalculationOptions;
-import org.openslat.options.EpistemicUncertOptions;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -14,14 +14,16 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class SlatInputStore {
 
 	private Structure structure;
+	private IM im;
 	private CalculationOptions calculationOptions;
 
-	public SlatInputStore(
-			@JsonProperty("structure") Structure structure,
-			@JsonProperty("calculationOptions") CalculationOptions calculationOptions) {
-		this.structure = structure;
-		this.calculationOptions = calculationOptions;
-	}
+
+	//public SlatInputStore(
+	//		@JsonProperty("structure") Structure structure,
+	//		@JsonProperty("calculationOptions") CalculationOptions calculationOptions) {
+	//	this.structure = structure;
+	//	this.calculationOptions = calculationOptions;
+	//}
 
 	public Structure getStructure() {
 		return structure;
@@ -37,14 +39,21 @@ public class SlatInputStore {
 
 	public void setupSis() {
 
-		// set edps within components
+		// set edps within pgs and components
 		for (PerformanceGroup pg : this.getStructure().getPerformanceGroups()) {
-			for (Component c : pg.getComponents()) {
-				c.setEdp(pg.getEdp());
+
+			int pgId = pg.getId();
+			for (EDP edp : this.getStructure().getEdps()) {
+				if (edp.getIdentifier() == pgId) {
+					
+					pg.setEdp(edp);
+					for (Component c : pg.getComponents()) {
+						c.setEdp(edp);
+					}
+				}
 			}
 		}
 
-		
 		// set sis in all classes that need to reference other things
 		for (Component c : structure.getComponents()) {
 			c.getEdp().setSis(this);
@@ -53,6 +62,8 @@ public class SlatInputStore {
 				ds.setSis(this);
 			}
 		}
+		
+		im.setSis(this);
 
 		// set means in ff
 		for (Component c : this.getStructure().getComponents()) {
@@ -67,14 +78,30 @@ public class SlatInputStore {
 			}
 		}
 
+		// set im
+		//System.out.println("temp debug:  " + this.im);
+		structure.setIm(this.im);
+		
 		// temporary
-		//this.setCalculationOptions(new CalculationOptions());
-		//this.getCalculationOptions().setConsiderCollapse(false);
-		//this.getCalculationOptions().setEpistemicUncertOptions(
-		//		new EpistemicUncertOptions());
-		//this.getCalculationOptions().getEpistemicUncertOptions()
-		//		.setEpistemicUncert(false);
+		// this.setCalculationOptions(new CalculationOptions());
+		// this.getCalculationOptions().setConsiderCollapse(false);
+		// this.getCalculationOptions().setEpistemicUncertOptions(
+		// new EpistemicUncertOptions());
+		// this.getCalculationOptions().getEpistemicUncertOptions()
+		// .setEpistemicUncert(false);
 
+	}
+
+	public IM getIm() {
+		return im;
+	}
+
+	public void setIm(IM im) {
+		this.im = im;
+	}
+
+	public void setStructure(Structure structure) {
+		this.structure = structure;
 	}
 
 }

@@ -1,6 +1,7 @@
 package org.openslat.calculators.rate;
 
 import org.apache.commons.math3.analysis.UnivariateFunction;
+import org.apache.commons.math3.analysis.integration.RombergIntegrator;
 import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
 import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
 import org.apache.commons.math3.util.FastMath;
@@ -22,7 +23,7 @@ import org.openslat.numerical.MagnitudeAdaptiveQuadratureIntegrator;
  */
 public class EDPR {
 
-	private UnivariateIntegrator integrator = new SimpsonIntegrator();
+	private UnivariateIntegrator integrator = new RombergIntegrator();
 
 	// private UnivariateIntegrator integrator = new
 	// MagnitudeAdaptiveQuadratureIntegrator();
@@ -42,7 +43,7 @@ public class EDPR {
 		EDPIM edpIm = edp.retrieveEdpIM(); // TODO: fix this obvious issue when
 											// EU becomes more important
 
-		if (pc != null) {
+		if (pc != null && false) { // TODO: bastardized this
 			UnivariateFunction temp = integrandWithPc(edpIm, im, val, pc);
 			return integrator.integrate(10000000, temp, 0, im.getMaxIMValue());
 		}
@@ -83,19 +84,24 @@ public class EDPR {
 			final IM im, final double val) {
 		return new UnivariateFunction() {
 			public double value(double t) {
+				System.out.println(t);
 				double epsilon = 1e-10;
 				if (FastMath.abs(t) < epsilon) {
 					return 0;
 				}
-				if (FastMath.abs(1 - t) < epsilon) {
-					return 0;
-				} else {
-
-					return (1 - edpIm.getDistributionFunction()
-							.distribution(1 / t - 1).cumulativeProbability(val))
-							* FastMath.abs(im.retrieveImr().derivative(
-									1 / t - 1)) * (1 / FastMath.pow(t, 2));
-				}
+				//if (FastMath.abs(1 - t) < epsilon) {
+				//	return 0;
+				//} else {
+				return (1 - edpIm.getDistributionFunction()
+						.distribution(t).cumulativeProbability(val))
+						* FastMath.abs(im.retrieveImr().derivative(
+								t)) ;
+				
+				//	return (1 - edpIm.getDistributionFunction()
+				//			.distribution(1 / t - 1).cumulativeProbability(val))
+				//			* FastMath.abs(im.retrieveImr().derivative(
+				//					1 / t - 1)) * (1 / FastMath.pow(t, 2));
+				//}
 			}
 		};
 

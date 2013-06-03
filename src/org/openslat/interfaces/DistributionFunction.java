@@ -1,6 +1,7 @@
 package org.openslat.interfaces;
 
 import org.apache.commons.math3.distribution.RealDistribution;
+import org.openslat.model.edp.EDPIMDiscreteModel;
 import org.openslat.models.distribution.LogNormalModel;
 import org.openslat.models.distribution.NormalModel;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({ @Type(value = LogNormalModel.class), // ,name = "ln model")
-		@Type(value = NormalModel.class) })
+		@Type(value = NormalModel.class), @Type(value = EDPIMDiscreteModel.class) })
 public interface DistributionFunction {
 	public RealDistribution distribution(double x);
 	public int hashCode();

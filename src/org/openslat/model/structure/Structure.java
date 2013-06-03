@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.openslat.model.collapse.CollapseDemolition;
-import org.openslat.model.collapse.LossCollapse;
-import org.openslat.model.collapse.CollapseDemolition;
 import org.openslat.model.edp.EDP;
 import org.openslat.model.im.IM;
 
@@ -20,9 +18,12 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class Structure {
 
 	private ArrayList<PerformanceGroup> performanceGroups = new ArrayList<PerformanceGroup>();
+	private ArrayList<EDP> edps;
 	private CollapseDemolition collapse;
 	private CollapseDemolition demolition;
+	@JsonIgnore
 	private IM im;
+
 
 	@JsonIgnore
 	public ArrayList<Component> getComponents() {
@@ -88,6 +89,14 @@ public class Structure {
 
 	public void setPerformanceGroups(ArrayList<PerformanceGroup> performanceGroups) {
 		this.performanceGroups = performanceGroups;
+	}
+
+	public ArrayList<EDP> getEdps() {
+		return edps;
+	}
+
+	public void setEdps(ArrayList<EDP> edps) {
+		this.edps = edps;
 	}
 
 }

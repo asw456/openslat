@@ -12,8 +12,11 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize
 public class PerformanceGroup {
 
+	private int edpId;
 	private ArrayList<Component> components = new ArrayList<Component>();
 	private String name;
+	
+	@JsonIgnore
 	private EDP edp;
 	
 	@JsonIgnore
@@ -73,5 +76,13 @@ public class PerformanceGroup {
 
 	public void setImVarLossMap(ConcurrentSkipListMap<Double, Double> imVarLossMap) {
 		this.imVarLossMap = imVarLossMap;
+	}
+
+	public int getId() {
+		return edpId;
+	}
+
+	public void setId(int id) {
+		this.edpId = id;
 	}
 }

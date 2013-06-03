@@ -2,7 +2,7 @@
   "structure":{
     "performanceGroups":[
       {
-		"edpId":0,
+		"edpId":0,	  
         "components":[
           {
             "ff":{
@@ -98,36 +98,23 @@
       }
     ],
 	"edps":[
-		{
-			  "id":0,
-			  "name":"simplified_bridge_EDP_name",
-			  "edpIM":[
-				{
-					"name":null,
-					"epistemicWeight":1,
-					"distributionFunction":{
-						"type":"LogNormalModel",
-						"meanModel":{
-						  "type":"PowerModel",
-						  "parameters":[
-							0.1,
-							1.5
-						  ]
-						},
-					"stddModel":{
-					  "type":"PowerModel",
-					  "parameters":[
-						0.5,
-						0
-					  ]
-					},
-				  }
-				}
-			  ],
-			  "minEDPValue":0,
-			  "maxEDPValue":0.15
-		}
-		],
+	        {
+		  "id":0,	
+		  "name":"simplified_bridge_EDP_name",
+          "edpIM":[
+            {
+                "name":null,
+                "epistemicWeight":1,
+                "distributionFunction":{
+					"type":"EDPIMDiscreteModel",
+					"table":[[1,1],[2,1]]
+              }
+            }
+          ],
+		  "minEDPValue":0,
+          "maxEDPValue":0.15
+        }
+	],
     "collapse": {
 		"pcim": [
 			{
@@ -182,12 +169,8 @@
         {
           "epistemicWeight":1,
           "model":{
-            "type":"HyperbolicModel",
-            "parameters":[
-              1221,
-              29.8,
-              62.2
-            ]
+            "type":"IMRDiscreteModel",
+            "table":[[1,1],[2,1]]
           },
           "imRName":"imr1"
         }
@@ -212,5 +195,3 @@
 
 
 
-
-			
