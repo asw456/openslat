@@ -39,10 +39,10 @@ public class CollapseOutput {
 		
 		
 		for (int i = 0; i < numSteps; i++) {
-			System.out.println("iteration:    ----------      " + i);
+			System.err.println("iteration:    ----------      " + i);
 			imArray[i] = 0 + i * stepsize;
 			collapseRateArray[i] = cR.evaluate(imArray[i]);
-			System.out.println(imArray[i] + ",   " + collapseRateArray[i] + ",    " + sigmaLossArray[i]);
+			System.err.println(imArray[i] + ",   " + collapseRateArray[i] + ",    " + sigmaLossArray[i]);
 		}
 
 		g.writeStartObject();

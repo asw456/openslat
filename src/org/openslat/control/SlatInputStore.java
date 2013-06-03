@@ -79,7 +79,7 @@ public class SlatInputStore {
 		}
 
 		// set im
-		//System.out.println("temp debug:  " + this.im);
+		//System.err.println("temp debug:  " + this.im);
 		structure.setIm(this.im);
 		
 		// temporary

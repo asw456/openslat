@@ -18,7 +18,7 @@ public class TaskReceiver1 {
 		Channel channel = connection.createChannel();
 
 		channel.queueDeclare(TASK_QUEUE_NAME, true, false, false, null);
-		System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+		System.err.println(" [*] Waiting for messages. To exit press CTRL+C");
 
 		channel.basicQos(1);
 
@@ -29,12 +29,12 @@ public class TaskReceiver1 {
 			QueueingConsumer.Delivery delivery = consumer.nextDelivery();
 			String message = new String(delivery.getBody());
 
-			System.out.println(" [x] Received '" + message + "'");
+			System.err.println(" [x] Received '" + message + "'");
 			// TODO: this used to be a void method, is this OK
 			// String results = generateResults(message);
 			doWork(message);
 
-			System.out.println(" [x] Done");
+			System.err.println(" [x] Done");
 
 			channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
 		}
