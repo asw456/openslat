@@ -24,7 +24,6 @@ public class CalculationOptions {
 	private boolean collapseRateCalc;
 	private boolean edpRateCalc;
 	
-	
 	@JsonIgnore
 	private EpistemicUncertOptions epistemicUncertOptions;
 	@JsonIgnore
@@ -124,8 +123,7 @@ public class CalculationOptions {
 			EpistemicLogicTreeValues epistemicLogicTreeValues) {
 		this.epistemicLogicTreeValues = epistemicLogicTreeValues;
 	}
-	
-	
+
 	// public EDPIMCorrelations getEdpIMCorrelations() {
 	// return edpIMCorrelations;
 	// }

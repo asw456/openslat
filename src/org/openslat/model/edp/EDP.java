@@ -11,7 +11,7 @@ public class EDP {
 
 	@JsonIgnore
 	private SlatInputStore sis;
-	
+	private int identifier;
 	private String name;
 	private ArrayList<EDPIM> edpIM = new ArrayList<EDPIM>();
 	private double minEDPValue;
@@ -117,5 +117,13 @@ public class EDP {
 
 	public void setMinEDPValue(double minEDP) {
 		this.minEDPValue = minEDP;
+	}
+
+	public int getIdentifier() {
+		return identifier;
+	}
+
+	public void setIdentifier(int id) {
+		this.identifier = id;
 	}
 }
