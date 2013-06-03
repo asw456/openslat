@@ -3,6 +3,8 @@ package org.openslat.control;
 import java.io.IOException;
 import java.io.StringWriter;
 
+import org.openslat.calculators.output.CollapseOutput;
+import org.openslat.calculators.output.DemolitionOutput;
 import org.openslat.calculators.output.EDPROutput;
 import org.openslat.control.SlatInputStore;
 import org.openslat.jsonparser.SlatParser;

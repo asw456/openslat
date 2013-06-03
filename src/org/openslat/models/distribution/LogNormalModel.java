@@ -21,6 +21,14 @@ public class LogNormalModel implements DistributionFunction {
 	private DifferentiableFunction meanModel;
 	private DifferentiableFunction stddModel;
 
+	public LogNormalModel(){
+	};
+	
+	public LogNormalModel(DifferentiableFunction meanModel,DifferentiableFunction stddModel){
+		this.meanModel = meanModel;
+		this.stddModel = stddModel;
+	}
+	
 	/**
 	 * Evaluates the model for a specified input value x.
 	 * 
@@ -33,12 +41,6 @@ public class LogNormalModel implements DistributionFunction {
 		// TODO : Check if this is correct..check 1 passed
 		return new LogNormalDistribution(LNConverter.muGivenMeanSigma(
 				meanModel.value(x), stddModel.value(x)), stddModel.value(x));
-	}
-
-	@Override
-	public ArrayList<ArrayList<Double>> getTable() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public DifferentiableFunction getMeanModel() {
