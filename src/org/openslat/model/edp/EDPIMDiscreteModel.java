@@ -1,5 +1,7 @@
 package org.openslat.model.edp;
 
+import gnu.trove.list.array.TDoubleArrayList;
+
 import java.util.ArrayList;
 import org.apache.commons.math3.distribution.LogNormalDistribution;
 import org.openslat.interfaces.DistributionFunction;
@@ -7,6 +9,10 @@ import org.openslat.numerical.FitLogNormalDistribution;
 import org.openslat.numerical.LNConverter;
 import org.apache.commons.math3.analysis.interpolation.LinearInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.lang.Math;
 
 /**
@@ -14,20 +20,27 @@ import java.lang.Math;
  * 
  * @author Alan Williams
  */
+@JsonSerialize
 public class EDPIMDiscreteModel implements DistributionFunction {
 
-	private double logMinKnot;
-	private double logMaxKnot;
+	private ArrayList<ArrayList<Double>> table;
 	
+	@JsonIgnore
+	private double logMinKnot;
+	@JsonIgnore
+	private double logMaxKnot;
+	@JsonIgnore
 	private PolynomialSplineFunction logMean;
+	@JsonIgnore
 	private PolynomialSplineFunction logSigma;
+	@JsonIgnore
 	private PolynomialSplineFunction logEpistemic;
-	private ArrayList<ArrayList<Double>> table = null;
-
+	
 	/**
 	 * method that deals with a type 1 table
 	 */
-	public void typeOneTableInput(ArrayList<ArrayList<Double>> table) {
+	public void typeOneTableInput() {
+		
 		double[] logiMi = new double[table.size()];
 		double[] logMeani = new double[table.size()];
 		double[] logSigmai = new double[table.size()];
@@ -56,8 +69,8 @@ public class EDPIMDiscreteModel implements DistributionFunction {
 	/**
 	 * method that deals with a type 2 table
 	 */
-	public void typeTwoTableInput(ArrayList<ArrayList<Double>> table) {
-		this.table = table;
+	public void typeTwoTableInput() {
+
 		double[] logiMi = new double[table.size()];
 		double[] logMeani = new double[table.size()];
 		double[] logaSigmai = new double[table.size()];
@@ -108,5 +121,6 @@ public class EDPIMDiscreteModel implements DistributionFunction {
 	public void setTable(ArrayList<ArrayList<Double>> table) {
 		this.table = table;
 	}
+
 
 }

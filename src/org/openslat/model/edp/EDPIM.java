@@ -3,6 +3,7 @@ package org.openslat.model.edp;
 import java.util.ArrayList;
 import org.openslat.interfaces.DifferentiableFunction;
 import org.openslat.interfaces.DistributionFunction;
+import org.openslat.models.distribution.LogNormalModel;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -38,32 +39,32 @@ public class EDPIM {
 
 	public void constructDistributionFunctionFromModels(
 			DifferentiableFunction meanModel, DifferentiableFunction stddModel) {
-		this.distributionFunction = new EDPIMParametricModel(meanModel,
+		this.distributionFunction = new LogNormalModel(meanModel,
 				stddModel);
 	}
 
 	public void constructDistributionFunctionDiscreteType1Table(
 			ArrayList<ArrayList<Double>> table) {
 		this.distributionFunction = new EDPIMDiscreteModel();
-		((EDPIMDiscreteModel) distributionFunction).typeOneTableInput(table);
+		((EDPIMDiscreteModel) distributionFunction).typeOneTableInput();
 	}
 
 	public void constructDistributionFunctionDiscreteType2Table(
 			ArrayList<ArrayList<Double>> table) {
 		this.distributionFunction = new EDPIMDiscreteModel();
-		((EDPIMDiscreteModel) distributionFunction).typeTwoTableInput(table);
+		((EDPIMDiscreteModel) distributionFunction).typeTwoTableInput();
 	}
 
 	public void constructDistributionFunctionParametricType1Table(
 			ArrayList<ArrayList<Double>> table) {
 		this.distributionFunction = new EDPIMParametricModel();
-		((EDPIMParametricModel) distributionFunction).typeOneTableInput(table);
+		((EDPIMParametricModel) distributionFunction).typeOneTableInput();
 	}
 
 	public void constructDistributionFunctionParametricType2Table(
 			ArrayList<ArrayList<Double>> table) {
 		this.distributionFunction = new EDPIMParametricModel();
-		((EDPIMParametricModel) distributionFunction).typeTwoTableInput(table);
+		((EDPIMParametricModel) distributionFunction).typeTwoTableInput();
 	}
 
 	public Double getEpistemicWeight() {

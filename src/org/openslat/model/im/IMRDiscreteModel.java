@@ -18,10 +18,15 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize
 public class IMRDiscreteModel implements DifferentiableFunction {
 
-	private ArrayList<ArrayList<Double>> inputTable;
+	private ArrayList<ArrayList<Double>> table;
+
+	@JsonIgnore
 	double[] iMi;
+	@JsonIgnore
 	double[] annualFreqi;
+	@JsonIgnore
 	private double minKnot;
+	@JsonIgnore
 	private double maxKnot;
 	@JsonIgnore
 	private PolynomialSplineFunction annualFreq;
@@ -29,7 +34,7 @@ public class IMRDiscreteModel implements DifferentiableFunction {
 	// TODO: deal with out-of-bounds values better
 
 	public void parseTable(ArrayList<ArrayList<Double>> table) {
-		this.inputTable = table;
+		this.table = table;
 		parseTable();
 	}
 
@@ -37,14 +42,14 @@ public class IMRDiscreteModel implements DifferentiableFunction {
 	 * method that deals with a type 1 table
 	 */
 	private void parseTable() {
-		iMi = new double[inputTable.size()];
-		annualFreqi = new double[inputTable.size()];
-		minKnot = inputTable.get(0).get(0);
-		maxKnot = inputTable.get(inputTable.size() - 1).get(0);
+		iMi = new double[table.size()];
+		annualFreqi = new double[table.size()];
+		minKnot = table.get(0).get(0);
+		maxKnot = table.get(table.size() - 1).get(0);
 
-		for (int i = 0; i < inputTable.size(); i++) {
-			iMi[i] = Math.log10(inputTable.get(i).get(0).doubleValue());
-			annualFreqi[i] = Math.log10(inputTable.get(i).get(1).doubleValue());
+		for (int i = 0; i < table.size(); i++) {
+			iMi[i] = Math.log10(table.get(i).get(0).doubleValue());
+			annualFreqi[i] = Math.log10(table.get(i).get(1).doubleValue());
 		}
 		annualFreq = new LinearInterpolator().interpolate(iMi, annualFreqi);
 	}
@@ -60,9 +65,9 @@ public class IMRDiscreteModel implements DifferentiableFunction {
 		}
 		// easy method: return consant
 		if (x < minKnot)
-			return inputTable.get(0).get(1).doubleValue();
+			return table.get(0).get(1).doubleValue();
 		else
-			return inputTable.get(inputTable.size() - 1).get(1).doubleValue();
+			return table.get(table.size() - 1).get(1).doubleValue();
 
 		// Line lowerLine = new Line(new Vector2D(iMi[0], annualFreqi[0]),
 		// new Vector2D(iMi[1], annualFreqi[1]));

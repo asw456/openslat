@@ -64,12 +64,6 @@ public class NormalModel implements DistributionFunction {
 	}
 
 	@Override
-	public ArrayList<ArrayList<Double>> getTable() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

@@ -1,10 +1,14 @@
 package org.openslat.model.edp;
 
 import java.util.ArrayList;
+
+import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 import org.apache.commons.math3.distribution.LogNormalDistribution;
 import org.openslat.interfaces.DifferentiableFunction;
 import org.openslat.interfaces.DistributionFunction;
 import org.openslat.numerical.LNConverter;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Combines two continuous parametric models into a distribution model with mean
@@ -16,29 +20,24 @@ public class EDPIMParametricModel implements DistributionFunction {
 
 	// 3. fit data to a power-law parametric model (cornell et. al. 2002)
 	// 4. fit data to a parabolic parametric model (Aslani and Miranda
-	private ArrayList<ArrayList<Double>> inputTable = new ArrayList<ArrayList<Double>>();
-	private double minKnot;
-	private double maxKnot;
-	private DifferentiableFunction mean;
-	private DifferentiableFunction aStdD;
-	private ArrayList<ArrayList<Double>> table = null;
+
+
+	@JsonIgnore
+	private double logMinKnot;
+	@JsonIgnore
+	private double logMaxKnot;
+	@JsonIgnore
+	private PolynomialSplineFunction logMean;
+	@JsonIgnore
+	private PolynomialSplineFunction logSigma;
+	@JsonIgnore
+	private PolynomialSplineFunction logEpistemic;
 
 	public EDPIMParametricModel(){
 		super();
 	}
 	
-	/**
-	 * Constructs the combined model from the two parametric models.
-	 * 
-	 * @param mean
-	 * @param aStdD
-	 */
-	public EDPIMParametricModel(DifferentiableFunction meanModel,
-			DifferentiableFunction stddModel) {
-		this.mean = meanModel;
-		this.aStdD = stddModel;
-	}
-	
+
 	/**
 	 * Evaluates the model for a specified input value x.
 	 * 
@@ -55,7 +54,7 @@ public class EDPIMParametricModel implements DistributionFunction {
 	/**
 	 * method that deals with a type 1 table
 	 */
-	public void typeOneTableInput(ArrayList<ArrayList<Double>> inputTable) {
+	public void typeOneTableInput() {
 		double[] iMi = new double[inputTable.size()];
 		double[] meani = new double[inputTable.size()];
 		double[] aStddi = new double[inputTable.size()];
@@ -79,7 +78,7 @@ public class EDPIMParametricModel implements DistributionFunction {
 	/**
 	 * method that deals with a type 2 table
 	 */
-	public void typeTwoTableInput(ArrayList<ArrayList<Double>> table) {
+	public void typeTwoTableInput() {
 		this.table = table;
 		double[] iMi = new double[table.size()];
 		double[] meani = new double[table.size()];
@@ -147,6 +146,14 @@ public class EDPIMParametricModel implements DistributionFunction {
 
 	public void setaStdD(DifferentiableFunction aStdD) {
 		this.aStdD = aStdD;
+	}
+
+	public String getTableInputString() {
+		return tableInputString;
+	}
+
+	public void setTableInputString(String tableInputString) {
+		this.tableInputString = tableInputString;
 	}
 
 }
