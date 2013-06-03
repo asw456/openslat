@@ -30,7 +30,6 @@ public class SlatController {
 			//end testing
 			
 			String results = calculate(sis);
-			System.err.println(results);
 			
 			return results;
 			
