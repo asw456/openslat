@@ -22,8 +22,8 @@ public class SlatParser {
 		StringWriter stringWriter = new StringWriter();
 		objmapper.writeValue(stringWriter, slatInputStore);
 		
-		System.out.println("printing the JSON string for debugging, after parsing into Objects and returning to string  ");
-		System.out.println(stringWriter.toString());
+		System.err.println("printing the JSON string for debugging, after parsing into Objects and returning to string  ");
+		System.err.println(stringWriter.toString());
 
 		return slatInputStore;
 	}

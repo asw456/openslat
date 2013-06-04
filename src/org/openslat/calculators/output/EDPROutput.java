@@ -35,11 +35,11 @@ public class EDPROutput {
 			double[] outputArrayX = new double[20];
 			double[] outputArrayY = new double[20];
 			for (int i = 0; i < 20; i++) {
-				System.out.println("edpr step " + i);
+				System.err.println("edpr step " + i);
 				outputArrayX[i] = 0.001 + i * stepsize;
 				outputArrayY[i] = edprCalc.edpRate(outputArrayX[i], edp, sis
 						.getStructure().getIm(), sis.getStructure().getPc());
-				System.out.println(outputArrayX[i] + "," + outputArrayY[i]);
+				System.err.println(outputArrayX[i] + "," + outputArrayY[i]);
 
 			}
 

@@ -37,7 +37,7 @@ public class LossIMNCOutput {
 				outputArrayX[i] = 0.001 + i * stepsize;
 				outputArrayY[i] = edprCalc.edpRate(outputArrayX[i], edp, sis
 						.getStructure().getIm(), sis.getStructure().getPc());
-				System.out.println(outputArrayX[i] + "," + outputArrayY[i]);
+				System.err.println(outputArrayX[i] + "," + outputArrayY[i]);
 
 			}
 

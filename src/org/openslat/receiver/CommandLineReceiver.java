@@ -26,8 +26,9 @@ public class CommandLineReceiver {
 			}
 
 			String inputString = sb.toString();
-			SlatController.run(inputString);
+			String output = SlatController.run(inputString);
 			
+			System.out.println(output);
 			
 		} catch (IOException e) {
 			e.printStackTrace();

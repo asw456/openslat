@@ -39,7 +39,7 @@ public class CollapseIM {
 		}, 0, (1 / imIn - 1) );
 		long endTime = System.nanoTime();
 		long duration = endTime - startTime;
-		System.out.println("collapse integral duration: " + duration);
+		System.err.println("collapse integral duration: " + duration);
 
 		//sis.getImMeanLossMap().put(imIn, temp);
 

@@ -38,11 +38,11 @@ public class LossIMOutput {
 		
 		
 		for (int i = 0; i < numSteps; i++) {
-			System.out.println("iteration:    ----------      " + i);
+			System.err.println("iteration:    ----------      " + i);
 			imArray[i] = 0 + i * stepsize;
 			meanLossArray[i] = lossIM.meanLossNC(imArray[i]);
 			sigmaLossArray[i] = lossIM.sigmaLoss(imArray[i]);
-			System.out.println(imArray[i] + ",   " + meanLossArray[i] + ",    " + sigmaLossArray[i]);
+			System.err.println(imArray[i] + ",   " + meanLossArray[i] + ",    " + sigmaLossArray[i]);
 		}
 
 		g.writeStartObject();

@@ -38,7 +38,7 @@ public class LossIMNC {
 		}, 0, 1);
 		long endTime = System.nanoTime();
 		long duration = endTime - startTime;
-		System.out.println("duration: " + duration);
+		System.err.println("duration: " + duration);
 
 		component.getImMeanLossMap().put(imIn, temp);
 
@@ -122,8 +122,8 @@ public class LossIMNC {
 			// LossEDP(1) is E[X] and LossEDP(2) is beta[X] so Var[X] =
 			// E[X]^2*(EXP(beta[X]^2)-1)
 
-			// System.out.println(meanLossEDP);
-			// System.out.println(sigmaLossEDP);
+			// System.err.println(meanLossEDP);
+			// System.err.println(sigmaLossEDP);
 
 			double varLedp = Math.pow(meanLossEDP, 2)
 					* (Math.exp(Math.pow(sigmaLossEDP, 2)) - 1.0);
