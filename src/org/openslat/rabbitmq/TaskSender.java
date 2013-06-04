@@ -19,7 +19,7 @@ public class TaskSender {
 		String message = getMessage(argv);
 
 		channel.basicPublish("", "hello", null, message.getBytes());
-		System.out.println(" [x] Sent '" + message + "'");
+		System.err.println(" [x] Sent '" + message + "'");
 
 		channel.close();
 		connection.close();

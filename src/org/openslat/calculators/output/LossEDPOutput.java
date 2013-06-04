@@ -38,11 +38,11 @@ public class LossEDPOutput {
 		}
 		
 		for (int i = 0; i < numSteps; i++) {
-			System.out.println("iteration:    ----------      " + i);
+			System.err.println("iteration:    ----------      " + i);
 			edpArray[i] = 0.00 + i * stepsize;
 			meanLossArray[i] = lossEDPNC.meanLoss(c,edpArray[i]);
 			sigmaLossArray[i] = lossEDPNC.sigmaLoss(c,edpArray[i]);
-			System.out.println(edpArray[i] + ",   " + meanLossArray[i] + ",    " + sigmaLossArray[i]);
+			System.err.println(edpArray[i] + ",   " + meanLossArray[i] + ",    " + sigmaLossArray[i]);
 		}
 
 		g.writeStartObject();

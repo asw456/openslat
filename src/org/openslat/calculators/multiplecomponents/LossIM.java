@@ -79,7 +79,7 @@ public class LossIM {
 				double cov_LIMNCkm = covLkLmIM.covLIMNCkm(components.get(k),
 						components.get(m), im);
 
-				System.out.println("varLoss:  " + varTotalLossNC);
+				System.err.println("varLoss:  " + varTotalLossNC);
 
 				if (k == m) {
 					varTotalLossNC = varTotalLossNC + cov_LIMNCkm;
