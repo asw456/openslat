@@ -12,7 +12,7 @@ import org.openslat.model.collapse.CollapseDemolition;
  * @author alan
  * 
  */
-public class LossR {
+public class LossRate {
 
 	private UnivariateIntegrator integrator = new SimpsonIntegrator();
 	private SlatInputStore sis;
@@ -79,7 +79,7 @@ public class LossR {
 			double probLIMC = new LogNormalDistribution(lnMeanLC, sigmaLC)
 					.cumulativeProbability(loss);
 
-			double probCollapse = sis.getStructure().getPc().getPcim()
+			double probCollapse = sis.getStructure().getCollapse().getPcim()
 					.probability(im);
 		
 			gLIM = (1-probCollapse)*(1-probLIMNC) + probCollapse*(1-probLIMC); 

@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 
  * @author Alan Williams
  */
-public class CollapseRate {
+public class DemolitionRate {
 
 	private SlatInputStore sis;
 	private UnivariateIntegrator integrator = new RombergIntegrator();
@@ -35,14 +35,14 @@ public class CollapseRate {
 	 */
 	public double evaluate() {
 
-		distribution = this.getSis().getStructure().getCollapse().getPcim().calcDistribution();
+		distribution = this.getSis().getStructure().getDemolition().getPcim().calcDistribution();
 		
-		final CollapseRate collapseRate = this;
+		final DemolitionRate demolitionRate = this;
 		return integrator.integrate(100000000, new UnivariateFunction() {
 			public double value(double t) {
-				return collapseRate.getDistribution()
+				return demolitionRate.getDistribution()
 						.cumulativeProbability(t)
-						* Math.abs(collapseRate.getSis().getStructure().getIm().retrieveImr().derivative(t));
+						* Math.abs(demolitionRate.getSis().getStructure().getIm().retrieveImr().derivative(t));
 			}
 		}, 1e-7, sis.getIm().getMaxIMValue()); //TODO: make robust
 	}
@@ -57,12 +57,12 @@ public class CollapseRate {
 	 */
 	public double evaluate_transformed_variable() {
 
-		final CollapseRate collapseRate = this;
+		final DemolitionRate demolitionRate = this;
 		return integrator.integrate(10000, new UnivariateFunction() {
 			public double value(double t) {
-				return collapseRate.getSis().getStructure().getCollapse().getPcim().calcDistribution()
+				return demolitionRate.getSis().getStructure().getCollapse().getPcim().calcDistribution()
 						.cumulativeProbability(1 / t - 1)
-						* Math.abs(collapseRate.getSis().getStructure().getIm().retrieveImr().derivative(1 / t - 1))
+						* Math.abs(demolitionRate.getSis().getStructure().getIm().retrieveImr().derivative(1 / t - 1))
 						* (-1 / Math.pow(t, 2));
 			}
 		}, 0, 1);

@@ -55,11 +55,11 @@ public class Structure {
 		this.performanceGroups.remove(performanceGroup);
 	}
 
-	public CollapseDemolition getPc() {
+	public CollapseDemolition getCollapse() {
 		return collapse;
 	}
 
-	public void setPc(CollapseDemolition pc) {
+	public void setCollapse(CollapseDemolition pc) {
 		this.collapse = pc;
 	}
 
@@ -79,11 +79,11 @@ public class Structure {
 		this.demolition = demolition;
 	}
 
-	public CollapseDemolition getCollapse() {
+	public CollapseDemolition getCollapse1() {
 		return collapse;
 	}
 
-	public void setCollapse(CollapseDemolition collapse) {
+	public void setCollapse1(CollapseDemolition collapse) {
 		this.collapse = collapse;
 	}
 

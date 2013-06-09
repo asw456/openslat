@@ -105,7 +105,7 @@ public class SlatParserTest {
 		// Construct and add example Structure to Store
 		Structure structure = new Structure();
 		structure.setIm(im);
-		structure.setPc(null);
+		structure.setCollapse(null);
 		structure.setLossCollapse(null);
 		structure.addPerformanceGroup(pg);
 		// =====================================

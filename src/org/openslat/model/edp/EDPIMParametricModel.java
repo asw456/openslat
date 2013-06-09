@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * Combines two continuous parametric models into a distribution model with mean
  * and standard deviation.
  * 
- * @author James Williams
+ * @author Alan Williams
  */
 public class EDPIMParametricModel implements DistributionFunction {
 

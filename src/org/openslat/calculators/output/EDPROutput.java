@@ -37,7 +37,7 @@ public class EDPROutput {
 			for (int i = 0; i < 20; i++) {
 				outputArrayX[i] = 0.001 + i * stepsize;
 				outputArrayY[i] = edprCalc.edpRate(outputArrayX[i], edp, sis
-						.getStructure().getIm(), sis.getStructure().getPc());
+						.getStructure().getIm(), sis.getStructure().getCollapse());
 			}
 
 

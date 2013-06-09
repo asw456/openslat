@@ -16,7 +16,7 @@ import java.lang.Math;
  * where <code>a</code>, <code>b</code> and <code>c</code> are specified
  * parameters.
  * 
- * @author James Williams
+ * @author Alan Williams
  */
 @JsonSerialize
 public class AslaniModel implements DifferentiableFunction {

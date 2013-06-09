@@ -4,7 +4,7 @@ package org.openslat.util;
  * ImportModel provides a data structure for importing data from files with
  * various formatting.
  * 
- * @author James Williams
+ * @author Alan Williams
  */
 public class ImportModel {
 	

@@ -12,7 +12,7 @@ import org.openslat.util.ImportModel;
 /**
  * ImportUtil contains utilities for importing data from files with various formatting.
  * 
- * @author James Williams
+ * @author Alan Williams
  */
 public class ImportControl {
 	

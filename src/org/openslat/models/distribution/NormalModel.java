@@ -10,7 +10,7 @@ import org.openslat.interfaces.DistributionFunction;
  * Combines two continuous parametric models into a distribution model with mean
  * and standard deviation.
  * 
- * @author James Williams
+ * @author Alan Williams
  */
 public class NormalModel implements DistributionFunction {
 

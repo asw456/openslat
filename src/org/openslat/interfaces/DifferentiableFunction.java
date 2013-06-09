@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
  * Distribution model interface for one-to-distribution parametric and numerical
  * models.
  * 
- * @author James Williams
+ * @author Alan Williams
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({

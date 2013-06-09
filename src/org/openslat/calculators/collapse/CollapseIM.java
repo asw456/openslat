@@ -56,7 +56,7 @@ public class CollapseIM {
 		} else {
 			double edp = (1 / t) - 1;
 			
-			LogNormalDistribution lgnd = (LogNormalDistribution) sis.getStructure().getPc().getPcim().calcDistribution();
+			LogNormalDistribution lgnd = (LogNormalDistribution) sis.getStructure().getCollapse().getPcim().calcDistribution();
 
 			// double fEDPIM = LognormalPDF.evaluate(lgnd.getScale(),
 			// lgnd.getShape(), edp);
