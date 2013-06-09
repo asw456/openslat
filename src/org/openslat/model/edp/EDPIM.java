@@ -43,29 +43,29 @@ public class EDPIM {
 				stddModel);
 	}
 
-	public void constructDistributionFunctionDiscreteType1Table(
-			ArrayList<ArrayList<Double>> table) {
-		this.distributionFunction = new EDPIMDiscreteModel();
-		((EDPIMDiscreteModel) distributionFunction).typeOneTableInput();
-	}
-
-	public void constructDistributionFunctionDiscreteType2Table(
-			ArrayList<ArrayList<Double>> table) {
-		this.distributionFunction = new EDPIMDiscreteModel();
-		((EDPIMDiscreteModel) distributionFunction).typeTwoTableInput();
-	}
-
-	public void constructDistributionFunctionParametricType1Table(
-			ArrayList<ArrayList<Double>> table) {
-		this.distributionFunction = new EDPIMParametricModel();
-		((EDPIMParametricModel) distributionFunction).typeOneTableInput();
-	}
-
-	public void constructDistributionFunctionParametricType2Table(
-			ArrayList<ArrayList<Double>> table) {
-		this.distributionFunction = new EDPIMParametricModel();
-		((EDPIMParametricModel) distributionFunction).typeTwoTableInput();
-	}
+//	public void constructDistributionFunctionDiscreteType1Table(
+//			ArrayList<ArrayList<Double>> table) {
+//		this.distributionFunction = new EDPIMDiscreteModel();
+//		((EDPIMDiscreteModel) distributionFunction).typeOneTableInput();
+//	}
+//
+//	public void constructDistributionFunctionDiscreteType2Table(
+//			ArrayList<ArrayList<Double>> table) {
+//		this.distributionFunction = new EDPIMDiscreteModel();
+//		((EDPIMDiscreteModel) distributionFunction).typeTwoTableInput();
+//	}
+//
+//	public void constructDistributionFunctionParametricType1Table(
+//			ArrayList<ArrayList<Double>> table) {
+//		this.distributionFunction = new EDPIMParametricModel();
+//		((EDPIMParametricModel) distributionFunction).typeOneTableInput();
+//	}
+//
+//	public void constructDistributionFunctionParametricType2Table(
+//			ArrayList<ArrayList<Double>> table) {
+//		this.distributionFunction = new EDPIMParametricModel();
+//		((EDPIMParametricModel) distributionFunction).typeTwoTableInput();
+//	}
 
 	public Double getEpistemicWeight() {
 		return epistemicWeight;

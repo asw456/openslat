@@ -84,7 +84,7 @@ public class EDPR {
 			final IM im, final double val) {
 		return new UnivariateFunction() {
 			public double value(double t) {
-				System.err.println(t);
+				if (im.getSis().isVerbose()) System.err.println(t);
 				double epsilon = 1e-10;
 				if (FastMath.abs(t) < epsilon) {
 					return 0;

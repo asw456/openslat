@@ -17,14 +17,14 @@ public class SlatParser {
 			throws JsonParseException, JsonMappingException, IOException {
 
 		ObjectMapper objmapper = new ObjectMapper();
-		SlatInputStore slatInputStore = objmapper.readValue(inputJsonString, SlatInputStore.class);
+		SlatInputStore sis = objmapper.readValue(inputJsonString, SlatInputStore.class);
 		
 		StringWriter stringWriter = new StringWriter();
-		objmapper.writeValue(stringWriter, slatInputStore);
+		objmapper.writeValue(stringWriter, sis);
 		
-		System.err.println("printing the JSON string for debugging, after parsing into Objects and returning to string  ");
-		System.err.println(stringWriter.toString());
+		if (sis.isVerbose()) System.err.println("printing the JSON string for debugging, after parsing into Objects and returning to string  ");
+		if (sis.isVerbose()) System.err.println(stringWriter.toString());
 
-		return slatInputStore;
+		return sis;
 	}
 }

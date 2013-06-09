@@ -75,26 +75,21 @@ public class EDPIMDiscreteModel implements DistributionFunction {
 		// minKnot = inputTable.get(0).get(0);
 		// maxKnot = inputTable.get(inputTable.size()).get(0);
 
-		logiMi[0] = 0;
-		logMeani[0] = 0;
-		logaSigmai[0] = 0;
-		logEpistemici[0] = 0;
-		
 		for (int i = 0; i < table.size(); i++) {
-			logiMi[i + 1] = Math.log10(table.get(i).get(0).doubleValue());
+			logiMi[i] = Math.log10(table.get(i).get(0).doubleValue());
 			table.get(i).remove(0);
-			logMeani[i + 1] = Math.log10(FitLogNormalDistribution
+			logMeani[i] = Math.log10(FitLogNormalDistribution
 					.calculateLogNormalParameters(table.get(i))
 					.getNumericalMean());
-			logaSigmai[i + 1] = Math.log10(FitLogNormalDistribution
+			logaSigmai[i] = Math.log10(FitLogNormalDistribution
 					.calculateLogNormalParameters(table.get(i)).getShape());
 		}
 
 		logMean = new LinearInterpolator().interpolate(logiMi, logMeani);
 		logSigma = new LinearInterpolator().interpolate(logiMi, logaSigmai);
 
-		logMinKnot = logiMi[0 + 1];
-		logMaxKnot = logiMi[logiMi.length - 1 + 1];
+		logMinKnot = logiMi[0];
+		logMaxKnot = logiMi[logiMi.length - 1];
 
 	}
 

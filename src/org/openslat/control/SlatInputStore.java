@@ -1,12 +1,18 @@
 package org.openslat.control;
 
 import org.openslat.model.edp.EDP;
+import org.openslat.model.edp.EDPIM;
+import org.openslat.model.edp.EDPIMDiscreteModel;
 import org.openslat.model.fragilityfunctions.DamageState;
 import org.openslat.model.im.IM;
+import org.openslat.model.im.IMR;
+import org.openslat.model.im.IMRDiscreteModel;
 import org.openslat.model.structure.Component;
 import org.openslat.model.structure.PerformanceGroup;
 import org.openslat.model.structure.Structure;
 import org.openslat.options.CalculationOptions;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -17,7 +23,8 @@ public class SlatInputStore {
 	private IM im;
 	private CalculationOptions calculationOptions;
 
-
+	@JsonIgnore
+	private boolean verbose;
 	//public SlatInputStore(
 	//		@JsonProperty("structure") Structure structure,
 	//		@JsonProperty("calculationOptions") CalculationOptions calculationOptions) {
@@ -63,7 +70,25 @@ public class SlatInputStore {
 			}
 		}
 		
+		//setup IMR and parse table
 		im.setSis(this);
+		for (IMR imr : im.getiMR()) {
+			if (imr.getModel().getClass().equals(IMRDiscreteModel.class)){
+				((IMRDiscreteModel) imr.getModel()).parseTable();
+				
+			}
+		}
+		
+		//setup parse edp table currently only type two implemented
+		for (EDP edp : structure.getEdps()){
+			for (EDPIM edpIm : edp.getEdpIM()){
+				if (edpIm.getDistributionFunction().getClass().equals(EDPIMDiscreteModel.class)) {
+					EDPIMDiscreteModel df = (EDPIMDiscreteModel) edpIm.getDistributionFunction();
+					df.typeTwoTableInput();
+				}
+			}
+		}
+		
 
 		// set means in ff
 		for (Component c : this.getStructure().getComponents()) {
@@ -102,6 +127,14 @@ public class SlatInputStore {
 
 	public void setStructure(Structure structure) {
 		this.structure = structure;
+	}
+
+	public boolean isVerbose() {
+		return verbose;
+	}
+
+	public void setVerbose(boolean verbose) {
+		this.verbose = verbose;
 	}
 
 }
