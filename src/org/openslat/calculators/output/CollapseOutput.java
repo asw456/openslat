@@ -3,7 +3,7 @@ package org.openslat.calculators.output;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import org.openslat.calculators.collapse.CR;
+import org.openslat.calculators.collapse.CollapseRate;
 import org.openslat.calculators.multiplecomponents.LossIM;
 import org.openslat.control.SlatInputStore;
 
@@ -18,14 +18,14 @@ public class CollapseOutput {
 	public static String collapseOutput(SlatInputStore sis, int numSteps)
 			throws JsonGenerationException, JsonMappingException, IOException {
 
-		final CR cR = new CR();
-		cR.setSis(sis);
+		final CollapseRate collapseRate = new CollapseRate();
+		collapseRate.setSis(sis);
 
 		JsonFactory f = new JsonFactory();
 		ByteArrayOutputStream ostream = new ByteArrayOutputStream();
 		JsonGenerator g = f.createGenerator(ostream, JsonEncoding.UTF8);
 
-		final double imMaxValue = sis.getStructure().getIm().getMaxValue();
+		final double imMaxValue = sis.getStructure().getIm().getMaxIMValue();
 		
 		final double stepsize = imMaxValue / numSteps;
 		
@@ -41,7 +41,7 @@ public class CollapseOutput {
 		for (int i = 0; i < numSteps; i++) {
 			System.err.println("iteration:    ----------      " + i);
 			imArray[i] = 0 + i * stepsize;
-			collapseRateArray[i] = cR.evaluate(imArray[i]);
+			collapseRateArray[i] = collapseRate.evaluate(imArray[i]);
 			System.err.println(imArray[i] + ",   " + collapseRateArray[i] + ",    " + sigmaLossArray[i]);
 		}
 

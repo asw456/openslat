@@ -8,6 +8,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.math3.analysis.interpolation.LinearInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
+import org.openslat.model.edp.EDPIMDiscreteModel;
 import org.openslat.model.structure.Component;
 
 /**
@@ -31,55 +32,61 @@ public class EDPIMCorrelations {
 
 		// TODO: same IM not checked?? but never checked elsewhere in program
 		// TODO: same IM values down column 1 of table not checked
-		if (componenti.getEdp().retrieveEdpIM().getDistributionFunction().getTable() == null) {
-			return 0; // TODO: exception, hard failure instead of soft
-		}
-		if (componentj.getEdp().retrieveEdpIM().getDistributionFunction().getTable() == null) {
-			return 0; // TODO: exception, hard failure instead of soft
-		}
-		if (componenti.getEdp().retrieveEdpIM().getDistributionFunction().getTable()
-				.size() != componentj.getEdp().retrieveEdpIM()
-				.getDistributionFunction().getTable().size()) {
-			return 0; // TODO: exception, hard failure instead of soft
-		}
+		if (componenti.getEdp().retrieveEdpIM().getDistributionFunction()
+				.getClass().equals(EDPIMDiscreteModel.class)) {
 
-		ArrayList<ArrayList<Double>> tablei = componenti.getEdp().retrieveEdpIM()
-				.getDistributionFunction().getTable();
-		ArrayList<ArrayList<Double>> tablej = componentj.getEdp().retrieveEdpIM()
-				.getDistributionFunction().getTable();
+			ArrayList<ArrayList<Double>> tablei = ((EDPIMDiscreteModel) componenti
+					.getEdp().retrieveEdpIM().getDistributionFunction())
+					.getTable();
+			ArrayList<ArrayList<Double>> tablej = ((EDPIMDiscreteModel) componentj
+					.getEdp().retrieveEdpIM().getDistributionFunction())
+					.getTable();
 
-		double[] imi = new double[tablei.size()];
-		double[] correlations = new double[tablej.size()];
+			if (tablei == null) {
+				return 0; // TODO: exception, hard failure instead of soft
+			}
+			else if (tablej == null) {
+				return 0; // TODO: exception, hard failure instead of soft
+			}
+			else if (tablei.size() != tablej.size()) {
+				return 0; // TODO: exception, hard failure instead of soft
+			}
 
-		for (int p = 0; p < tablei.size(); ++p) {
+			double[] imi = new double[tablei.size()];
+			double[] correlations = new double[tablej.size()];
 
-			imi[p] = tablei.get(p).get(0).doubleValue(); // same as table j
-			ArrayList<Double> edpRowI = tablei.get(p);
-			ArrayList<Double> edpRowJ = tablej.get(p);
-			edpRowI.remove(0);
-			edpRowJ.remove(0);
+			for (int p = 0; p < tablei.size(); ++p) {
 
-			correlations[p] = pearsonsCorrelation.correlation(ArrayUtils
-					.toPrimitive(edpRowI.toArray(new Double[edpRowI.size()])),
-					ArrayUtils.toPrimitive(edpRowJ.toArray(new Double[edpRowI
-							.size()])));
+				imi[p] = tablei.get(p).get(0).doubleValue(); // same as table j
+				ArrayList<Double> edpRowI = tablei.get(p);
+				ArrayList<Double> edpRowJ = tablej.get(p);
+				edpRowI.remove(0);
+				edpRowJ.remove(0);
 
-		}
+				correlations[p] = pearsonsCorrelation.correlation(
+						ArrayUtils.toPrimitive(edpRowI
+								.toArray(new Double[edpRowI.size()])),
+						ArrayUtils.toPrimitive(edpRowJ
+								.toArray(new Double[edpRowI.size()])));
 
-		PolynomialSplineFunction correlationIMRelationship = new LinearInterpolator()
-				.interpolate(imi, correlations);
+			}
 
-		// flat if im value lies outside range
-		if (im < correlationIMRelationship.getKnots()[0]) {
-			im = correlationIMRelationship.getKnots()[0];
-		}
+			PolynomialSplineFunction correlationIMRelationship = new LinearInterpolator()
+					.interpolate(imi, correlations);
 
-		if (im > correlationIMRelationship.getKnots()[correlationIMRelationship
-				.getKnots().length - 1]) {
-			im = correlationIMRelationship.getKnots()[correlationIMRelationship
-					.getKnots().length - 1];
-		}
+			// flat if im value lies outside range
+			if (im < correlationIMRelationship.getKnots()[0]) {
+				im = correlationIMRelationship.getKnots()[0];
+			}
 
-		return correlationIMRelationship.value(im);
+			if (im > correlationIMRelationship.getKnots()[correlationIMRelationship
+					.getKnots().length - 1]) {
+				im = correlationIMRelationship.getKnots()[correlationIMRelationship
+						.getKnots().length - 1];
+			}
+
+			return correlationIMRelationship.value(im);
+		} else
+			return -99;
 	}
 }

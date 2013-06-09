@@ -9,7 +9,7 @@ import org.openslat.control.SlatInputStore;
  * Collapse hazard relationship or Collapse-Rate. Represents the annual
  * frequency of collapse.
  * 
- * CR can be constructed with an IMR relationship and an PCIM relationship and
+ * CollapseRate can be constructed with an IMR relationship and an PCIM relationship and
  * an integration method.
  * 
  * @author Alan Williams
@@ -28,12 +28,12 @@ public class CR {
 	 */
 	public double evaluate() {
 
-		final CR cr = this;
+		final CollapseRate collapseRate = this;
 		return integrator.integrate(10000, new UnivariateFunction() {
 			public double value(double t) {
-				return cr.getSis().getStructure().getPc().getPcim().calcDistribution()
+				return collapseRate.getSis().getStructure().getPc().getPcim().calcDistribution()
 						.cumulativeProbability(1 / t - 1)
-						* Math.abs(cr.getSis().getStructure().getIm().retrieveImr().derivative(1 / t - 1))
+						* Math.abs(collapseRate.getSis().getStructure().getIm().retrieveImr().derivative(1 / t - 1))
 						* (-1 / Math.pow(t, 2));
 			}
 		}, 0, 1);

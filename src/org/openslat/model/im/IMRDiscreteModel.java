@@ -4,6 +4,9 @@
 package org.openslat.model.im;
 
 import java.util.ArrayList;
+
+import org.apache.commons.math3.analysis.differentiation.FiniteDifferencesDifferentiator;
+import org.apache.commons.math3.analysis.differentiation.UnivariateDifferentiableFunction;
 import org.apache.commons.math3.analysis.interpolation.LinearInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 import org.apache.commons.math3.util.FastMath;
@@ -49,9 +52,8 @@ public class IMRDiscreteModel implements DifferentiableFunction {
 		maxKnot = table.get(table.size() - 1).get(0);
 
 		for (int i = 0; i < table.size(); i++) {
-			iMi[i] = FastMath.log10(table.get(i).get(0).doubleValue());
-			System.err.println(iMi[i]);
-			annualFreqi[i] = FastMath.log10(table.get(i).get(1).doubleValue());
+			iMi[i] = FastMath.log(table.get(i).get(0).doubleValue());
+			annualFreqi[i] = FastMath.log(table.get(i).get(1).doubleValue());
 		}
 		annualFreq = new LinearInterpolator().interpolate(iMi, annualFreqi);
 	}
@@ -62,14 +64,14 @@ public class IMRDiscreteModel implements DifferentiableFunction {
 	 */
 	@Override
 	public double value(double x) {
-		if (x >= 0 && x <= maxKnot) {
-			return Math.pow(annualFreq.value(Math.log10(x)), 10);
+		if (x >= minKnot && x <= maxKnot) {
+			return Math.exp(annualFreq.value(Math.log(x)));
 		}
 		// easy method: return consant
-		if (x < 0)
-			return annualFreqi[0];
+		if (x < minKnot)
+			return table.get(0).get(1).doubleValue();
 		else
-			return table.get(table.size() - 1).get(1).doubleValue();
+			return 0;//table.get(table.size() - 1).get(1).doubleValue();
 
 		// Line lowerLine = new Line(new Vector2D(iMi[0], annualFreqi[0]),
 		// new Vector2D(iMi[1], annualFreqi[1]));
@@ -86,15 +88,28 @@ public class IMRDiscreteModel implements DifferentiableFunction {
 
 	@Override
 	public double derivative(double x_in) {
-		double x = FastMath.log10(x_in);
-		
-		if (x >= minKnot && x <= maxKnot) {
-			return annualFreq.derivative().value(x);
+		double e = 1e-7;
+
+		if (x_in >= minKnot+2*e && x_in <= maxKnot-2*e) {
+			return (value(x_in+e)-value(x_in-e))/(2*e);
 		}
-		if (x < minKnot)
-			return annualFreq.derivative().value(minKnot);
+		// easy method: return consant
+		if (x_in < minKnot + 2*e)
+			return 0; //table.get(0).get(1).doubleValue();
 		else
-			return annualFreq.derivative().value(maxKnot);
+			return 0; //table.get(table.size() - 1).get(1).doubleValue();
+		
+		
+		
+		// double x = FastMath.log(x_in);
+		//
+		// if (x >= minKnot && x <= maxKnot) {
+		// return annualFreq.derivative().value(x);
+		// }
+		// if (x < minKnot)
+		// return annualFreq.derivative().value(minKnot);
+		// else
+		// return annualFreq.derivative().value(maxKnot);
 
 	}
 

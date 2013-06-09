@@ -37,8 +37,8 @@ public class EDPR {
 	 */
 	public double edpRate(double val, EDP edp, IM im, CollapseDemolition pc) {
 
-		if (val == 0){
-			val = val + 1e-10; //TODO: is this enough
+		if (val == 0) {
+			val = val + 1e-10; // TODO: is this enough
 		}
 		EDPIM edpIm = edp.retrieveEdpIM(); // TODO: fix this obvious issue when
 											// EU becomes more important
@@ -62,20 +62,31 @@ public class EDPR {
 				if (FastMath.abs(t) < epsilon) {
 					return 0;
 				}
-				if (FastMath.abs(1 - t) < epsilon) {
-					return 0;
-				} else {
-					return (1
-							- edpIm.getDistributionFunction()
-									.distribution(1 / t - 1)
-									.cumulativeProbability(val)
-							* (1 - pc.getPcim().calcDistribution()
-									.cumulativeProbability(1 / t - 1)) + pc
-							.getPcim().calcDistribution()
-							.cumulativeProbability(1 / t - 1))
-							* FastMath.abs(im.retrieveImr().derivative(
-									1 / t - 1)) * (1 / FastMath.pow(t, 2));
-				}
+				// if (FastMath.abs(1 - t) < epsilon) {
+				// return 0;
+				// } else {
+
+				return (1
+						- edpIm.getDistributionFunction()
+								.distribution(t)
+								.cumulativeProbability(val)
+						* (1 - pc.getPcim().calcDistribution()
+								.cumulativeProbability(t)) + pc
+						.getPcim().calcDistribution()
+						.cumulativeProbability(t))
+						* FastMath.abs(im.retrieveImr().derivative(t));
+
+				// return (1
+				// - edpIm.getDistributionFunction()
+				// .distribution(1 / t - 1)
+				// .cumulativeProbability(val)
+				// * (1 - pc.getPcim().calcDistribution()
+				// .cumulativeProbability(1 / t - 1)) + pc
+				// .getPcim().calcDistribution()
+				// .cumulativeProbability(1 / t - 1))
+				// * FastMath.abs(im.retrieveImr().derivative(
+				// 1 / t - 1)) * (1 / FastMath.pow(t, 2));
+				// }
 			}
 		};
 	}
@@ -84,24 +95,22 @@ public class EDPR {
 			final IM im, final double val) {
 		return new UnivariateFunction() {
 			public double value(double t) {
-				if (im.getSis().isVerbose()) System.err.println(t);
 				double epsilon = 1e-10;
 				if (FastMath.abs(t) < epsilon) {
 					return 0;
 				}
-				//if (FastMath.abs(1 - t) < epsilon) {
-				//	return 0;
-				//} else {
-				return (1 - edpIm.getDistributionFunction()
-						.distribution(t).cumulativeProbability(val))
-						* FastMath.abs(im.retrieveImr().derivative(
-								t)) ;
-				
-				//	return (1 - edpIm.getDistributionFunction()
-				//			.distribution(1 / t - 1).cumulativeProbability(val))
-				//			* FastMath.abs(im.retrieveImr().derivative(
-				//					1 / t - 1)) * (1 / FastMath.pow(t, 2));
-				//}
+				// if (FastMath.abs(1 - t) < epsilon) {
+				// return 0;
+				// } else {
+				return (1 - edpIm.getDistributionFunction().distribution(t)
+						.cumulativeProbability(val))
+						* FastMath.abs(im.retrieveImr().derivative(t));
+
+				// return (1 - edpIm.getDistributionFunction()
+				// .distribution(1 / t - 1).cumulativeProbability(val))
+				// * FastMath.abs(im.retrieveImr().derivative(
+				// 1 / t - 1)) * (1 / FastMath.pow(t, 2));
+				// }
 			}
 		};
 

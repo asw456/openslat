@@ -41,12 +41,12 @@ public class LossR {
 		a = z - h;
 		b = z + h;
 
-		final LossR lossR = this;
+		final LossRate lossRate = this;
 		final double loss = inputLoss;
 		double integrand = integrator.integrate(10000,
 				new UnivariateFunction() {
 					public double value(double t) {
-						return lossR.integrand(t, loss);
+						return lossRate.integrand(t, loss);
 					}
 				}, a, b);
 
