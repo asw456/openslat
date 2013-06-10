@@ -24,6 +24,10 @@ public class PowerModelTest {
 		pm2 = new PowerModel();
 		double[] pparams2 = { 0.5, 0.0 };
 		pm2.setPowerModelParams(pparams2);
+		
+		pm3 = new PowerModel();
+		double[] pparams3 = { 0.0002, -3 };
+		pm3.setPowerModelParams(pparams3);
 	}
 	
 	@Test
@@ -35,7 +39,7 @@ public class PowerModelTest {
 	@Test
 	public void test1() {
 		assertEquals(0, pm1.value(0), 0.001);
-		assertEquals(1.4142, pm1.value(2), 0.001);
+		assertEquals(0.0002, pm1.value(2), 0.001);
 	}
 
 	@Test
@@ -51,6 +55,11 @@ public class PowerModelTest {
 	
 	@Test
 	public void test5() {
-		assertEquals(0.49, pm1.derivative(0.4), 0.05);
+		assertEquals(7.41159, pm1.derivative(0.4), 0.05);
+	}
+	
+	@Test
+	public void test6() {
+		assertEquals(-0.0006, pm3.derivative(1), 0.00001);
 	}
 }

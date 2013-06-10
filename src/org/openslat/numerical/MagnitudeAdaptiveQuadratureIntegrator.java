@@ -50,6 +50,7 @@ public class MagnitudeAdaptiveQuadratureIntegrator extends
 			MaxCountExceededException {
 
 		double integral = 0;
+		int ibin = 1;
 
 		double a = this.getMin();
 		double b = this.getMax();
@@ -57,6 +58,28 @@ public class MagnitudeAdaptiveQuadratureIntegrator extends
 		double fa = this.computeObjectiveValue(a);
 		double fb = this.computeObjectiveValue(b);
 		double fc = this.computeObjectiveValue(c);
+
+		// double epsilon = 1e-10;
+		// int pre_n = 0;
+		// int pre_k = 0;
+		// double pre_h = 0;
+		// double pre_z = 0;
+		// double pre_fz = 0;
+		// boolean flag = false;
+		// while (!flag && pre_n < 1000000) {
+		// ++pre_k;
+		// pre_n = (int) FastMath.pow(2, pre_k);
+		// pre_h = (b - a) / pre_n;
+		// for (int i = 1; i < pre_n / 2; ++i) {
+		// pre_z = (2 * i - 1) * pre_h;
+		// pre_fz = this.computeObjectiveValue(pre_z);
+		// if (FastMath.abs(pre_fz) > epsilon) {
+		// a = pre_z - pre_h;
+		// b = pre_z + pre_h;
+		// flag = true;
+		// }
+		// }
+		// }
 
 		double r1 = quad(a, b, c, fa, fb, fc);
 		iterations.incrementCount();
@@ -70,7 +93,9 @@ public class MagnitudeAdaptiveQuadratureIntegrator extends
 		double Q1;
 		double Q2;
 
-		while (true) {
+		boolean flag2 = true;
+
+		while (true && ibin != 0) {
 			d = (a + c) / 2;
 			e = (c + b) / 2;
 			fd = this.computeObjectiveValue(d);
@@ -83,31 +108,56 @@ public class MagnitudeAdaptiveQuadratureIntegrator extends
 			Q2 = r2 + r3;
 
 			final double delta = FastMath.abs(Q2 - Q1);
-			final double rLimit = getRelativeAccuracy()
-					* (FastMath.abs(Q1) + FastMath.abs(Q2)) * 0.5;
-			if ((delta <= rLimit) || (delta <= getAbsoluteAccuracy())) {
+
+			// final double rLimit = 1e-4
+			// * (FastMath.abs(Q1) + FastMath.abs(Q2)) * 0.5;
+			// if ((delta <= rLimit) || (delta <= 1e-10)) {
+			// integral = integral + Q2 + (Q2 - Q1) / 15;
+			// flag2 = false;
+			// }
+
+			if ((delta <= 1e-4 * Q2) || (delta <= 1e-10 * integral)) {
 				integral = integral + Q2 + (Q2 - Q1) / 15;
-				return integral;
+				flag2 = false;
 			}
 
-			if (FastMath.abs(r2) > FastMath.abs(r3)) {
+			System.err.println(ibin);
+			System.err.println(integral);
+
+			if (FastMath.abs(r2) > FastMath.abs(r3) && flag2) {
+
+				ibin = ibin + 4;
+
 				b = c;
 				fb = fc;
 				c = d;
 				fc = fd;
 				r1 = r2;
 
-			} else {
+			} else if (flag2) {
+
+				ibin = ibin + 4;
+
 				a = c;
 				fa = fc;
 				c = e;
 				fc = fe;
 				r1 = r3;
 			}
+
+			flag2 = true;
+
+			if (ibin == 1) {
+				return integral;
+			}
+
+			ibin = ibin - 4;
+
 			iterations.incrementCount();
 			if (iterations.getCount() > this.getMaximalIterationCount()) {
 				throw new MaxCountExceededException(iterations.getCount());
 			}
 		}
+		return integral;
 	}
 }

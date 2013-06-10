@@ -102,6 +102,12 @@ public class EDPR {
 				// if (FastMath.abs(1 - t) < epsilon) {
 				// return 0;
 				// } else {
+				
+				System.err.println("t        " + t);
+				System.err.println("cp       " + edpIm.getDistributionFunction().distribution(t)
+						.cumulativeProbability(val));
+				System.err.println("imrderiv " + FastMath.abs(im.retrieveImr().derivative(t)) + "\n");
+				
 				return (1 - edpIm.getDistributionFunction().distribution(t)
 						.cumulativeProbability(val))
 						* FastMath.abs(im.retrieveImr().derivative(t));

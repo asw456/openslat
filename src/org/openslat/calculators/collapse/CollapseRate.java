@@ -6,6 +6,7 @@ import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
 import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
 import org.apache.commons.math3.distribution.LogNormalDistribution;
 import org.openslat.control.SlatInputStore;
+import org.openslat.numerical.MagnitudeAdaptiveQuadratureIntegrator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -22,6 +23,7 @@ public class CollapseRate {
 
 	private SlatInputStore sis;
 	private UnivariateIntegrator integrator = new RombergIntegrator();
+	//private UnivariateIntegrator integrator = new MagnitudeAdaptiveQuadratureIntegrator();
 	
 	@JsonIgnore
 	private LogNormalDistribution distribution;
@@ -55,7 +57,7 @@ public class CollapseRate {
 	 *            probability of collapse
 	 * @return rate of exceedance
 	 */
-	public double evaluate_transformed_variable() {
+	public double evaluate_with_variable_transform_to_t() {
 
 		final CollapseRate collapseRate = this;
 		return integrator.integrate(10000, new UnivariateFunction() {

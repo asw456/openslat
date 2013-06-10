@@ -67,7 +67,7 @@ public class PowerModel implements DifferentiableFunction {
 	 * @return output value
 	 */
 	public double value(double x) {
-		return (parameters[0] * FastMath.pow(x, parameters[1]));
+		return (parameters[0] * FastMath.pow(x, - parameters[1]));
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class PowerModel implements DifferentiableFunction {
 	 * @return output value
 	 */
 	public double derivative(double x) {
-		return parameters[0] * parameters[1] * FastMath.pow(x, parameters[1] - 1);
+		return parameters[0] * (parameters[1]) * FastMath.pow(x, - parameters[1] - 1);
 	}
 
 	public String toString() {
