@@ -1,55 +1,42 @@
 package org.openslat.numerical;
 
-import java.util.ArrayList;
-
-import org.apache.commons.math3.analysis.integration.BaseAbstractUnivariateIntegrator;
+import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.exception.MaxCountExceededException;
-import org.apache.commons.math3.exception.NotStrictlyPositiveException;
-import org.apache.commons.math3.exception.NumberIsTooLargeException;
-import org.apache.commons.math3.exception.NumberIsTooSmallException;
 import org.apache.commons.math3.exception.TooManyEvaluationsException;
 import org.apache.commons.math3.util.FastMath;
 
 import cern.colt.matrix.impl.SparseDoubleMatrix2D;
 
-public class MagnitudeAdaptiveQuadratureIntegrator extends
-		BaseAbstractUnivariateIntegrator {
+public class MAQIntegrator {
 
 	public static final int MAQ_MAX_ITERATIONS_COUNT = 1000000;
+	public double min;
+	public double max;
+	public UnivariateFunction f;
+	public int iterations = 1;
 
-	public MagnitudeAdaptiveQuadratureIntegrator(double relativeAccuracy,
-			double absoluteAccuracy, int minimalIterationCount,
-			int maximalIterationCount) throws NotStrictlyPositiveException,
-			NumberIsTooSmallException {
-		super(relativeAccuracy, absoluteAccuracy, minimalIterationCount,
-				maximalIterationCount);
+	// public MAQIntegrator(double relativeAccuracy,
+	// double absoluteAccuracy, int minimalIterationCount,
+	// int maximalIterationCount) throws NotStrictlyPositiveException,
+	// NumberIsTooSmallException {
+	// }
+	//
+	// public MAQIntegrator(
+	// final int minimalIterationCount, final int maximalIterationCount)
+	// throws NotStrictlyPositiveException, NumberIsTooSmallException,
+	// NumberIsTooLargeException {
+	// }
 
-		if (maximalIterationCount > MAQ_MAX_ITERATIONS_COUNT) {
-			throw new NumberIsTooLargeException(maximalIterationCount,
-					MAQ_MAX_ITERATIONS_COUNT, false);
-		}
-	}
-
-	public MagnitudeAdaptiveQuadratureIntegrator(
-			final int minimalIterationCount, final int maximalIterationCount)
-			throws NotStrictlyPositiveException, NumberIsTooSmallException,
-			NumberIsTooLargeException {
-		super(minimalIterationCount, maximalIterationCount);
-		if (maximalIterationCount > MAQ_MAX_ITERATIONS_COUNT) {
-			throw new NumberIsTooLargeException(maximalIterationCount,
-					MAQ_MAX_ITERATIONS_COUNT, false);
-		}
-	}
-
-	public MagnitudeAdaptiveQuadratureIntegrator() {
-		super(DEFAULT_MIN_ITERATIONS_COUNT, MAQ_MAX_ITERATIONS_COUNT);
+	public MAQIntegrator(double min, double max, UnivariateFunction f) {
+		this.min = min;
+		this.max = max;
+		this.f = f;
 	}
 
 	double quad(double a, double b, double c, double fa, double fb, double fc) {
-		return (b - a) / 6 * (fa + 4 * fc + fb);
+		return ((b - a) / 6) * (fa + 4 * fc + fb);
 	}
 
-	@Override
 	public double doIntegrate() throws TooManyEvaluationsException,
 			MaxCountExceededException {
 
@@ -60,35 +47,35 @@ public class MagnitudeAdaptiveQuadratureIntegrator extends
 		double a = this.getMin();
 		double b = this.getMax();
 		double c = (a + b) / 2;
-		double fa = this.computeObjectiveValue(a);
-		double fb = this.computeObjectiveValue(b);
-		double fc = this.computeObjectiveValue(c);
+		double fa = this.f.value(a);
+		double fb = this.f.value(b);
+		double fc = this.f.value(c);
 
-		// double epsilon = 1e-10;
-		// int pre_n = 0;
-		// int pre_k = 0;
-		// double pre_h = 0;
-		// double pre_z = 0;
-		// double pre_fz = 0;
-		// boolean flag = false;
-		// while (!flag && pre_n < 1000000) {
-		// ++pre_k;
-		// pre_n = (int) FastMath.pow(2, pre_k);
-		// pre_h = (b - a) / pre_n;
-		// for (int i = 1; i < pre_n / 2; i++) {
-		//
-		// if (!flag) {
-		// pre_z = (2 * i - 1) * pre_h;
-		// pre_fz = this.f.value(pre_z);
-		// if (FastMath.abs(pre_fz) > epsilon) {
-		// a = pre_z - pre_h;
-		// b = pre_z + pre_h;
-		// flag = true;
-		// }
-		// }
-		//
-		// }
-		// }
+//		double epsilon = 1e-10;
+//		int pre_n = 0;
+//		int pre_k = 0;
+//		double pre_h = 0;
+//		double pre_z = 0;
+//		double pre_fz = 0;
+//		boolean flag = false;
+//		while (!flag && pre_n < 1000000) {
+//			++pre_k;
+//			pre_n = (int) FastMath.pow(2, pre_k);
+//			pre_h = (b - a) / pre_n;
+//			for (int i = 1; i < pre_n / 2; i++) {
+//
+//				if (!flag) {
+//					pre_z = (2 * i - 1) * pre_h;
+//					pre_fz = this.f.value(pre_z);
+//					if (FastMath.abs(pre_fz) > epsilon) {
+//						a = pre_z - pre_h;
+//						b = pre_z + pre_h;
+//						flag = true;
+//					}
+//				}
+//
+//			}
+//		}
 
 		double r1 = quad(a, b, c, fa, fb, fc);
 
@@ -108,15 +95,15 @@ public class MagnitudeAdaptiveQuadratureIntegrator extends
 
 			while (!flag2) {
 
-				if (this.getIterations() > MAQ_MAX_ITERATIONS_COUNT) {
-					throw new MaxCountExceededException(this.getIterations());
+				if (iterations > MAQ_MAX_ITERATIONS_COUNT) {
+					throw new MaxCountExceededException(iterations);
 				}
-				iterations.incrementCount();
+				++iterations;
 
 				d = (a + c) / 2;
 				e = (c + b) / 2;
-				fd = this.computeObjectiveValue(d);
-				fe = this.computeObjectiveValue(e);
+				fd = this.f.value(d);
+				fe = this.f.value(e);
 
 				r2 = quad(a, c, d, fa, fc, fd);
 				r3 = quad(c, b, e, fc, fb, fe);
@@ -195,5 +182,37 @@ public class MagnitudeAdaptiveQuadratureIntegrator extends
 
 		}
 		return integral;
+	}
+
+	public double getMin() {
+		return min;
+	}
+
+	public void setMin(double min) {
+		this.min = min;
+	}
+
+	public double getMax() {
+		return max;
+	}
+
+	public void setMax(double max) {
+		this.max = max;
+	}
+
+	public UnivariateFunction getF() {
+		return f;
+	}
+
+	public void setF(UnivariateFunction f) {
+		this.f = f;
+	}
+
+	public int getIterations() {
+		return iterations;
+	}
+
+	public void setIterations(int iterations) {
+		this.iterations = iterations;
 	}
 }

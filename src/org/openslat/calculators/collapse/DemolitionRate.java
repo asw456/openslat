@@ -6,6 +6,7 @@ import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
 import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
 import org.apache.commons.math3.distribution.LogNormalDistribution;
 import org.openslat.control.SlatInputStore;
+import org.openslat.numerical.MagnitudeAdaptiveQuadratureIntegrator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -21,7 +22,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class DemolitionRate {
 
 	private SlatInputStore sis;
-	private UnivariateIntegrator integrator = new RombergIntegrator();
+	//private UnivariateIntegrator integrator = new RombergIntegrator();
+	private UnivariateIntegrator integrator = new MagnitudeAdaptiveQuadratureIntegrator();
 	
 	@JsonIgnore
 	private LogNormalDistribution distribution;

@@ -22,8 +22,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class CollapseRate {
 
 	private SlatInputStore sis;
-	private UnivariateIntegrator integrator = new RombergIntegrator();
-	//private UnivariateIntegrator integrator = new MagnitudeAdaptiveQuadratureIntegrator();
+	//private UnivariateIntegrator integrator = new RombergIntegrator();
+	private UnivariateIntegrator integrator = new MagnitudeAdaptiveQuadratureIntegrator();
 	
 	@JsonIgnore
 	private LogNormalDistribution distribution;
