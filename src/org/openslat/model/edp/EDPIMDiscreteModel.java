@@ -82,8 +82,9 @@ public class EDPIMDiscreteModel implements DistributionFunction {
 			for (int k = 0; k < table.get(i).size(); ++k){
 				if (table.get(i).get(k).equals(0)){
 					table.get(i).remove(k);
+					k = k-1;
 				}
-				k = k-1;
+
 			}
 			
 			

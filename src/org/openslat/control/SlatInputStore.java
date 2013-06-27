@@ -69,7 +69,7 @@ public class SlatInputStore {
 				ds.setSis(this);
 			}
 		}
-		
+
 		//setup IMR and parse table
 		im.setSis(this);
 		for (IMR imr : im.getiMR()) {
@@ -89,7 +89,6 @@ public class SlatInputStore {
 			}
 		}
 		
-
 		// set means in ff
 		for (Component c : this.getStructure().getComponents()) {
 			c.getFf().setMeans(getStructure().getComponents().size());

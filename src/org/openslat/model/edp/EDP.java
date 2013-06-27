@@ -23,6 +23,7 @@ public class EDP {
 	 * 
 	 * @return
 	 */
+	@JsonIgnore
 	public EDPIM retrieveEdpIM() {
 		// TODO : exceptions..
 		if (edpIM.size() == 0) {
@@ -86,6 +87,7 @@ public class EDP {
 		this.maxEDPValue = maxValue;
 	}
 
+	@JsonIgnore
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -94,6 +96,7 @@ public class EDP {
 		return result;
 	}
 
+	@JsonIgnore
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
