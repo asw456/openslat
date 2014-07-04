@@ -1,13 +1,12 @@
-### Earthquake Engineering Value-At-Risk Software via SaaS
+### Earthquake Engineering Value-At-Risk SaaS
 
 This software calculates the financial and life-safety risk for commercial buildings in New Zealand, part of the design and risk assessment process for new buildings. This project is also a proof-of-concept in converting research to a usable tool as quickly and flexibly as possible.
 
 ### Features
-* SaaS model 
-* Server-based computation engine
-* Browser client
-* parallel and scalable
-* json HTTP api
+* SaaS implementation or self-contained cross-platform application
+* Java calculation engine
+* AngularJS/websocket browser client (best in Chrome)
+* job submission and results access via. REST api
 
 This project brings leading earthquake engineering research to an educational and consulting setting through a simple and flexible user interface coupled to a server-based or local computation engine. A local mode is available.
  
