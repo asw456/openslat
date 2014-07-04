@@ -14,6 +14,8 @@ This project brings leading earthquake engineering research to an educational an
 * NodeJS
 * RabbitMQ
 
+### Screenshots
+
 <div><img title="screenshot 1" src="https://dl.dropboxusercontent.com/u/128539/openslat_github_1.png" align=center height = 300 /></div>
 <div><img title="screenshot 1" src="https://dl.dropboxusercontent.com/u/128539/openslat_github_2.png" align=center height = 300 /></div>
 
