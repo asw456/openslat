@@ -4,9 +4,8 @@ This software calculates the financial and life-safety risk for commercial build
 
 ### Features
 * SaaS implementation or self-contained cross-platform application
-* Java calculation engine
+* Java calculation server, job submission and results access via. REST api
 * AngularJS/websocket browser client (best in Chrome)
-* job submission and results access via. REST api
 
 This project brings leading earthquake engineering research to an educational and consulting setting through a simple and flexible user interface coupled to a server-based or local computation engine. A local mode is available.
  
